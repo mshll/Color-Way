@@ -1,7 +1,8 @@
 # Color Way
 
 Color Way is a simple 2D game written in Swift.
-Written as an exercise while learning Swift.
+
+This game was written as an exercise while learning Swift.
 
 
 ## Preview
