@@ -1,0 +1,12 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AnimatedCollectionViewLayout" "${PODS_CONFIGURATION_BUILD_DIR}/ChameleonFramework" "${PODS_CONFIGURATION_BUILD_DIR}/DynamicColor" "${PODS_CONFIGURATION_BUILD_DIR}/EasySocialButton" "${PODS_CONFIGURATION_BUILD_DIR}/GTProgressBar" "${PODS_CONFIGURATION_BUILD_DIR}/LNZCollectionLayouts" "${PODS_CONFIGURATION_BUILD_DIR}/SKTextureGradient" "${PODS_CONFIGURATION_BUILD_DIR}/Spring" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyUserDefaults" "${PODS_CONFIGURATION_BUILD_DIR}/TCProgressBar"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ChameleonFramework/ChameleonFramework.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/DynamicColor/DynamicColor.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/EasySocialButton/EasySocialButton.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/GTProgressBar/GTProgressBar.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/LNZCollectionLayouts/LNZCollectionLayouts.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SKTextureGradient/SKTextureGradient.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Spring/Spring.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TCProgressBar/TCProgressBar.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_LDFLAGS = $(inherited) -framework "AnimatedCollectionViewLayout" -framework "ChameleonFramework" -framework "CoreGraphics" -framework "DynamicColor" -framework "EasySocialButton" -framework "GTProgressBar" -framework "LNZCollectionLayouts" -framework "QuartzCore" -framework "SKTextureGradient" -framework "Spring" -framework "SwiftyUserDefaults" -framework "TCProgressBar" -framework "UIKit"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

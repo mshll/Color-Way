@@ -1,0 +1,6 @@
+framework module SKTextureGradient {
+  umbrella header "SKTextureGradient-umbrella.h"
+
+  export *
+  module * { export * }
+}

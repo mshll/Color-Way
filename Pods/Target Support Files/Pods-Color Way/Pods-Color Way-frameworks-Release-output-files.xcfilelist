@@ -1,0 +1,10 @@
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicColor.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasySocialButton.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTProgressBar.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LNZCollectionLayouts.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKTextureGradient.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TCProgressBar.framework

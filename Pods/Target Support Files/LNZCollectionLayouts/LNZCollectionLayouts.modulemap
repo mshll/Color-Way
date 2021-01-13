@@ -1,0 +1,6 @@
+framework module LNZCollectionLayouts {
+  umbrella header "LNZCollectionLayouts-umbrella.h"
+
+  export *
+  module * { export * }
+}

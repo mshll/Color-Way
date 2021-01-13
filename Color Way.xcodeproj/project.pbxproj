@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,10 +13,32 @@
 		512BAFF925ADED6E008C220B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512BAFF825ADED6E008C220B /* GameScene.swift */; };
 		512BAFFB25ADED6E008C220B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512BAFFA25ADED6E008C220B /* GameViewController.swift */; };
 		512BAFFE25ADED6E008C220B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 512BAFFC25ADED6E008C220B /* Main.storyboard */; };
-		512BB00025ADED73008C220B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 512BAFFF25ADED73008C220B /* Assets.xcassets */; };
+		518846AD25AE82CD0090049D /* SettingUpGameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846AC25AE82CD0090049D /* SettingUpGameplay.swift */; };
+		518846B025AE82E90090049D /* BarriersLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846AF25AE82E90090049D /* BarriersLogic.swift */; };
+		518846B325AE82FF0090049D /* Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846B225AE82FF0090049D /* Physics.swift */; };
+		518846B725AE83290090049D /* Swipes_Taps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846B625AE83290090049D /* Swipes_Taps.swift */; };
+		518846BB25AE83430090049D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846BA25AE83430090049D /* Extensions.swift */; };
+		518846BF25AE835A0090049D /* ChoosePlayerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */; };
+		518846D525AE858F0090049D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518846D425AE858F0090049D /* Assets.xcassets */; };
+		518846E225AE88900090049D /* odin-rounded.regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 518846DF25AE88900090049D /* odin-rounded.regular.otf */; };
+		518846E325AE88900090049D /* odin-rounded.bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 518846E025AE88900090049D /* odin-rounded.bold.otf */; };
+		518846E425AE88900090049D /* odin-rounded.light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 518846E125AE88900090049D /* odin-rounded.light.otf */; };
+		518846E925AE89C10090049D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518846E825AE89C10090049D /* LaunchScreen.storyboard */; };
+		51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */; };
+		51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */; };
+		51D2CE6525AE800400F4EB2E /* snowingParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */; };
+		51D2CE6625AE800400F4EB2E /* playerParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5F25AE800300F4EB2E /* playerParticle.sks */; };
+		51D2CE6725AE800400F4EB2E /* sparkleStar.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE6025AE800300F4EB2E /* sparkleStar.sks */; };
+		51D2CE6825AE800400F4EB2E /* rainParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE6125AE800300F4EB2E /* rainParticle.sks */; };
+		51D2CE6925AE800400F4EB2E /* playerExplo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE6225AE800400F4EB2E /* playerExplo.sks */; };
+		51D2CE6E25AE80C300F4EB2E /* cButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2CE6D25AE80C300F4EB2E /* cButton.swift */; };
+		8AE092A328961313FE2BFA5C /* Pods_Color_Way.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E3B839D474879EFDDB7666D /* Pods_Color_Way.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E3B839D474879EFDDB7666D /* Pods_Color_Way.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Color_Way.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2524CAE328CBDB6A83BBCF2A /* Pods-Color Way.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Color Way.debug.xcconfig"; path = "Target Support Files/Pods-Color Way/Pods-Color Way.debug.xcconfig"; sourceTree = "<group>"; };
+		270177695A5B575A833ECCDC /* Pods-Color Way.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Color Way.release.xcconfig"; path = "Target Support Files/Pods-Color Way/Pods-Color Way.release.xcconfig"; sourceTree = "<group>"; };
 		512BAFEF25ADED6E008C220B /* Color Way.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Way.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		512BAFF225ADED6E008C220B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		512BAFF425ADED6E008C220B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -24,8 +46,26 @@
 		512BAFF825ADED6E008C220B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		512BAFFA25ADED6E008C220B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		512BAFFD25ADED6E008C220B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		512BAFFF25ADED73008C220B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		512BB00125ADED73008C220B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		518846AC25AE82CD0090049D /* SettingUpGameplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUpGameplay.swift; sourceTree = "<group>"; };
+		518846AF25AE82E90090049D /* BarriersLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarriersLogic.swift; sourceTree = "<group>"; };
+		518846B225AE82FF0090049D /* Physics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Physics.swift; sourceTree = "<group>"; };
+		518846B625AE83290090049D /* Swipes_Taps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swipes_Taps.swift; sourceTree = "<group>"; };
+		518846BA25AE83430090049D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlayerCollectionView.swift; sourceTree = "<group>"; };
+		518846D425AE858F0090049D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		518846DF25AE88900090049D /* odin-rounded.regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.regular.otf"; sourceTree = "<group>"; };
+		518846E025AE88900090049D /* odin-rounded.bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.bold.otf"; sourceTree = "<group>"; };
+		518846E125AE88900090049D /* odin-rounded.light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.light.otf"; sourceTree = "<group>"; };
+		518846E825AE89C10090049D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = inGamesnow.sks; sourceTree = "<group>"; };
+		51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosionParticle.sks; sourceTree = "<group>"; };
+		51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = snowingParticle.sks; sourceTree = "<group>"; };
+		51D2CE5F25AE800300F4EB2E /* playerParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = playerParticle.sks; sourceTree = "<group>"; };
+		51D2CE6025AE800300F4EB2E /* sparkleStar.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sparkleStar.sks; sourceTree = "<group>"; };
+		51D2CE6125AE800300F4EB2E /* rainParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rainParticle.sks; sourceTree = "<group>"; };
+		51D2CE6225AE800400F4EB2E /* playerExplo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = playerExplo.sks; sourceTree = "<group>"; };
+		51D2CE6D25AE80C300F4EB2E /* cButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AE092A328961313FE2BFA5C /* Pods_Color_Way.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +85,8 @@
 			children = (
 				512BAFF125ADED6E008C220B /* Color Way */,
 				512BAFF025ADED6E008C220B /* Products */,
+				555BDD7E2FB2F9C51D34B889 /* Pods */,
+				78B4561AA86F5B5A817C34DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,15 +102,74 @@
 			isa = PBXGroup;
 			children = (
 				512BAFF225ADED6E008C220B /* AppDelegate.swift */,
-				512BAFF425ADED6E008C220B /* GameScene.sks */,
-				512BAFF625ADED6E008C220B /* Actions.sks */,
 				512BAFF825ADED6E008C220B /* GameScene.swift */,
+				518846AC25AE82CD0090049D /* SettingUpGameplay.swift */,
+				518846AF25AE82E90090049D /* BarriersLogic.swift */,
+				518846B225AE82FF0090049D /* Physics.swift */,
+				518846B625AE83290090049D /* Swipes_Taps.swift */,
+				51D2CE6D25AE80C300F4EB2E /* cButton.swift */,
+				518846BA25AE83430090049D /* Extensions.swift */,
+				518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */,
 				512BAFFA25ADED6E008C220B /* GameViewController.swift */,
-				512BAFFC25ADED6E008C220B /* Main.storyboard */,
-				512BAFFF25ADED73008C220B /* Assets.xcassets */,
+				51D2CE6B25AE801800F4EB2E /* Particles */,
+				51D2CE6C25AE808C00F4EB2E /* Support Files */,
+				518846E625AE88940090049D /* Fonts */,
+				518846D425AE858F0090049D /* Assets.xcassets */,
 				512BB00125ADED73008C220B /* Info.plist */,
 			);
 			path = "Color Way";
+			sourceTree = "<group>";
+		};
+		518846E625AE88940090049D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				518846E025AE88900090049D /* odin-rounded.bold.otf */,
+				518846E125AE88900090049D /* odin-rounded.light.otf */,
+				518846DF25AE88900090049D /* odin-rounded.regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		51D2CE6B25AE801800F4EB2E /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */,
+				51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */,
+				51D2CE6225AE800400F4EB2E /* playerExplo.sks */,
+				51D2CE5F25AE800300F4EB2E /* playerParticle.sks */,
+				51D2CE6125AE800300F4EB2E /* rainParticle.sks */,
+				51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */,
+				51D2CE6025AE800300F4EB2E /* sparkleStar.sks */,
+			);
+			path = Particles;
+			sourceTree = "<group>";
+		};
+		51D2CE6C25AE808C00F4EB2E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				512BAFFC25ADED6E008C220B /* Main.storyboard */,
+				518846E825AE89C10090049D /* LaunchScreen.storyboard */,
+				512BAFF425ADED6E008C220B /* GameScene.sks */,
+				512BAFF625ADED6E008C220B /* Actions.sks */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		555BDD7E2FB2F9C51D34B889 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2524CAE328CBDB6A83BBCF2A /* Pods-Color Way.debug.xcconfig */,
+				270177695A5B575A833ECCDC /* Pods-Color Way.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		78B4561AA86F5B5A817C34DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0E3B839D474879EFDDB7666D /* Pods_Color_Way.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +179,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 512BB00425ADED73008C220B /* Build configuration list for PBXNativeTarget "Color Way" */;
 			buildPhases = (
+				E237FB438B99733A72D7F0E8 /* [CP] Check Pods Manifest.lock */,
 				512BAFEB25ADED6E008C220B /* Sources */,
 				512BAFEC25ADED6E008C220B /* Frameworks */,
 				512BAFED25ADED6E008C220B /* Resources */,
+				1F776274329E4A0BEBCF1F5C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,23 +231,83 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */,
+				518846E425AE88900090049D /* odin-rounded.light.otf in Resources */,
+				51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */,
+				518846E925AE89C10090049D /* LaunchScreen.storyboard in Resources */,
+				518846D525AE858F0090049D /* Assets.xcassets in Resources */,
+				518846E225AE88900090049D /* odin-rounded.regular.otf in Resources */,
+				51D2CE6625AE800400F4EB2E /* playerParticle.sks in Resources */,
 				512BAFFE25ADED6E008C220B /* Main.storyboard in Resources */,
+				51D2CE6525AE800400F4EB2E /* snowingParticle.sks in Resources */,
+				518846E325AE88900090049D /* odin-rounded.bold.otf in Resources */,
+				51D2CE6825AE800400F4EB2E /* rainParticle.sks in Resources */,
+				51D2CE6725AE800400F4EB2E /* sparkleStar.sks in Resources */,
+				51D2CE6925AE800400F4EB2E /* playerExplo.sks in Resources */,
 				512BAFF525ADED6E008C220B /* GameScene.sks in Resources */,
-				512BB00025ADED73008C220B /* Assets.xcassets in Resources */,
 				512BAFF725ADED6E008C220B /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1F776274329E4A0BEBCF1F5C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Color Way/Pods-Color Way-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Color Way/Pods-Color Way-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Color Way/Pods-Color Way-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E237FB438B99733A72D7F0E8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Color Way-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		512BAFEB25ADED6E008C220B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				518846B725AE83290090049D /* Swipes_Taps.swift in Sources */,
+				518846BB25AE83430090049D /* Extensions.swift in Sources */,
+				518846BF25AE835A0090049D /* ChoosePlayerCollectionView.swift in Sources */,
 				512BAFF925ADED6E008C220B /* GameScene.swift in Sources */,
+				518846B025AE82E90090049D /* BarriersLogic.swift in Sources */,
+				518846AD25AE82CD0090049D /* SettingUpGameplay.swift in Sources */,
 				512BAFFB25ADED6E008C220B /* GameViewController.swift in Sources */,
 				512BAFF325ADED6E008C220B /* AppDelegate.swift in Sources */,
+				518846B325AE82FF0090049D /* Physics.swift in Sources */,
+				51D2CE6E25AE80C300F4EB2E /* cButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +443,7 @@
 		};
 		512BB00525ADED73008C220B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2524CAE328CBDB6A83BBCF2A /* Pods-Color Way.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -298,6 +463,7 @@
 		};
 		512BB00625ADED73008C220B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 270177695A5B575A833ECCDC /* Pods-Color Way.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
