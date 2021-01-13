@@ -20,4 +20,4 @@ Pull requests are welcome if you want to make some tweaks on the game, it is by 
 
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
