@@ -14,8 +14,6 @@ import EasySocialButton
 import Spring
 import AnimatedCollectionViewLayout
 import SwiftyUserDefaults
-import TCProgressBar
-import GTProgressBar
 import SKTextureGradient
 import LNZCollectionLayouts
 

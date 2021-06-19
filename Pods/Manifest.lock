@@ -5,35 +5,29 @@ PODS:
     - ChameleonFramework/Default
   - DynamicColor (5.0.1)
   - EasySocialButton (1.0.2)
-  - GTProgressBar (0.3.3)
   - LNZCollectionLayouts (1.2.2)
   - SKTextureGradient (4.0.1)
   - Spring (1.0.6)
-  - SwiftyUserDefaults (5.0.0)
-  - TCProgressBar (0.4)
+  - SwiftyUserDefaults (5.3.0)
 
 DEPENDENCIES:
   - AnimatedCollectionViewLayout
   - ChameleonFramework/Swift (from `https://github.com/wowansm/Chameleon`, branch `swift5`)
   - DynamicColor
   - EasySocialButton
-  - GTProgressBar
   - LNZCollectionLayouts
   - SKTextureGradient
   - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftyUserDefaults (~> 5.0)
-  - TCProgressBar
 
 SPEC REPOS:
   trunk:
     - AnimatedCollectionViewLayout
     - DynamicColor
     - EasySocialButton
-    - GTProgressBar
     - LNZCollectionLayouts
     - SKTextureGradient
     - SwiftyUserDefaults
-    - TCProgressBar
 
 EXTERNAL SOURCES:
   ChameleonFramework:
@@ -55,13 +49,11 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DynamicColor: d049834ef86d8ecf150b0ca1ebe54ee733a0ec22
   EasySocialButton: 8f2464e11dd5b52d612964243cc899d8fae0f1eb
-  GTProgressBar: a480283ecb0ada50de16c71e634892826928f640
   LNZCollectionLayouts: 509d8143a70db014f2094ae7052ec879ab988dab
   SKTextureGradient: fd2af051ff7596327c6d9356cc74639b54f34901
   Spring: 3d113f14575ef79aec9c5f906dfa4f5001c03254
-  SwiftyUserDefaults: 33fcb42bd1feb53a37d873feb62c82967db5f7f6
-  TCProgressBar: 14bf8cce9d9a4dae2d82fe88b8e9c45709ebe55d
+  SwiftyUserDefaults: 63f80248cf5bfb3458825d9a78f2eb7e1293a040
 
-PODFILE CHECKSUM: c8235c260ac28ea297360bb5bef6a02a4387b8fb
+PODFILE CHECKSUM: a78934c8f6a9d2ffb56d6fc739054efece3f39ab
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.1

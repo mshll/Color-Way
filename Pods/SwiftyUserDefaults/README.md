@@ -1,5 +1,6 @@
 # SwiftyUserDefaults
 
+[![Stake to support us](https://badge.devprotocol.xyz/0x5C7db549a025586DEc6667b3c0217e2e97f19033/descriptive)](https://stakes.social/0x5C7db549a025586DEc6667b3c0217e2e97f19033)
 ![Platforms](https://img.shields.io/badge/platforms-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-lightgrey.svg)
 [![CI Status](https://api.travis-ci.org/sunshinejr/SwiftyUserDefaults.svg?branch=master)](https://travis-ci.org/sunshinejr/SwiftyUserDefaults)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat)](#cocoapods)
@@ -44,8 +45,8 @@ Define your keys!
 
 ```swift
 extension DefaultsKeys {
-    var username: DefaultsKey<String?> { return .init("username") }
-    var launchCount: DefaultsKey<Int> { return .init("launchCount", defaultValue: 0) }
+    var username: DefaultsKey<String?> { .init("username") }
+    var launchCount: DefaultsKey<Int> { .init("launchCount", defaultValue: 0) }
 }
 ```
 
@@ -104,8 +105,8 @@ For extra convenience, define your keys by extending magic `DefaultsKeys` class 
 
 ```swift
 extension DefaultsKeys {
-    var username: DefaultsKey<String?> { return .init("username") }
-    var launchCount: DefaultsKey<Int> { return .init("launchCount", defaultValue: 0) }
+    var username: DefaultsKey<String?> { .init("username") }
+    var launchCount: DefaultsKey<Int> { .init("launchCount", defaultValue: 0) }
 }
 ```
 
@@ -213,7 +214,7 @@ For instance, this is a bridge for single value data storing/retrieving using `N
 public struct DefaultsKeyedArchiverBridge<T>: DefaultsBridge {
 
     public func get(key: String, userDefaults: UserDefaults) -> T? {
-        return userDefaults.data(forKey: key).flatMap(NSKeyedUnarchiver.unarchiveObject) as? T
+        userDefaults.data(forKey: key).flatMap(NSKeyedUnarchiver.unarchiveObject) as? T
     }
 
     public func save(key: String, value: T?, userDefaults: UserDefaults) {
@@ -235,11 +236,11 @@ public struct DefaultsArrayBridge<T: Collection>: DefaultsBridge {
     }
 
     public func get(key: String, userDefaults: UserDefaults) -> T? {
-        return userDefaults.array(forKey: key) as? T
+        userDefaults.array(forKey: key) as? T
     }
 
     public func deserialize(_ object: Any) -> T? {
-        return nil
+        nil
     }
 }
 ```
@@ -248,8 +249,8 @@ Now, to use these bridges in our type we simply declare it as follows:
 ```swift
 struct FrogCustomSerializable: DefaultsSerializable {
 
-    static var _defaults: DefaultsBridge<FrogCustomSerializable> { return DefaultsKeyedArchiverBridge() }
-    static var _defaultsArray: DefaultsBridge<[FrogCustomSerializable]> { return DefaultsKeyedArchiverBridge() }
+    static var _defaults: DefaultsKeyedArchiverBridge( { DefaultsKeyedArchiverBridge() }
+    static var _defaultsArray: DefaultsKeyedArchiverBridge { DefaultsKeyedArchiverBridge() }
 
     let name: String
 }
@@ -276,7 +277,7 @@ final class DefaultsFrogBridge: DefaultsBridge {
 
 final class DefaultsFrogArrayBridge: DefaultsBridge {
     func get(key: String, userDefaults: UserDefaults) -> [FrogCustomSerializable]? {
-        return userDefaults.array(forKey: key)?
+        userDefaults.array(forKey: key)?
             .compactMap { $0 as? String }
             .map(FrogCustomSerializable.init)
     }
@@ -295,8 +296,8 @@ final class DefaultsFrogArrayBridge: DefaultsBridge {
 
 struct FrogCustomSerializable: DefaultsSerializable, Equatable {
 
-    static var _defaults: DefaultsFrogBridge { return DefaultsFrogBridge() }
-    static var _defaultsArray: DefaultsFrogArrayBridge { return DefaultsFrogArrayBridge() }
+    static var _defaults: DefaultsFrogBridge { DefaultsFrogBridge() }
+    static var _defaultsArray: DefaultsFrogArrayBridge { DefaultsFrogArrayBridge() }
 
     let name: String
 }
@@ -305,8 +306,8 @@ struct FrogCustomSerializable: DefaultsSerializable, Equatable {
 To support existing types with different bridges, you can extend it similarly:
 ```swift
 extension Data: DefaultsSerializable {
-    public static var _defaultsArray: DefaultsArrayBridge<[T]> { return DefaultsArrayBridge() }
-    public static var _defaults: DefaultsDataBridge { return DefaultsDataBridge() }
+    public static var _defaultsArray: DefaultsArrayBridge<[T]> { DefaultsArrayBridge() }
+    public static var _defaults: DefaultsDataBridge { DefaultsDataBridge() }
 }
 ```
 
@@ -329,7 +330,7 @@ extension DefaultsKeys {
 }
 ```
 
-You can declare a `Test` struct:
+You can declare a `Settings` struct:
 ```swift
 struct Settings {
     @SwiftyUserDefault(keyPath: \.userColorScheme)
@@ -347,13 +348,21 @@ struct Settings {
 
 KVO is supported for all the types that are `DefaultsSerializable`. However, if you have a custom type, it needs to have correctly defined bridges and serialization in them.
 
-To observe a value:
+To observe a value for local DefaultsKey:
 ```swift
 let nameKey = DefaultsKey<String>("name", defaultValue: "")
 Defaults.observe(key: nameKey) { update in
 	// here you can access `oldValue`/`newValue` and few other properties
 }
 ```
+
+To observe a value for a key defined in DefaultsKeys extension:
+```swift
+Defaults.observe(\.nameKey) { update in
+	// here you can access `oldValue`/`newValue` and few other properties
+}
+```
+
 
 By default we are using `[.old, .new]` options for observing, but you can provide your own:
 ```swift
@@ -366,8 +375,8 @@ SwiftyUserDefaults makes KeyPath dynamicMemberLookup usable in Swift 5.1!
 
 ```swift
 extension DefaultsKeys {
-    var username: DefaultsKey<String?> { return .init("username") }
-    var launchCount: DefaultsKey<Int> { return .init("launchCount", defaultValue: 0) }
+    var username: DefaultsKey<String?> { .init("username") }
+    var launchCount: DefaultsKey<Int> { .init("launchCount", defaultValue: 0) }
 }
 ```
 
@@ -443,7 +452,7 @@ let hasKey = Defaults.hasKey(\.skipLogin)
 
 ### Requirements
 **Swift** version **>= 4.1**<br />
-**iOS** version **>= 8.0**<br />
+**iOS** version **>= 9.0**<br />
 **macOS** version **>= 10.11**<br />
 **tvOS** version **>= 9.0**<br />
 **watchOS** version **>= 2.0**

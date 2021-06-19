@@ -10,7 +10,6 @@ import Foundation
 import SpriteKit
 import UIKit
 import CoreImage
-import TCProgressBar
 
 extension SKScene {
     func addBlur(_ radius: Int = 50){

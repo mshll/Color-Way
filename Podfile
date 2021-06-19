@@ -14,8 +14,6 @@ target 'Color Way' do
 	pod 'SwiftyUserDefaults', '~> 5.0'
 	pod 'AnimatedCollectionViewLayout'
 	pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
-	pod 'TCProgressBar'
-	pod 'GTProgressBar'
 	pod 'LNZCollectionLayouts'
 	pod 'SKTextureGradient'
 
