@@ -78,7 +78,7 @@ extension GameScene{
         
         
         
-        let indexToScrollTo = IndexPath(item: selectedTheRightCell, section: 0)
+        let indexToScrollTo = IndexPath(item: correctPlayerCellIndex, section: 0)
         self.playerCollectionView.scrollToItem(at: indexToScrollTo, at: .centeredHorizontally, animated: false)
         
         
@@ -143,7 +143,7 @@ extension GameScene: UICollectionViewDataSource {
         
         if Defaults[\.lockedSkins]![indexPath.item] == 1{
             cell.pImage.image = UIImage(named: playerSkins[indexPath.item])
-            selectedCell.alpha = 0.7
+            cellBackground.alpha = 0.7
             
             btnBuy.fadeOut(withDuration: 0.2)
             btnStart.fadeIn(withDuration: 0.2)
@@ -157,7 +157,7 @@ extension GameScene: UICollectionViewDataSource {
         } else{
             
             cell.pImage.image = UIImage(named: "locked")
-            selectedCell.alpha = 0.2
+            cellBackground.alpha = 0.2
             
             btnBuy.fadeIn()
             btnBuy.alpha = 1

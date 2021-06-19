@@ -22,8 +22,6 @@ extension DefaultsKeys {
      var selectedSkin: DefaultsKey<String?> { .init("selectedSkin") }
      var coinsOwned: DefaultsKey<Int> { .init("coinsOwned", defaultValue: 0) }
      var lockedSkins: DefaultsKey<[Int]?> { .init("lockedSkins")}
-     var level: DefaultsKey<Int> { .init("level", defaultValue: 0) }
-     var levelBarriers: DefaultsKey<Int> { .init("levelBarriers", defaultValue: 0) }
     
 }
 
@@ -123,10 +121,13 @@ extension GameScene {
         self.logo1.animateTo()
         self.logo2.animateTo()
 
-        self.btnStart.animateTo()
+        self.btnStart.animateToNext {
+            self.logo1.isHidden = true
+            self.logo2.isHidden = true
+        }
 
 
-        self.selectedCell.isHidden = true
+        self.cellBackground.isHidden = true
         self.playerCollectionView.fadeOut()
         self.CellsLabel.fadeOut()
         
@@ -134,59 +135,54 @@ extension GameScene {
     }
     
     @objc func startGame(){
-        setBackground()
+        
         hideStartScreen()
+        setBackground()
         setTaps()
 
-        levelProg.alpha = 1
+        lblCurrentScore.isHidden = false
 
-
-        ///Setting level progress:
-        lblScore.isHidden = true
-
-        Bnum = 0
+        barrierNum = 0  // Set # of barriers to 0
 
         rain.targetNode = self
         rain.position.y = displaySize.height / 1.8
 
         inGamesnow.targetNode = self
         inGamesnow.position.y = (displaySize.height / 1.8)
+        
+        
         snowing.removeFromParent()
         playerPOS = 3
         cellParticle.removeFromParent()
 
         player.texture = SKTexture(imageNamed: Defaults[\.selectedSkin]!)
 
-        player.position.y = -(displaySize.height / 1.5)
+        player.position.y = -(displaySize.height)
 
         player.run(.moveTo(y: -(displaySize.midY / 3), duration: 2)) {
 
-            delayCode(1){
                 self.startSpawning()
                 self.addChild(self.rain)
-                //self.addChild(self.inGamesnow)
 
+                self.lblCurrentScore.animation = "fadeIn"
+                self.lblCurrentScore.animate()
 
-                self.lblScore.animation = "fadeIn"
-                self.lblScore.animate()
-
-
-            }
 
         }
         
         
-        
-        
-    }
+    } // End of startGame()
     
     
-    func whenDied(){
+    func whenDead(){
         
-        died = true
+        if score >= Defaults[\.highScore] {
+            Defaults[\.highScore] = score
+        }
+        
+        playerDead = true
         gameOn = false
-        lblScore.alpha = 0
-        levelProg.alpha = 0
+        lblCurrentScore.alpha = 0
         
         
         lblGO.text = "GAMEOVER"
@@ -197,12 +193,19 @@ extension GameScene {
         lblGO.center.y = displaySize.height / 4
         
         
-        lblGOScore.text = "\(Defaults[\.level])"
+        lblGOScore.text = "\(score)"
         lblGOScore.font = UIFont(name: "Odin-Bold", size: 120)
         lblGOScore.textColor = .flatWhite()
         lblGOScore.sizeToFit()
         lblGOScore.center.x = (view?.center.x)!
         lblGOScore.center.y = (view?.center.y)! / 1.2
+        
+        lblGOHiScore.text = "Best: \(Defaults[\.highScore])"
+        lblGOHiScore.font = UIFont(name: "Odin-Bold", size: 32)
+        lblGOHiScore.textColor = .flatWhite()
+        lblGOHiScore.sizeToFit()
+        lblGOHiScore.center.x = (view?.center.x)!
+        lblGOHiScore.center.y = (view?.center.y)! / 0.9
         
         
         btnHome.color = .flatWatermelon()
@@ -218,42 +221,39 @@ extension GameScene {
         
         lblGO.alpha = 0
         lblGOScore.alpha = 0
+        lblGOHiScore.alpha = 0
         btnHome.alpha = 0
         
         
-        
-        
-        //DEATH ANIMATIONS:
-        delayCode(0.5){
-            self.coinImage.animation = "squeezeLeft"
-            self.coinsLabel.animation = "squeezeLeft"
+        self.coinImage.animation = "squeezeLeft"
+        self.coinsLabel.animation = "squeezeLeft"
             
-            self.view?.shake()
-            //self.SnapshotAnim()
-            self.coinImage.animateTo()
-            self.coinsLabel.animateTo()
-        }
-        delayCode(0.8){
+        self.view?.shake()
+        //self.SnapshotAnim()
+        self.coinImage.animateTo()
+        self.coinsLabel.animateTo()
+
+
+        delayCode(0.1){
             
             self.addBlur()
             
             self.lblGO.animation = "squeezeDown"
             self.lblGOScore.animation = "fadeIn"
+            self.lblGOHiScore.animation = "fadeIn"
             self.btnHome.animation = "zoomIn"
             
-            delayCode(0.3){
+            self.lblGO.animate()
+            self.lblGOScore.animate()
+            self.lblGOHiScore.animate()
+            self.btnHome.animate()
                 
-                self.lblGO.animate()
-                self.lblGOScore.animate()
-                self.btnHome.animate()
-                
-            }
             
             
             
         }
         
-        print("PLAYER DEAD!!!")
+        print("Player died.")
     }
     
     
@@ -267,41 +267,30 @@ extension GameScene {
             subview.removeFromSuperview()
             
         }
-        
-        
-        print("RESTART GAME????")
+                
+        print("Restarting Game...")
         let skView = self.view!
         if let scene = SKScene(fileNamed: "GameScene") {
             scene.scaleMode = .aspectFill
             scene.size = (view?.bounds.size)!
-            
+
             skView.presentScene(scene)
         }
         
-        
-        
     }
+    
     
     @objc func AddingScore(){
         score += 1
-        lblScore.text = "\(score)"
-        lblScore.sizeToFit()
-        lblScore.center.x = (self.view?.center.x)!
-        lblScore.animation = "morph"
-        lblScore.duration = 0.3
-        lblScore.animateNext(completion: {})
-        lblScore.animate()
+        lblCurrentScore.text = "\(score)"
+        lblCurrentScore.sizeToFit()
+        lblCurrentScore.center.x = (self.view?.center.x)!
+        lblCurrentScore.animation = "morph"
+        lblCurrentScore.duration = 0.3
+        lblCurrentScore.animateNext(completion: {})
+        lblCurrentScore.animate()
         
     }
-    
-    func checkLvl(){
-        
-        if Defaults[\.level] > CInt(Defaults[\.levelBarriers]){
-            Defaults[\.levelBarriers] += 5
-        }
-        
-    }
-    
     
     
 }

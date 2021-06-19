@@ -34,45 +34,40 @@ var selCellalpha = false
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
-    ///-  Variables  -///
+    // -  Variables  - //
     var player = SKSpriteNode(imageNamed: "playerSkin1")
     let playerParticle = SKEmitterNode(fileNamed: "playerParticle.sks")!
     let gradientTexture = SKTexture(size: CGSize(width: 10, height: 10), color1: CIColor(color:  .white), color2: .white)
     var playerPHY = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
+        
     
-    //weak var collectionView: playerCollectionView!
-    
-    ///-----=POWER UPS=----///
-    
-    
+    // ----= POWER UPS =---- //
     var haveShield = false
     
     
-    ////////----PU------///////
-    let selectedCell = SKSpriteNode(imageNamed: "greenBlur")
-    
+    // --- Set up player selection view ---
+    let cellBackground = SKSpriteNode(imageNamed: "greenBlur")    // Skin cell background
     
     var playerCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), collectionViewLayout: UICollectionViewFlowLayout.init())
     
-    var selectedTheRightCell: Int = 0
-    
+    var correctPlayerCellIndex: Int = 0
     let cellParticle = SKEmitterNode(fileNamed: "sparkleStar.sks")!
     
-    let rightBlock = TouchableRight(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
-    let leftBlock = TouchableLeft(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
+    let rightBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
+    let leftBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
     
     let bgRadial = SKSpriteNode(imageNamed: "bgRadial")
-    
     let CellsLabel = UILabel()
     
     let btnBuy = cButton(btitle: "250")
     
-    
+    // Particles:
     let snowing = SKEmitterNode(fileNamed: "snowingParticle.sks")!
     let rain = SKEmitterNode(fileNamed: "rainParticle.sks")!
     let inGamesnow = SKEmitterNode(fileNamed: "inGamesnow.sks")!
         
-    var BLine = SKNode()
+    
+    var barriersLine = SKNode()
     var coinLine = SKNode()
     
     
@@ -80,6 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let coinsLabel = SpringLabel()
     
     
+    // Dividing the screen to 5 parts
     var spot1: CGFloat = -(screenDiv * 2)
     var spot2: CGFloat = -screenDiv
     var spot3: CGFloat = 0
@@ -87,9 +83,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var spot5: CGFloat = (screenDiv * 2)
     
     
+    // Gameplay actions (moving barriers and coins/powerups)
     var moveRemoveAction = SKAction()
     var CoinmoveRemoveAction = SKAction()
     
+    // Barriers colors
     var colorsArray : [UIColor] = [.flatSkyBlue(),.flatPurple(),.flatMint(),.flatWatermelon(),.flatYellow()]
     
     var canCheck: Bool = true
@@ -101,26 +99,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var btnStart = cButton(btitle: "Play")
     
     var score: Int = 0
-    var prog: Double = 0
     
     let btnHome = cButton(btitle: "Home")
     let lblGO = SpringLabel()
     let lblGOScore = SpringLabel()
+    let lblGOHiScore = SpringLabel()
     
-    let lblScore = SpringLabel()
+    let lblCurrentScore = SpringLabel()
     
     
     var gameOn: Bool = false
-    var died: Bool = false
+    var playerDead: Bool = false
     
     
-    
-    var levelProg = GTProgressBar(frame: CGRect(x: 0, y: 0, width: 200, height: 30)) //GTProgressBar(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
-    var levellbl = UILabel()
     
     var currentlevelBar: Int = 0
-    
-    var Bnum = 0
+    var barrierNum = 0
     // ~~~~~~~~.
     
     
@@ -146,22 +140,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          spot5 = (screenDiv * 2)
         
         
-        
-        Defaults[\.level] = 0
-        
         //if Defaults[.lockedSkins] == nil{
         Defaults[\.lockedSkins] = [1,1,1,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1]
-        //}
-        if Defaults[\.level] == 0{
-            Defaults[\.level] += 1
-            Defaults[\.levelBarriers] = 5
-        }
-        
-        checkLvl()
-        
+        //}        
         
         backgroundColor = .flatBlackDark()
-        selectedTheRightCell = playerSkins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")!
+        correctPlayerCellIndex = playerSkins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")!
         
         bgRadial.position = CGPoint(x: 0, y: 0)
         bgRadial.zPosition = -99
@@ -169,14 +153,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bgRadial.alpha = 0.3
         addChild(bgRadial)
         
-        
-        //setBackground()
         setPlayer()
         
         
-        ///- Replaced by Taps.v
+        //- Replaced by Taps
         //addSwipes()
-        
         
         snowing.targetNode = self
         snowing.position.y = displaySize.height / 2
@@ -209,21 +190,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         btnStart.color = .flatMint()
         view.addSubview(btnStart)
         
-        
-        
-        
         setCollectionView()
-        
-        
         view.addSubview(playerCollectionView)
-        
-        
-        
-        
-        coinImage.frame.size = CGSize(width: 25, height: 25)
-        coinImage.center.x = displaySize.width / 1.1
-        coinImage.center.y = (view.center.y) / 7
-        
         
         
         coinsLabel.text = "999999999999999"
@@ -236,28 +204,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinsLabel.center.y = (view.center.y) / 6.93
         
         coinsLabel.set(image: UIImage(named: "coin")!, with: "\(Defaults[\.coinsOwned])")
-        
-
-        //view.addSubview(coinImage)
         view.addSubview(coinsLabel)
         
         
-        
-        
-
-        
-        selectedCell.setScale(0.5)
-        selectedCell.alpha = 0.7
-        selectedCell.position = CGPoint(x: 0, y: -35)
-        selectedCell.zPosition = -3
-        addChild(selectedCell)
+        cellBackground.setScale(0.5)
+        cellBackground.alpha = 0.7
+        cellBackground.position = CGPoint(x: 0, y: -35)
+        cellBackground.zPosition = -3
+        addChild(cellBackground)
         
         cellParticle.targetNode = self
         cellParticle.position.y = -23
         //cellParticle.particleColorSequence = nil
         
         
-        ///- ANIMATIONS:
+        //- ANIMATIONS:
         logo1.animation = "squeezeRight"
         logo2.animation = "squeezeLeft"
         
@@ -274,14 +235,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinsLabel.alpha = 0
         CellsLabel.alpha = 0
         playerCollectionView.alpha = 0
-        selectedCell.isHidden = true
+        cellBackground.isHidden = true
         
         print("GAME VIEW STARTED")
         
             self.logo1.animate()
             self.logo2.animateNext(completion: {
                 
-                self.selectedCell.isHidden = false
+                self.cellBackground.isHidden = false
                 self.playerCollectionView.fadeIn()
                 self.CellsLabel.fadeIn()
                 self.addChild(self.cellParticle)
@@ -293,69 +254,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 
             })
-        ///---------ANIMATIONS^-------////
+        // ---------^END OF ANIMATIONS^------- //
         
         
-        
-        //{
-        
-        
-        levelProg.backgroundColor = .clear
-        levelProg.barFillColor = .flatSkyBlueDark()
-        levelProg.barBorderColor = .clear
-        levelProg.barBackgroundColor = .flatBlackDark()
-        levelProg.barFillInset = 0
-        levelProg.displayLabel = false
-        levelProg.barBorderWidth = 0
-        levelProg.cornerRadius = 15
-        levelProg.progress = 0
-        
-        
-        //levelProg.outlineColor = .clear
-        //levelProg.outlineWidth = 0
-        //levelProg.spacing = 0
-        //levelProg.backgroundColor = .flatBlackDark
-        //levelProg.progressColor = .flatMint
-        levelProg.center.y = (view.center.y) / 3
-        levelProg.center.x = (view.center.x)
-        //levelProg.value = 0.0
-        view.addSubview(levelProg)
-        levelProg.alpha = 0
-        
-        
-        levellbl.text = "level \(Defaults[\.level])"
-        levellbl.font = UIFont(name: "Odin-Bold", size: 18)
-        levellbl.textAlignment = .center
-        levellbl.textColor = UIColor.white.withAlphaComponent(0.8)
-        levellbl.sizeToFit()
-        levellbl.center.y = levelProg.frame.size.height / 1.9
-        levellbl.center.x = levelProg.frame.size.width / 2
-        levelProg.addSubview(levellbl)
-        
-        
+                    
         
         view.addSubview(btnHome)
         view.addSubview(lblGO)
         view.addSubview(lblGOScore)
+        view.addSubview(lblGOHiScore)
         btnHome.alpha = 0
         lblGO.alpha = 0
         lblGOScore.alpha = 0
+        lblGOHiScore.alpha = 0
         
         
-        lblScore.text = "\(score)"
-        lblScore.font = UIFont(name: "Odin-Bold", size: 58)
-        lblScore.textColor = .flatWhite()
-        lblScore.sizeToFit()
-        lblScore.center.x = (view.center.x)
-        lblScore.center.y = (view.center.y) / 2
-        lblScore.alpha = 0
-        lblScore.textAlignment = .center
-        view.addSubview(lblScore)
-        
-        
-        
-        
-        
+        lblCurrentScore.text = "\(score)"
+        lblCurrentScore.font = UIFont(name: "Odin-Bold", size: 58)
+        lblCurrentScore.textColor = .flatWhite()
+        lblCurrentScore.sizeToFit()
+        lblCurrentScore.center.x = (view.center.x)
+        lblCurrentScore.center.y = (view.center.y) / 2
+        lblCurrentScore.alpha = 0
+        lblCurrentScore.textAlignment = .center
+        view.addSubview(lblCurrentScore)
     
         
     }
@@ -366,4 +288,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    
 }

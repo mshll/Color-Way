@@ -14,11 +14,18 @@ let displaySize: CGRect = UIScreen.main.bounds
 
 class GameViewController: UIViewController {
 
+    
+    var skView = SKView()   // scene ref
+    
+    // MARK - Set up view and load game scene
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        // Force app to be full screen [on macOS]
+        (NSClassFromString("NSApplication")?.value(forKeyPath: "sharedApplication.windows") as? [AnyObject])?.first?.perform(Selector("toggleFullScreen:"))
         
-        let skView = self.view as! SKView
-        if let scene = SKScene(fileNamed: "GameScene") {
+        skView = self.view as! SKView
+        if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
             scene.scaleMode = .aspectFill
             scene.size = view.bounds.size
             skView.ignoresSiblingOrder = true
@@ -28,20 +35,46 @@ class GameViewController: UIViewController {
             skView.showsFPS = false
             //skView.showsPhysics = true
             
+            
             skView.presentScene(scene)
         }
+        
     }
+    
+    // MARK - Get Keyboard Input (Left & Right Arrows for movement)
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        let gameScene = skView.scene as? GameScene
+        guard let key = presses.first?.key else { return }
+            
+        switch key.keyCode {
+                            
+        case .keyboardRightArrow:
+            if ((gameScene?.gameOn) != nil) {
+                gameScene?.rightTap()
+            }
+            
+        case .keyboardLeftArrow:
+            if ((gameScene?.gameOn) != nil) {
+                gameScene?.leftTap()
+            }
+            
+        default:
+            super.pressesBegan(presses, with: event)
+        }
+    }
+    
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+//        if UIDevice.current.userInterfaceIdiom == .phone {
+//            return .allButUpsideDown
+//        } else {
+//            return .all
+//        }
+        return .portrait
     }
 
     override var prefersStatusBarHidden: Bool {

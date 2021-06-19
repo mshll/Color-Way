@@ -16,8 +16,6 @@ import EasySocialButton
 import Spring
 import AnimatedCollectionViewLayout
 import SwiftyUserDefaults
-import TCProgressBar
-import GTProgressBar
 import SKTextureGradient
 
 
@@ -35,33 +33,21 @@ extension GameScene {
         let first = contact.bodyA
         let second = contact.bodyB
 
+        // Player contact with barriers
         if (first.categoryBitMask == phyCatg.playerCATG && second.categoryBitMask == phyCatg.lineCATG) {
 
-            if canCheck == true {
-            if playerPOS == 1 {
-                checkObj(second.node as? SKShapeNode,"B1")
-
-            } else if playerPOS == 2 {
-                checkObj(second.node as? SKShapeNode,"B2")
-
-            } else if playerPOS == 3 {
-                checkObj(second.node as? SKShapeNode,"B3")
-
-            } else if playerPOS == 4 {
-                checkObj(second.node as? SKShapeNode,"B4")
-
-            } else if playerPOS == 5 {
-                checkObj(second.node as? SKShapeNode,"B5")
-
-            }
+            if canCheck {
+                checkObj(second.node as? SKShapeNode)
            }
         }
 
+        
+        // Player contact with coins/powerups
         if (first.categoryBitMask == phyCatg.playerCATG && second.categoryBitMask == phyCatg.coinCATG){
 
             switch second.node!.name{
             case loots[0]:
-                print("YOU GET NOTHING")
+                print("empty")
 
             case loots[1]:
                 let secondNode = second.node!.copy() as! SKSpriteNode
@@ -80,9 +66,9 @@ extension GameScene {
 
 
             case loots[2]:
-                //REMOVES ALREADY EXISTING SHIELD
+                // Remove existing shield (if applicable)
                 player.childNode(withName: "shieldParticle")?.removeFromParent()
-                //~
+                // Add shield again
                 second.node?.run(.fadeOut(withDuration: 0.3))
                 let shieldNode = SKSpriteNode(imageNamed: "shieldParticle")
                 shieldNode.name = "shieldParticle"
@@ -100,96 +86,75 @@ extension GameScene {
                     })
                 }
 
-            default: print("nil")
-            }
+            default:
+                print("nil")
+                
+            } // end of switch
 
-
-        }
+        } // End of player contact w coins/powerups
+        
     }
     
-    func checkObj(_ n : SKShapeNode?, _ s : String){
-        canCheck = false
-        //let node = childNode(withName: "BLine")?.childNode(withName: "\(s)-\(Bnum - 2)")?.copy() as? SKShapeNode
+    func checkObj(_ obj : SKShapeNode?){
         
-        if n?.fillColor == player.color {
-            print("MATCH")
+        func destroyBarrier() {
+            let expo = SKEmitterNode(fileNamed: "explosionParticle.sks")!
+            expo.particleColorSequence = nil
+            expo.particleColor = (obj?.fillColor)!
+            expo.position = (obj?.position)!
+            expo.targetNode = self
+            childNode(withName: "BLine")?.addChild(expo)
+            obj?.isHidden = true
             
-            
-            prog += 1
-            
-            let lvlbarrierif = Double(Defaults[\.levelBarriers])
-            
-            levelProg.animateTo(progress: CGFloat(self.prog / lvlbarrierif))
-            
-            delayCode(0.5){
-                if (self.prog / lvlbarrierif) >= 1{
-                    
-                    //WHEN LEVELING UP
-                    self.levelProg.animateTo(progress: 0)
-                    self.prog = 0
-                    self.checkLvl()
-                    Defaults[\.level] += 1
-                    self.levellbl.text = "level \(Defaults[\.level])"
-                    self.levellbl.sizeToFit()
-                    
-                }
-                
-            }
-            
+        }
+        
+        canCheck = false
+        
+        if obj?.fillColor == player.color {
+            print("Player color matches barrier.")
             
             AddingScore()
             
+            // Destroying barrier
+            destroyBarrier()
             
-            
-            
-            
-            let expo = SKEmitterNode(fileNamed: "explosionParticle.sks")!
-            expo.particleColorSequence = nil
-            expo.particleColor = (n?.fillColor)!
-            expo.position = (n?.position)! //(childNode(withName: "BLine")?.childNode(withName: "\(s)-\(Bnum - 2)")?.position)!
-            expo.targetNode = self
-            childNode(withName: "BLine")?.addChild(expo)
-            //childNode(withName: "BLine")?.childNode(withName: "\(s)-\(Bnum - 2)")?.isHidden = true
-            n?.isHidden = true
-            
+            // Change Player color
             playerParticle.particleColor = colorsArray[Int(arc4random_uniform(UInt32(colorsArray.count)))]
             player.changeColorTo(playerParticle.particleColor, dur: 0.3)
-            
+
             delayCode(0.5){
                 self.canCheck = true
-        }
+            }
+
             
             
         } else {
-            print("WRONG")
+            print("Wrong contact")
             
             if haveShield == true{
                 
-                let expo = SKEmitterNode(fileNamed: "explosionParticle.sks")!
-                expo.particleColorSequence = nil
-                expo.particleColor = (n?.fillColor)!
-                expo.position = (n?.position)! //(childNode(withName: "BLine")?.childNode(withName: "\(s)-\(Bnum - 2)")?.position)!
-                expo.targetNode = self
-                childNode(withName: "BLine")?.addChild(expo)
-                //childNode(withName: "BLine")?.childNode(withName: "\(s)-\(Bnum - 2)")?.isHidden = true
-                n?.isHidden = true
+                // Destroy barrier
+                destroyBarrier()
                 
+                // Change Player color
                 playerParticle.particleColor = colorsArray[Int(arc4random_uniform(UInt32(colorsArray.count)))]
                 player.changeColorTo(playerParticle.particleColor, dur: 0.3)
+
                 
-                delayCode(0.5){
-                    self.canCheck = true
-                }
-                
-                //remove shield:
+                // Remove shield:
                 player.childNode(withName: "shieldParticle")?.run(.fadeOut(withDuration: 0.2), completion: {
                     self.player.childNode(withName: "shieldParticle")?.removeFromParent()
                     self.haveShield = false
                 })
                 
+                delayCode(0.5){
+                    self.canCheck = true
+                }
+
                 
+            } else {
                 
-            } else{
+                // Stop barriers & coins movement
                 enumerateChildNodes(withName: "BLine") { (node, error) in
                     node.speed = 0
                     self.removeAction(forKey: "Spawning")
@@ -210,7 +175,7 @@ extension GameScene {
                 playerParticle.removeFromParent()
                 
                 
-                whenDied()
+                whenDead()
             }
             
         }

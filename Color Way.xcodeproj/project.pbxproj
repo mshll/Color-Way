@@ -58,6 +58,7 @@
 		518846E025AE88900090049D /* odin-rounded.bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.bold.otf"; sourceTree = "<group>"; };
 		518846E125AE88900090049D /* odin-rounded.light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.light.otf"; sourceTree = "<group>"; };
 		518846E825AE89C10090049D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		51B613CC267BF66100316E84 /* Color Way.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Color Way.entitlements"; sourceTree = "<group>"; };
 		51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = inGamesnow.sks; sourceTree = "<group>"; };
 		51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosionParticle.sks; sourceTree = "<group>"; };
 		51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = snowingParticle.sks; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		512BAFF125ADED6E008C220B /* Color Way */ = {
 			isa = PBXGroup;
 			children = (
+				51B613CC267BF66100316E84 /* Color Way.entitlements */,
 				512BAFF225ADED6E008C220B /* AppDelegate.swift */,
 				512BAFF825ADED6E008C220B /* GameScene.swift */,
 				518846AC25AE82CD0090049D /* SettingUpGameplay.swift */,
@@ -447,17 +449,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Color Way/Color Way.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7JS3EF2N2N;
+				DEVELOPMENT_TEAM = HT3BJHKWF2;
 				INFOPLIST_FILE = "Color Way/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mshl.Color-Way";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mshl.colorway;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -467,17 +471,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Color Way/Color Way.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7JS3EF2N2N;
+				DEVELOPMENT_TEAM = HT3BJHKWF2;
 				INFOPLIST_FILE = "Color Way/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mshl.Color-Way";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mshl.colorway;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};

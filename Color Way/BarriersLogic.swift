@@ -30,7 +30,7 @@ extension GameScene {
 
         colorsArray.shuffle()
 
-        BLine = SKNode()
+        barriersLine = SKNode()
 
         let barrierSize = CGSize(width: displaySize.width / 5, height: 25)
         let barrier = SKShapeNode(rectOf: barrierSize, cornerRadius: 10)
@@ -46,27 +46,27 @@ extension GameScene {
         barrier.physicsBody?.affectedByGravity = false
         barrier.physicsBody?.isDynamic = false
 
-         B3 = barrier.copy() as! SKShapeNode
+        B3 = barrier.copy() as! SKShapeNode
         B3.fillColor = colorsArray[0]
         B3.position.x = displaySize.minX
 
-         B4 = barrier.copy() as! SKShapeNode
+        B4 = barrier.copy() as! SKShapeNode
         B4.fillColor = colorsArray[1]
         B4.position.x = B3.frame.width
 
-         B5 = barrier.copy() as! SKShapeNode
+        B5 = barrier.copy() as! SKShapeNode
         B5.fillColor = colorsArray[2]
         B5.position.x = B3.frame.width * 2
 
-         B2 = barrier.copy() as! SKShapeNode
+        B2 = barrier.copy() as! SKShapeNode
         B2.fillColor = colorsArray[3]
         B2.position.x = -B3.frame.width
 
-         B1 = barrier.copy() as! SKShapeNode
+        B1 = barrier.copy() as! SKShapeNode
         B1.fillColor = colorsArray[4]
         B1.position.x = -(B3.frame.width * 2)
 
-        BLine.position.y = (displaySize.height / 2) + BLine.frame.height
+        barriersLine.position.y = (displaySize.height / 2) + barriersLine.frame.height
 
         B1.setScale(0.9)
         B2.setScale(0.9)
@@ -80,29 +80,29 @@ extension GameScene {
         B4.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
         B5.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
 
-        BLine.name = "BLine"
+        barriersLine.name = "BLine"
 
-        B1.name = "B1-\(Bnum)"
-        B2.name = "B2-\(Bnum)"
-        B3.name = "B3-\(Bnum)"
-        B4.name = "B4-\(Bnum)"
-        B5.name = "B5-\(Bnum)"
-
-
-        BLine.addChild(B1)
-        BLine.addChild(B2)
-        BLine.addChild(B3)
-        BLine.addChild(B4)
-        BLine.addChild(B5)
+        B1.name = "B1-\(barrierNum)"
+        B2.name = "B2-\(barrierNum)"
+        B3.name = "B3-\(barrierNum)"
+        B4.name = "B4-\(barrierNum)"
+        B5.name = "B5-\(barrierNum)"
 
 
+        barriersLine.addChild(B1)
+        barriersLine.addChild(B2)
+        barriersLine.addChild(B3)
+        barriersLine.addChild(B4)
+        barriersLine.addChild(B5)
 
 
 
 
-        BLine.run(moveRemoveAction, withKey: "moveRemove")
-        addChild(BLine)
-        Bnum += 1
+
+
+        barriersLine.run(moveRemoveAction, withKey: "moveRemove")
+        addChild(barriersLine)
+        barrierNum += 1
     }
 
 
@@ -219,7 +219,7 @@ extension GameScene {
         let spawnDelay = SKAction.sequence([spawn,delay])
         self.run(.repeatForever(spawnDelay), withKey: "Spawning")
 
-        let distance = CGFloat(displaySize.height + (BLine.frame.height * 3))
+        let distance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
         let moveLine = SKAction.moveBy(x: 0, y: -distance, duration: TimeInterval((dur/450) * distance))
         moveRemoveAction = .sequence([moveLine, .removeFromParent()])
 
@@ -234,13 +234,14 @@ extension GameScene {
         let CoinspawnDelay = SKAction.sequence([Coinspawn,Coindelay])
 
 
-        delayCode(1.0){
+        self.run(.wait(forDuration: 1.0)) {
             self.run(.repeatForever(CoinspawnDelay), withKey: "CoinSpawning")
         }
+        
 
 
 
-        let Coindistance = CGFloat(displaySize.height + (BLine.frame.height * 3))
+        let Coindistance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
         let CoinmoveLine = SKAction.moveBy(x: 0, y: -Coindistance, duration: TimeInterval((dur/450) * Coindistance))
         CoinmoveRemoveAction = .sequence([CoinmoveLine, .removeFromParent()])
 
