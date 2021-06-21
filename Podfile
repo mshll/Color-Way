@@ -9,13 +9,5 @@ target 'Color Way' do
 
 
 	pod 'ChameleonFramework/Swift', :git => 'https://github.com/wowansm/Chameleon', :branch => 'swift5'
-	pod 'DynamicColor'
-	pod 'EasySocialButton'
-	pod 'SwiftyUserDefaults', '~> 5.0'
-	pod 'AnimatedCollectionViewLayout'
-	pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
-	pod 'LNZCollectionLayouts'
-	pod 'SKTextureGradient'
-
 
 end

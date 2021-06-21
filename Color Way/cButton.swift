@@ -70,7 +70,7 @@ open class cButton: SpringButton{
     
     ///The primary color of the button.
     @IBInspectable
-    open var color: UIColor = .flatGreen() {
+    open var color: UIColor = clrGreen {
         didSet{
             layer.backgroundColor = color.cgColor
         }

@@ -7,16 +7,28 @@
 
 import SpriteKit
 import GameplayKit
-
-import ChameleonFramework
 import Spring
-import AnimatedCollectionViewLayout
 import SwiftyUserDefaults
-import SKTextureGradient
 import LNZCollectionLayouts
 
 
 //FONTS USED :: Odin Rounded ["OdinRounded-Light", "Odin-Bold", "OdinRounded"] (for reference)
+
+
+// - Main game colors
+let clrSkyBlue = UIColor(hue: 0.57, saturation: 0.76, brightness: 0.86, alpha: 1)
+let clrPurple = UIColor(hue: 0.70, saturation: 0.52, brightness: 0.77, alpha: 1)
+let clrMint = UIColor(hue: 0.47, saturation: 0.86, brightness: 0.74, alpha: 1)
+let clrWatermelon = UIColor(hue: 0.99, saturation: 0.53, brightness: 0.94, alpha: 1)
+let clrYellow = UIColor(hue: 0.13, saturation: 0.99, brightness: 1.00, alpha: 1)
+
+// - Other colors used
+let clrGreen = UIColor(red: 0.18, green: 0.80, blue: 0.44, alpha: 1.00)
+let clrWhite = UIColor(red: 0.93, green: 0.94, blue: 0.95, alpha: 1.00)
+let clrGray = UIColor(red: 0.58, green: 0.65, blue: 0.65, alpha: 1.00)
+let clrBlackDark = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.00)
+let clrYellowDark = UIColor(red: 1.00, green: 0.66, blue: 0.00, alpha: 1.00)
+
 
 var screenDiv : CGFloat = 0
 var playerSkins: [String] = []
@@ -28,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // -  Variables  - //
     var player = SKSpriteNode(imageNamed: "playerSkin1")
     let playerParticle = SKEmitterNode(fileNamed: "playerParticle.sks")!
-    let gradientTexture = SKTexture(size: CGSize(width: 10, height: 10), color1: CIColor(color:  .white), color2: .white)
+    //let gradientTexture = SKTexture(size: CGSize(width: 10, height: 10), color1: CIColor(color:  .white), color2: .white)
     var playerPHY = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
         
     
@@ -75,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var CoinmoveRemoveAction = SKAction()
     
     // Barriers colors
-    var colorsArray : [UIColor] = [.flatSkyBlue(),.flatPurple(),.flatMint(),.flatWatermelon(),.flatYellow()]
+    var colorsArray : [UIColor] = [clrSkyBlue, clrPurple, clrMint, clrWatermelon, clrYellow]
     
     var canCheck: Bool = true
     
@@ -132,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         Defaults[\.lockedSkins] = [1,1,1,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1]
         }
         
-        backgroundColor = .flatBlackDark()
+        backgroundColor = clrBlackDark
         correctPlayerCellIndex = playerSkins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")!
         
         bgRadial.position = CGPoint(x: 0, y: 0)
@@ -175,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (button) in
             self.startGame()
         }
-        btnStart.color = .flatMint()
+        btnStart.color = clrMint
         view.addSubview(btnStart)
         
         setCollectionView()
@@ -186,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinsLabel.font = UIFont(name: "Odin-Bold", size: 24)
         coinsLabel.sizeToFit()
         coinsLabel.frame.size.height *= 2
-        coinsLabel.textColor = .flatYellowDark()
+        coinsLabel.textColor = clrYellowDark
         coinsLabel.textAlignment = .right
         coinsLabel.center.x = (displaySize.width / 1.05) - (coinsLabel.frame.size.width / 2)
         coinsLabel.center.y = (view.center.y) / 6.93
@@ -259,7 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         lblCurrentScore.text = "\(score)"
         lblCurrentScore.font = UIFont(name: "Odin-Bold", size: 58)
-        lblCurrentScore.textColor = .flatWhite()
+        lblCurrentScore.textColor = clrWhite
         lblCurrentScore.sizeToFit()
         lblCurrentScore.center.x = (view.center.x)
         lblCurrentScore.center.y = (view.center.y) / 2

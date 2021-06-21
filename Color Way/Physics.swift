@@ -11,9 +11,7 @@ import UIKit
 import SpriteKit
 
 import Spring
-import AnimatedCollectionViewLayout
 import SwiftyUserDefaults
-import SKTextureGradient
 
 
 struct phyCatg {

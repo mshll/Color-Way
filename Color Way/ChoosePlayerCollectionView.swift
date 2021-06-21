@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import SwiftyUserDefaults
-import AnimatedCollectionViewLayout
 import LNZCollectionLayouts
 
 
@@ -87,7 +86,7 @@ extension GameScene{
         CellsLabel.text = "1/200000000"
         CellsLabel.font = UIFont(name: "Odin-Bold", size: 16)
         CellsLabel.sizeToFit()
-        CellsLabel.textColor = .flatGray()
+        CellsLabel.textColor = clrGray
         CellsLabel.textAlignment = .center
         CellsLabel.center.x = (view?.center.x)!
         CellsLabel.center.y = (view?.center.y)! + 100
@@ -127,8 +126,8 @@ extension GameScene: UICollectionViewDataSource {
         btnBuy.onClickAction = {
             (button) in
             
-            //// NEEDS TO BE EDITED!!!!!!
-            if button.titleColor(for: []) == .flatWatermelon(){
+            // TODO: Implement buying skins
+            if button.titleColor(for: []) == clrWatermelon {
                 print("not enough money.")
                 button.shake()
             } else{
@@ -170,7 +169,7 @@ extension GameScene: UICollectionViewDataSource {
 
             
             if Defaults[\.coinsOwned] < 250{
-                btnBuy.setTitleColor(.flatWatermelon(), for: [])
+                btnBuy.setTitleColor(clrWatermelon, for: [])
                 
             } else{ //When player have enough money.
                 
@@ -229,7 +228,7 @@ class playerCell: UICollectionViewCell {
         label.sizeToFit()
         label.center.x = self.frame.width / 2//self.center.x
         label.center.y = (self.frame.height / 2)// + (pImage.frame.height / 2.5)
-        label.textColor = .flatWhite()
+        label.textColor = clrWhite
         return label
     }
     
@@ -243,7 +242,7 @@ class playerCell: UICollectionViewCell {
         pImage.center.x = self.frame.width / 2
         pImage.center.y = (self.frame.height / 2) //- 25
         pImage.transform = pImage.transform.rotated(by: 0.785398)
-        pImage.tintColor = .flatWatermelon()
+        pImage.tintColor = clrWatermelon
         contentView.addSubview(pImage)
         //contentView.addSubview(pImage)
         //addSubview(pName)

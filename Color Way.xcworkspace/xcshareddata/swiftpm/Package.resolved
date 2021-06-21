@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "LNZCollectionLayouts",
+        "repositoryURL": "https://github.com/rwbutler/LNZCollectionLayouts",
+        "state": {
+          "branch": null,
+          "revision": "d9838349d647888cc0b5fc8d89cc16b3b517a98d",
+          "version": "1.2.4"
+        }
+      },
+      {
+        "package": "Spring",
+        "repositoryURL": "https://github.com/MengTo/Spring.git",
+        "state": {
+          "branch": null,
+          "revision": "2f54f168e6c53208ed52bf9715965aae5ac0e427",
+          "version": null
+        }
+      },
+      {
+        "package": "SwiftyUserDefaults",
+        "repositoryURL": "https://github.com/sunshinejr/SwiftyUserDefaults",
+        "state": {
+          "branch": null,
+          "revision": "f66bcd04088582c8fbb5cb8554d577e303bae396",
+          "version": "5.3.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

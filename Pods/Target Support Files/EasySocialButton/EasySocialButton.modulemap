@@ -1,6 +1,0 @@
-framework module EasySocialButton {
-  umbrella header "EasySocialButton-umbrella.h"
-
-  export *
-  module * { export * }
-}

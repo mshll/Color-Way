@@ -180,7 +180,7 @@ extension GameScene {
         
         lblGO.text = "GAMEOVER"
         lblGO.font = UIFont(name: "Odin-Bold", size: 46)
-        lblGO.textColor = .flatWatermelon()
+        lblGO.textColor = clrWatermelon
         lblGO.sizeToFit()
         lblGO.center.x = (view?.center.x)!
         lblGO.center.y = displaySize.height / 4
@@ -188,7 +188,7 @@ extension GameScene {
         
         lblGOScore.text = "\(score)"
         lblGOScore.font = UIFont(name: "Odin-Bold", size: 120)
-        lblGOScore.textColor = .flatWhite()
+        lblGOScore.textColor = clrWhite
         lblGOScore.sizeToFit()
         lblGOScore.center.x = (view?.center.x)!
         lblGOScore.center.y = (view?.center.y)! / 1.2
@@ -202,13 +202,13 @@ extension GameScene {
         }
         
         lblGOHiScore.font = UIFont(name: "Odin-Bold", size: 32)
-        lblGOHiScore.textColor = .flatWhite()
+        lblGOHiScore.textColor = clrWhite
         lblGOHiScore.sizeToFit()
         lblGOHiScore.center.x = (view?.center.x)!
         lblGOHiScore.center.y = (view?.center.y)! / 0.9
         
         
-        btnHome.color = .flatWatermelon()
+        btnHome.color = clrWatermelon
         btnHome.center.x = (view?.center.x)!
         btnHome.center.y = (view?.center.y)! * 1.4
         btnHome.onClickAction = {

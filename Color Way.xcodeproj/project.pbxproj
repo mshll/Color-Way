@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,6 +24,9 @@
 		518846E325AE88900090049D /* odin-rounded.bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 518846E025AE88900090049D /* odin-rounded.bold.otf */; };
 		518846E425AE88900090049D /* odin-rounded.light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 518846E125AE88900090049D /* odin-rounded.light.otf */; };
 		518846E925AE89C10090049D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518846E825AE89C10090049D /* LaunchScreen.storyboard */; };
+		519A48BD26803FD70003C70A /* SwiftyUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48BC26803FD70003C70A /* SwiftyUserDefaults */; };
+		519A48C62680415F0003C70A /* Spring in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48C52680415F0003C70A /* Spring */; };
+		519A48C9268042DF0003C70A /* LNZCollectionLayouts in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48C8268042DF0003C70A /* LNZCollectionLayouts */; };
 		51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */; };
 		51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */; };
 		51D2CE6525AE800400F4EB2E /* snowingParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */; };
@@ -32,13 +35,9 @@
 		51D2CE6825AE800400F4EB2E /* rainParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE6125AE800300F4EB2E /* rainParticle.sks */; };
 		51D2CE6925AE800400F4EB2E /* playerExplo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE6225AE800400F4EB2E /* playerExplo.sks */; };
 		51D2CE6E25AE80C300F4EB2E /* cButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2CE6D25AE80C300F4EB2E /* cButton.swift */; };
-		8AE092A328961313FE2BFA5C /* Pods_Color_Way.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E3B839D474879EFDDB7666D /* Pods_Color_Way.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E3B839D474879EFDDB7666D /* Pods_Color_Way.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Color_Way.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2524CAE328CBDB6A83BBCF2A /* Pods-Color Way.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Color Way.debug.xcconfig"; path = "Target Support Files/Pods-Color Way/Pods-Color Way.debug.xcconfig"; sourceTree = "<group>"; };
-		270177695A5B575A833ECCDC /* Pods-Color Way.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Color Way.release.xcconfig"; path = "Target Support Files/Pods-Color Way/Pods-Color Way.release.xcconfig"; sourceTree = "<group>"; };
 		512BAFEF25ADED6E008C220B /* Color Way.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Way.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		512BAFF225ADED6E008C220B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		512BAFF425ADED6E008C220B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -74,7 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AE092A328961313FE2BFA5C /* Pods_Color_Way.framework in Frameworks */,
+				519A48C9268042DF0003C70A /* LNZCollectionLayouts in Frameworks */,
+				519A48C62680415F0003C70A /* Spring in Frameworks */,
+				519A48BD26803FD70003C70A /* SwiftyUserDefaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,8 +87,6 @@
 			children = (
 				512BAFF125ADED6E008C220B /* Color Way */,
 				512BAFF025ADED6E008C220B /* Products */,
-				555BDD7E2FB2F9C51D34B889 /* Pods */,
-				78B4561AA86F5B5A817C34DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,23 +156,6 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
-		555BDD7E2FB2F9C51D34B889 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2524CAE328CBDB6A83BBCF2A /* Pods-Color Way.debug.xcconfig */,
-				270177695A5B575A833ECCDC /* Pods-Color Way.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		78B4561AA86F5B5A817C34DA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0E3B839D474879EFDDB7666D /* Pods_Color_Way.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,11 +163,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 512BB00425ADED73008C220B /* Build configuration list for PBXNativeTarget "Color Way" */;
 			buildPhases = (
-				E237FB438B99733A72D7F0E8 /* [CP] Check Pods Manifest.lock */,
 				512BAFEB25ADED6E008C220B /* Sources */,
 				512BAFEC25ADED6E008C220B /* Frameworks */,
 				512BAFED25ADED6E008C220B /* Resources */,
-				1F776274329E4A0BEBCF1F5C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -193,6 +173,9 @@
 			);
 			name = "Color Way";
 			packageProductDependencies = (
+				519A48BC26803FD70003C70A /* SwiftyUserDefaults */,
+				519A48C52680415F0003C70A /* Spring */,
+				519A48C8268042DF0003C70A /* LNZCollectionLayouts */,
 			);
 			productName = "Color Way";
 			productReference = 512BAFEF25ADED6E008C220B /* Color Way.app */;
@@ -222,6 +205,9 @@
 			);
 			mainGroup = 512BAFE625ADED6E008C220B;
 			packageReferences = (
+				519A48BB26803FD70003C70A /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
+				519A48C42680415F0003C70A /* XCRemoteSwiftPackageReference "Spring" */,
+				519A48C7268042DF0003C70A /* XCRemoteSwiftPackageReference "LNZCollectionLayouts" */,
 			);
 			productRefGroup = 512BAFF025ADED6E008C220B /* Products */;
 			projectDirPath = "";
@@ -256,48 +242,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1F776274329E4A0BEBCF1F5C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Color Way/Pods-Color Way-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Color Way/Pods-Color Way-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Color Way/Pods-Color Way-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E237FB438B99733A72D7F0E8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Color Way-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		512BAFEB25ADED6E008C220B /* Sources */ = {
@@ -449,7 +393,6 @@
 		};
 		512BB00525ADED73008C220B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2524CAE328CBDB6A83BBCF2A /* Pods-Color Way.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -471,7 +414,6 @@
 		};
 		512BB00625ADED73008C220B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 270177695A5B575A833ECCDC /* Pods-Color Way.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -513,6 +455,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		519A48BB26803FD70003C70A /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sunshinejr/SwiftyUserDefaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.0;
+			};
+		};
+		519A48C42680415F0003C70A /* XCRemoteSwiftPackageReference "Spring" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MengTo/Spring.git";
+			requirement = {
+				kind = revision;
+				revision = 2f54f168e6c53208ed52bf9715965aae5ac0e427;
+			};
+		};
+		519A48C7268042DF0003C70A /* XCRemoteSwiftPackageReference "LNZCollectionLayouts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rwbutler/LNZCollectionLayouts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		519A48BC26803FD70003C70A /* SwiftyUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 519A48BB26803FD70003C70A /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */;
+			productName = SwiftyUserDefaults;
+		};
+		519A48C52680415F0003C70A /* Spring */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 519A48C42680415F0003C70A /* XCRemoteSwiftPackageReference "Spring" */;
+			productName = Spring;
+		};
+		519A48C8268042DF0003C70A /* LNZCollectionLayouts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 519A48C7268042DF0003C70A /* XCRemoteSwiftPackageReference "LNZCollectionLayouts" */;
+			productName = LNZCollectionLayouts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 512BAFE725ADED6E008C220B /* Project object */;
 }
