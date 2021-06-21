@@ -10,9 +10,6 @@ import Foundation
 import UIKit
 import SpriteKit
 
-import DynamicColor
-import ChameleonFramework
-import EasySocialButton
 import Spring
 import AnimatedCollectionViewLayout
 import SwiftyUserDefaults
@@ -42,7 +39,7 @@ extension GameScene {
         }
 
         
-        // Player contact with coins/powerups
+        // Player contact with loot
         if (first.categoryBitMask == phyCatg.playerCATG && second.categoryBitMask == phyCatg.coinCATG){
 
             switch second.node!.name{
@@ -55,7 +52,7 @@ extension GameScene {
                 second.node!.alpha = 0
                 secondNode.run(.sequence([.scale(by: 2, duration: 0.05),
                                           .scale(to: 0, duration: 0.2)]))
-                secondNode.run(.move(to: convertPoint(fromView: coinImage.center), duration: 0.2)) {
+                secondNode.run(.move(to: convertPoint(fromView: coinsLabel.center), duration: 0.2)) {
                     secondNode.removeFromParent()
                     self.coinsLabel.animation = "pop"
                     self.coinsLabel.animate()
@@ -122,7 +119,7 @@ extension GameScene {
             playerParticle.particleColor = colorsArray[Int(arc4random_uniform(UInt32(colorsArray.count)))]
             player.changeColorTo(playerParticle.particleColor, dur: 0.3)
 
-            delayCode(0.5){
+            self.run(.wait(forDuration: 0.5)) {
                 self.canCheck = true
             }
 
@@ -147,21 +144,21 @@ extension GameScene {
                     self.haveShield = false
                 })
                 
-                delayCode(0.5){
+                self.run(.wait(forDuration: 0.5)) {
                     self.canCheck = true
                 }
 
                 
             } else {
                 
-                // Stop barriers & coins movement
+                // Stop barriers & loot movement
                 enumerateChildNodes(withName: "BLine") { (node, error) in
                     node.speed = 0
                     self.removeAction(forKey: "Spawning")
                 }
                 enumerateChildNodes(withName: "CoinLine") { (node, error) in
                     node.speed = 0
-                    self.removeAction(forKey: "CoinSpawning")
+                    self.removeAction(forKey: "lootSpawning")
                 }
                 
                 

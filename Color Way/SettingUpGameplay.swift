@@ -10,9 +10,6 @@ import Foundation
 import UIKit
 import SpriteKit
 
-//Pods
-import ChameleonFramework
-import DynamicColor
 import Spring
 import SwiftyUserDefaults
 
@@ -176,10 +173,6 @@ extension GameScene {
     
     func whenDead(){
         
-        if score >= Defaults[\.highScore] {
-            Defaults[\.highScore] = score
-        }
-        
         playerDead = true
         gameOn = false
         lblCurrentScore.alpha = 0
@@ -200,7 +193,14 @@ extension GameScene {
         lblGOScore.center.x = (view?.center.x)!
         lblGOScore.center.y = (view?.center.y)! / 1.2
         
-        lblGOHiScore.text = "Best: \(Defaults[\.highScore])"
+        
+        if score >= Defaults[\.highScore] {
+            Defaults[\.highScore] = score
+            lblGOHiScore.text = "New Highscore!!"
+        } else {
+            lblGOHiScore.text = "Best: \(Defaults[\.highScore])"
+        }
+        
         lblGOHiScore.font = UIFont(name: "Odin-Bold", size: 32)
         lblGOHiScore.textColor = .flatWhite()
         lblGOHiScore.sizeToFit()
@@ -234,8 +234,7 @@ extension GameScene {
         self.coinsLabel.animateTo()
 
 
-        delayCode(0.1){
-            
+        self.run(.wait(forDuration: 0.2)) {
             self.addBlur()
             
             self.lblGO.animation = "squeezeDown"
@@ -247,10 +246,6 @@ extension GameScene {
             self.lblGOScore.animate()
             self.lblGOHiScore.animate()
             self.btnHome.animate()
-                
-            
-            
-            
         }
         
         print("Player died.")

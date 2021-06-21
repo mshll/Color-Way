@@ -62,7 +62,7 @@ extension GameScene{
         playerCollectionView.center.x = (view?.center.x)!
         playerCollectionView.center.y = (view?.center.y)! + 40
         
-        /// set up
+        // Set up
         playerCollectionView.backgroundColor = .clear
         //playerCollectionView.isPagingEnabled = true
         //self.frame = frame

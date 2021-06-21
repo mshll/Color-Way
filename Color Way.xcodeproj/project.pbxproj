@@ -192,6 +192,8 @@
 			dependencies = (
 			);
 			name = "Color Way";
+			packageProductDependencies = (
+			);
 			productName = "Color Way";
 			productReference = 512BAFEF25ADED6E008C220B /* Color Way.app */;
 			productType = "com.apple.product-type.application";
@@ -219,6 +221,8 @@
 				Base,
 			);
 			mainGroup = 512BAFE625ADED6E008C220B;
+			packageReferences = (
+			);
 			productRefGroup = 512BAFF025ADED6E008C220B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

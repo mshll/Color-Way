@@ -20,9 +20,7 @@ class GameViewController: UIViewController {
     // MARK - Set up view and load game scene
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        // Force app to be full screen [on macOS]
-        (NSClassFromString("NSApplication")?.value(forKeyPath: "sharedApplication.windows") as? [AnyObject])?.first?.perform(Selector("toggleFullScreen:"))
+
         
         skView = self.view as! SKView
         if let scene = SKScene(fileNamed: "GameScene") as? GameScene {

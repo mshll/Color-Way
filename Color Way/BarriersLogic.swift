@@ -10,7 +10,6 @@
 import Foundation
 import UIKit
 import SpriteKit
-import ChameleonFramework
 
 extension GameScene {
 
@@ -20,11 +19,12 @@ extension GameScene {
     func summonBarriers(){
 
         // BARRIERS.
-        var B1 = SKShapeNode()
-        var B2 = SKShapeNode()
-        var B3 = SKShapeNode()
-        var B4 = SKShapeNode()
-        var B5 = SKShapeNode()
+//        var B1 = SKShapeNode()
+//        var B2 = SKShapeNode()
+//        var B3 = SKShapeNode()
+//        var B4 = SKShapeNode()
+//        var B5 = SKShapeNode()
+        var barr = Array(repeating: SKShapeNode(), count: 5)
 
 
 
@@ -46,60 +46,24 @@ extension GameScene {
         barrier.physicsBody?.affectedByGravity = false
         barrier.physicsBody?.isDynamic = false
 
-        B3 = barrier.copy() as! SKShapeNode
-        B3.fillColor = colorsArray[0]
-        B3.position.x = displaySize.minX
+        
+        let barrXPosition = [-(barrier.frame.width * 2), -barrier.frame.width, displaySize.minX, barrier.frame.width, barrier.frame.width * 2]
+        
+        for i in 0...4 {
+            barr[i] = barrier.copy() as! SKShapeNode
+            barr[i].fillColor = colorsArray[i]
+            barr[i].position.x = barrXPosition[i]
+            
+            barr[i].setScale(0.9)
+            barr[i].physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
+            
+            barr[i].name = "B\(i+1)-\(barrierNum)"
+            barriersLine.addChild(barr[i])
+        }
 
-        B4 = barrier.copy() as! SKShapeNode
-        B4.fillColor = colorsArray[1]
-        B4.position.x = B3.frame.width
-
-        B5 = barrier.copy() as! SKShapeNode
-        B5.fillColor = colorsArray[2]
-        B5.position.x = B3.frame.width * 2
-
-        B2 = barrier.copy() as! SKShapeNode
-        B2.fillColor = colorsArray[3]
-        B2.position.x = -B3.frame.width
-
-        B1 = barrier.copy() as! SKShapeNode
-        B1.fillColor = colorsArray[4]
-        B1.position.x = -(B3.frame.width * 2)
-
+        
         barriersLine.position.y = (displaySize.height / 2) + barriersLine.frame.height
-
-        B1.setScale(0.9)
-        B2.setScale(0.9)
-        B3.setScale(0.9)
-        B4.setScale(0.9)
-        B5.setScale(0.9)
-
-        B1.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
-        B2.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
-        B3.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
-        B4.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
-        B5.physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
-
         barriersLine.name = "BLine"
-
-        B1.name = "B1-\(barrierNum)"
-        B2.name = "B2-\(barrierNum)"
-        B3.name = "B3-\(barrierNum)"
-        B4.name = "B4-\(barrierNum)"
-        B5.name = "B5-\(barrierNum)"
-
-
-        barriersLine.addChild(B1)
-        barriersLine.addChild(B2)
-        barriersLine.addChild(B3)
-        barriersLine.addChild(B4)
-        barriersLine.addChild(B5)
-
-
-
-
-
-
         barriersLine.run(moveRemoveAction, withKey: "moveRemove")
         addChild(barriersLine)
         barrierNum += 1
@@ -108,46 +72,12 @@ extension GameScene {
 
 
     func summonCoins(){
-
-        coinLine = SKNode()
-
-        coinLine.position.y = (displaySize.height / 2) + coinLine.frame.height
-
-        func coinNode() -> SKSpriteNode{
-            var coinNode : SKSpriteNode{
-                let coinNode = SKSpriteNode(texture: SKTexture(imageNamed: "coin"))
-
-
-                //coinNode.texture = SKTexture(imageNamed: "coin")
-                coinNode.setScale(0.12)
-                coinNode.physicsBody = SKPhysicsBody(rectangleOf: coinNode.frame.size)
-                coinNode.physicsBody?.categoryBitMask = phyCatg.coinCATG
-                coinNode.physicsBody?.collisionBitMask = 0
-                coinNode.physicsBody?.contactTestBitMask = phyCatg.playerCATG
-                coinNode.physicsBody?.affectedByGravity = false
-                coinNode.physicsBody?.isDynamic = false
-                return coinNode
-            }
-            return coinNode
-        }
-
-        coinLine.name = "CoinLine"
-
-
-
-        let coin1 = coinNode()
-        let coin2 = coinNode()
-        let coin3 = coinNode()
-        let coin4 = coinNode()
-        let coin5 = coinNode()
-
-
+        var lootArray = Array(repeating: SKSpriteNode(), count: 5)
+        
         let coinRotate = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 0.5))
-
-
-
         var spawnedShield = false
 
+        
         func randomizeLoot(node: SKSpriteNode){
             let rand = randomNumber(inRange: 1...1000)
 
@@ -173,30 +103,32 @@ extension GameScene {
                 node.isHidden = true
             }
         }
-
-        randomizeLoot(node: coin1)
-        randomizeLoot(node: coin2)
-        randomizeLoot(node: coin3)
-        randomizeLoot(node: coin4)
-        randomizeLoot(node: coin5)
-
-        coin1.position.x = spot1
-        coin2.position.x = spot2
-        coin3.position.x = spot3
-        coin4.position.x = spot4
-        coin5.position.x = spot5
-
-        coinLine.addChild(coin1)
-        coinLine.addChild(coin2)
-        coinLine.addChild(coin3)
-        coinLine.addChild(coin4)
-        coinLine.addChild(coin5)
-
-        //coin1.addGlow(radius: 50)
-        //coin2.addGlow(radius: 50)
-        //coin3.addGlow(radius: 50)
-        //coin4.addGlow(radius: 50)
-        //coin5.addGlow(radius: 50)
+        
+        
+        coinLine = SKNode()
+        coinLine.position.y = (displaySize.height / 2) + coinLine.frame.height
+        coinLine.name = "CoinLine"
+        
+        let lootNode = SKSpriteNode(texture: SKTexture(imageNamed: "coin"))
+        lootNode.physicsBody = SKPhysicsBody(rectangleOf: lootNode.frame.size)
+        lootNode.physicsBody?.categoryBitMask = phyCatg.coinCATG
+        lootNode.physicsBody?.collisionBitMask = 0
+        lootNode.physicsBody?.contactTestBitMask = phyCatg.playerCATG
+        lootNode.physicsBody?.affectedByGravity = false
+        lootNode.physicsBody?.isDynamic = false
+        
+        for i in 0...4 {
+            lootArray[i] = lootNode.copy() as! SKSpriteNode
+            lootArray[i].physicsBody = (lootNode.physicsBody?.copy() as! SKPhysicsBody)
+            
+            
+            lootArray[i].setScale(0.12)
+            
+            randomizeLoot(node: lootArray[i])
+            lootArray[i].position.x = screenSpots[i]
+            coinLine.addChild(lootArray[i])
+            
+        }
 
         coinLine.run(CoinmoveRemoveAction, withKey: "CoinmoveRemove")
         addChild(coinLine)
@@ -235,11 +167,9 @@ extension GameScene {
 
 
         self.run(.wait(forDuration: 1.0)) {
-            self.run(.repeatForever(CoinspawnDelay), withKey: "CoinSpawning")
+            self.run(.repeatForever(CoinspawnDelay), withKey: "lootSpawning")
         }
         
-
-
 
         let Coindistance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
         let CoinmoveLine = SKAction.moveBy(x: 0, y: -Coindistance, duration: TimeInterval((dur/450) * Coindistance))

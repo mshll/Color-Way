@@ -8,9 +8,7 @@
 import SpriteKit
 import GameplayKit
 
-import DynamicColor
 import ChameleonFramework
-import EasySocialButton
 import Spring
 import AnimatedCollectionViewLayout
 import SwiftyUserDefaults
@@ -18,15 +16,10 @@ import SKTextureGradient
 import LNZCollectionLayouts
 
 
-var screenDiv : CGFloat = 0
-
-
 //FONTS USED :: Odin Rounded ["OdinRounded-Light", "Odin-Bold", "OdinRounded"] (for reference)
 
-let playerSkins = ["playerSkin1","playerSkin2","playerSkin3","playerSkin4","playerSkin5","playerSkin6","playerSkin7","playerSkin8","playerSkin9","playerSkin10","playerSkin11","playerSkin12","playerSkin13","playerSkin14","playerSkin15","playerSkin16","playerSkin17","playerSkin18","playerSkin19","playerSkin20"]
-
-
-var selCellalpha = false
+var screenDiv : CGFloat = 0
+var playerSkins: [String] = []
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -74,11 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     // Dividing the screen to 5 parts
-    var spot1: CGFloat = -(screenDiv * 2)
-    var spot2: CGFloat = -screenDiv
-    var spot3: CGFloat = 0
-    var spot4: CGFloat = screenDiv
-    var spot5: CGFloat = (screenDiv * 2)
+    var screenSpots: [CGFloat] = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
     
     
     // Gameplay actions (moving barriers and coins/powerups)
@@ -128,19 +117,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         print("DID MOVE TO VIEW !!!!")
         
+        // Set player skins names
+        for i in 1...20 {
+            playerSkins.append("playerSkin\(i)")
+        }
+        
         self.physicsWorld.contactDelegate = self
         screenDiv = (displaySize.width / 5)
         
-         spot1 = -(screenDiv * 2)
-         spot2 = -screenDiv
-         spot3 = 0
-         spot4 = screenDiv
-         spot5 = (screenDiv * 2)
+        screenSpots = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
         
         
-        //if Defaults[.lockedSkins] == nil{
+        if Defaults[\.lockedSkins] == nil {
         Defaults[\.lockedSkins] = [1,1,1,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1]
-        //}        
+        }
         
         backgroundColor = .flatBlackDark()
         correctPlayerCellIndex = playerSkins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")!
