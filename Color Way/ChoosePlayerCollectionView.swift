@@ -77,7 +77,7 @@ extension GameScene{
         
         
         
-        let indexToScrollTo = IndexPath(item: correctPlayerCellIndex, section: 0)
+        let indexToScrollTo = IndexPath(item: lastValidPlayerIndex, section: 0)
         self.playerCollectionView.scrollToItem(at: indexToScrollTo, at: .centeredHorizontally, animated: false)
         
         
@@ -118,29 +118,9 @@ extension GameScene: UICollectionViewDataSource {
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //.......
+        CellsLabel.text = "\(indexPath.item + 1)/\(playerSkins.count)"
         
-        let cell = playerCollectionView.dequeueReusableCell(withReuseIdentifier: "pCell", for: indexPath) as! playerCell
-        
-        //modify cell subviews.
-        
-        btnBuy.onClickAction = {
-            (button) in
-            
-            // TODO: Implement buying skins
-            if button.titleColor(for: []) == clrWatermelon {
-                print("not enough money.")
-                button.shake()
-            } else{
-                if self.btnBuy.title != "Buy?"{
-                    self.btnBuy.title = "Buy?"
-                } else {
-                    
-                }
-            }
-            
-        }
-        
-        if Defaults[\.lockedSkins]![indexPath.item] == 1{
+        func unlockCell() {
             cell.pImage.image = UIImage(named: playerSkins[indexPath.item])
             cellBackground.alpha = 0.7
             
@@ -152,8 +132,45 @@ extension GameScene: UICollectionViewDataSource {
             cellParticle.resetSimulation()
 
             Defaults[\.selectedSkin] = playerSkins[indexPath.item]
+        }
+        
+        let cell = playerCollectionView.dequeueReusableCell(withReuseIdentifier: "pCell", for: indexPath) as! playerCell
+        
+        //modify cell subviews.
+        var confirmBuy = false
+        btnBuy.setTitle("250", for: [])
+        
+        btnBuy.onClickAction = { [self]
+            (button) in
             
-        } else{
+            // Buying a skin
+            if button.titleColor(for: []) == clrWatermelon {
+                print("not enough money.")
+                button.shake()
+                
+            } else{
+                
+                if !confirmBuy{
+                    btnBuy.setTitle("Buy?", for: [])
+                    confirmBuy = true
+                } else {
+                    Defaults[\.coinsOwned] -= 250
+                    Defaults[\.lockedSkins]![indexPath.item] = 1
+                    coinsLabel.set(image: UIImage(named: "coin")!, with: "\(Defaults[\.coinsOwned])")
+                    coinsLabel.animation = "morph"
+                    coinsLabel.animateTo()
+                    
+                    unlockCell()
+                }
+                
+            }
+        }
+        view?.bringSubviewToFront(btnBuy)
+        
+        if Defaults[\.lockedSkins]![indexPath.item] == 1{
+            unlockCell()
+            
+        } else {
             
             cell.pImage.image = UIImage(named: "locked")
             cellBackground.alpha = 0.2
@@ -170,14 +187,10 @@ extension GameScene: UICollectionViewDataSource {
             
             if Defaults[\.coinsOwned] < 250{
                 btnBuy.setTitleColor(clrWatermelon, for: [])
-                
-            } else{ //When player have enough money.
-                
             }
             
         }
         
-        CellsLabel.text = "\(indexPath.item + 1)/\(playerSkins.count)"
         return cell
     }
     

@@ -25,6 +25,8 @@ class TouchableNode : SKShapeNode
 
 extension GameScene{
     
+    /// Places two objects that fill the screen (one covers the right half and one the left) that act as controls to move the player
+    ///
     func setTaps(){
 
         rightBlock.position.x = displaySize.width / 4
@@ -43,12 +45,12 @@ extension GameScene{
 
         rightBlock.onClickAction = {
             (button) in
-            self.rightTap()
+            self.tap(dir: false)
         }
 
         leftBlock.onClickAction = {
             (button) in
-            self.leftTap()
+            self.tap(dir: true)
         }
 
         addChild(rightBlock)
@@ -56,90 +58,66 @@ extension GameScene{
     }
 
     
-    // - Right & Left taps logic -
-    func rightTap(){
-        let angle: CGFloat = 0.4
+    /// Right & Left taps logic.
+    ///
+    /// - Parameter dir: Indicates direction (`true` for left and `false` for right).
+    func tap(dir: Bool) {
+        
+        // Remove rotation animations
+        player.removeAction(forKey: "rotatePlayer")
+        playerParticle.removeAction(forKey: "rotateParticle")
+        
+        // Rotation angle, Rotation duration & Movement duration
+        let angle: CGFloat = 0.25
+        let rotDur = 0.10
         let dur = 0.3
-
-        let rotatePlayer = SKAction.sequence(([.rotate(toAngle: -angle, duration: dur/2),.rotate(toAngle: 0, duration: dur/2)]))
-        let rotatePlayerParticle = SKAction.sequence(([.rotate(toAngle: -(angle*3), duration: dur/2),.rotate(toAngle: 0, duration: dur/2)]))
-
-        if playerDead == false {
+        
+        
+        /// Moves the player to a certain x location
+        ///
+        /// - Parameter to: X location to move player to.
+        func movePlayer(_ to: CGFloat) {
+            playerPOS += dir ? -1 : 1
+            let dirSign: CGFloat = dir ? 1 : -1
+            
+            // Player's rotation animation and player particle's.
+            let rotateP = SKAction.sequence([.rotate(toAngle: dirSign*angle, duration: rotDur),
+                                              .wait(forDuration: dur-rotDur),
+                                              .rotate(toAngle: 0, duration: rotDur)])
+            let rotatePP = SKAction.sequence([.rotate(toAngle: dirSign*(angle*3), duration: rotDur),
+                                              .wait(forDuration: dur-rotDur),
+                                              .rotate(toAngle: 0, duration: rotDur)])
+            
+            player.run(.moveTo(x: to, duration: dur)) // Move
+            player.run(rotateP, withKey: "rotatePlayer") // Rotate
+            playerParticle.run(rotatePP, withKey: "rotateParticle") // Rotate
+        }
+        
+        
+        // Deciding where to move player
+        if !playerDead {
             switch playerPOS {
             case 1:
-                player.run(.moveTo(x: -screenDiv, duration: dur))
-                playerPOS = 2
-                player.run(rotatePlayer)
-                playerParticle.run(rotatePlayerParticle)
+                //                       {left tap} : {right tap}
+                dir ? (print("can't move further")) : (movePlayer(-screenDiv))
 
             case 2:
-                player.run(.moveTo(x: 0, duration: dur))
-                playerPOS = 3
-                player.run(rotatePlayer)
-                playerParticle.run(rotatePlayerParticle)
+                dir ? (movePlayer(-(screenDiv * 2))) : (movePlayer(0))
 
             case 3:
-                player.run(.moveTo(x: screenDiv, duration: dur))
-                playerPOS = 4
-                player.run(rotatePlayer)
-                playerParticle.run(rotatePlayerParticle)
+                dir ? (movePlayer(-screenDiv)) : (movePlayer(screenDiv))
 
             case 4:
-                player.run(.moveTo(x: screenDiv * 2, duration: dur))
-                playerPOS = 5
-                player.run(rotatePlayer)
-                playerParticle.run(rotatePlayerParticle)
-
-            case 5:       print("can't move further")
-
-            default: print("nil")
-            }
-        }
-
-    }
-
-    func leftTap(){
-        let angle: CGFloat = 0.4
-        let dur = 0.3
-
-        let RoL = SKAction.sequence(([.rotate(toAngle: angle, duration: dur/2),.rotate(toAngle: 0, duration: dur/2)]))
-        let rRoL = SKAction.sequence(([.rotate(toAngle: angle*3, duration: dur/2),.rotate(toAngle: 0, duration: dur/2)]))
-
-        if playerDead == false{
-            switch playerPOS {
-            case 1:      print("can't move further")
-            case 2:
-                player.run(.moveTo(x: -(screenDiv * 2), duration: dur))
-                playerPOS = 1
-                player.run(RoL)
-                playerParticle.run(rRoL)
-
-            case 3:
-                player.run(.moveTo(x: -screenDiv, duration: dur))
-                playerPOS = 2
-                player.run(RoL)
-                playerParticle.run(rRoL)
-
-
-            case 4:
-                player.run(.moveTo(x: 0, duration: dur))
-                playerPOS = 3
-                player.run(RoL)
-                playerParticle.run(rRoL)
-
+                dir ? (movePlayer(0)) : (movePlayer(screenDiv * 2))
 
             case 5:
-                player.run(.moveTo(x: screenDiv, duration: dur))
-                playerPOS = 4
-                player.run(RoL)
-                playerParticle.run(rRoL)
+                dir ? (movePlayer(screenDiv)) : (print("can't move further"))
 
-
-
-            default: print("nil")
+            default:
+                print("ERROR: couldn't process tap")
             }
         }
-
+        
     }
     
 }

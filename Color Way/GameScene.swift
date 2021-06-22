@@ -28,10 +28,11 @@ let clrWhite = UIColor(red: 0.93, green: 0.94, blue: 0.95, alpha: 1.00)
 let clrGray = UIColor(red: 0.58, green: 0.65, blue: 0.65, alpha: 1.00)
 let clrBlackDark = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.00)
 let clrYellowDark = UIColor(red: 1.00, green: 0.66, blue: 0.00, alpha: 1.00)
+let clrRed = UIColor(red: 0.75, green: 0.22, blue: 0.17, alpha: 1.00)
 
 
 var screenDiv : CGFloat = 0
-var playerSkins: [String] = []
+var playerSkins: [String] = Array(repeating: "", count: 20)
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -53,7 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var playerCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), collectionViewLayout: UICollectionViewFlowLayout.init())
     
-    var correctPlayerCellIndex: Int = 0
+    var lastValidPlayerIndex: Int = 0
     let cellParticle = SKEmitterNode(fileNamed: "sparkleStar.sks")!
     
     let rightBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
@@ -82,7 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var screenSpots: [CGFloat] = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
     
     
-    // Gameplay actions (moving barriers and coins/powerups)
+    // Gameplay actions (moving barriers and loot)
     var moveRemoveAction = SKAction()
     var CoinmoveRemoveAction = SKAction()
     
@@ -90,10 +91,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var colorsArray : [UIColor] = [clrSkyBlue, clrPurple, clrMint, clrWatermelon, clrYellow]
     
     var canCheck: Bool = true
+    var canCheckLoot: Bool = true
     
     var logo1 = SpringImageView(image: UIImage(named: "gameLogo1"))
     var logo2 = SpringImageView(image: UIImage(named: "gameLogo2"))
-    
     
     var btnStart = cButton(btitle: "Play")
     
@@ -103,49 +104,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let lblGO = SpringLabel()
     let lblGOScore = SpringLabel()
     let lblGOHiScore = SpringLabel()
-    
     let lblCurrentScore = SpringLabel()
-    
     
     var gameOn: Bool = false
     var playerDead: Bool = false
     
-    
-    
-    var currentlevelBar: Int = 0
     var barrierNum = 0
-    // ~~~~~~~~.
+    // ~~
     
     
-    let loots = ["nil","coin","shield","invincible","double"]
-    let lootsPercentage = [750,210,40] // SHOULD ADD UP TO 1000!
-    
-    ///      ---       ///
-    
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    // Loot variables
+    let loots = ["nil", "coin", "shield", "skull", "double"] // 'double' unused
+    let lootWeight = [70, 20, 5, 5, 0] // SHOULD ADD UP TO 100!
+    //let lootsRate = [750, 210, 40, 0, 0] // SHOULD ADD UP TO 1000!
+    //      ---       //
     
     override func didMove(to view: SKView) {
         print("DID MOVE TO VIEW !!!!")
         
         // Set player skins names
-        for i in 1...20 {
-            playerSkins.append("playerSkin\(i)")
+        for i in 0...(playerSkins.count-1) {
+            playerSkins[i] = ("playerSkin\(i+1)")
+            
         }
         
         self.physicsWorld.contactDelegate = self
         screenDiv = (displaySize.width / 5)
         
+        // Divides screen to 5 spaces
         screenSpots = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
         
         
+        // Initialize skins
         if Defaults[\.lockedSkins] == nil {
-        Defaults[\.lockedSkins] = [1,1,1,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1]
+            Defaults[\.lockedSkins] = Array(repeating: 0, count: 20)
+            Defaults[\.lockedSkins]![0] = 1 // Unlock first skin
         }
         
         backgroundColor = clrBlackDark
-        correctPlayerCellIndex = playerSkins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")!
+        lastValidPlayerIndex = playerSkins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")!
         
         bgRadial.position = CGPoint(x: 0, y: 0)
         bgRadial.zPosition = -99
@@ -174,11 +171,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         logo2.center.y = displaySize.height / 5
         
         
-        
-        
         view.addSubview(self.logo1)
         view.addSubview(self.logo2)
-        
         
         
         btnStart.center.x = view.center.x
@@ -258,7 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
                     
-        
+        // Preparing GameOver screen stuff
         view.addSubview(btnHome)
         view.addSubview(lblGO)
         view.addSubview(lblGOScore)

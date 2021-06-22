@@ -47,13 +47,13 @@ class GameViewController: UIViewController {
         switch key.keyCode {
                             
         case .keyboardRightArrow:
-            if ((gameScene?.gameOn) != nil) {
-                gameScene?.rightTap()
+            if (gameScene!.gameOn) {
+                gameScene?.tap(dir: false)
             }
             
         case .keyboardLeftArrow:
-            if ((gameScene?.gameOn) != nil) {
-                gameScene?.leftTap()
+            if (gameScene!.gameOn) {
+                gameScene?.tap(dir: true)
             }
             
         default:

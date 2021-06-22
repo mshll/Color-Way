@@ -93,6 +93,47 @@ extension SKSpriteNode {
     }
 }
 
+
+// - Animating SKShapeNode color change. src: https://stackoverflow.com/a/27952397
+func lerp(a : CGFloat, b : CGFloat, fraction : CGFloat) -> CGFloat
+{
+    return (b-a) * fraction + a
+}
+
+struct ColorComponents {
+    var red = CGFloat(0)
+    var green = CGFloat(0)
+    var blue = CGFloat(0)
+    var alpha = CGFloat(0)
+}
+
+extension UIColor {
+    func toComponents() -> ColorComponents {
+        var components = ColorComponents()
+        getRed(&components.red, green: &components.green, blue: &components.blue, alpha: &components.alpha)
+        return components
+    }
+}
+
+extension SKAction {
+    static func colorTransitionAction(fromColor : UIColor, toColor : UIColor, duration : Double = 0.4) -> SKAction
+    {
+        return SKAction.customAction(withDuration: duration, actionBlock: { (node : SKNode!, elapsedTime : CGFloat) -> Void in
+            let fraction = CGFloat(elapsedTime / CGFloat(duration))
+            let startColorComponents = fromColor.toComponents()
+            let endColorComponents = toColor.toComponents()
+            let transColor = UIColor(red: lerp(a: startColorComponents.red, b: endColorComponents.red, fraction: fraction),
+                                     green: lerp(a: startColorComponents.green, b: endColorComponents.green, fraction: fraction),
+                                     blue: lerp(a: startColorComponents.blue, b: endColorComponents.blue, fraction: fraction),
+                                     alpha: lerp(a: startColorComponents.alpha, b: endColorComponents.alpha, fraction: fraction))
+            (node as? SKShapeNode)?.fillColor = transColor
+        }
+        )
+    }
+}
+// - End of Animating SKShapeNode color change
+
+
 func newExpo(_ color: UIColor) -> SKEmitterNode {
     let emNode = SKEmitterNode(fileNamed: "explosionParticle")!
     emNode.particleColor = color
@@ -210,15 +251,15 @@ extension SKScene{
 
     func SnapshotAnim(){
         let white = SKShapeNode(rectOf: (self.view?.frame.size)!)
-        white.fillColor = .white
-        white.zPosition = 100
+        white.fillColor = clrWhite
+        white.zPosition = 999
 
         self.addChild(white)
         white.alpha = 0
 
         white.run(.sequence([
-            .fadeIn(withDuration: 0.1),
-            .fadeOut(withDuration: 0.1)
+            .fadeIn(withDuration: 0.15),
+            .fadeOut(withDuration: 0.15)
             ])) {
                 white.removeFromParent()
         }
@@ -254,6 +295,8 @@ public func randomNumber<T : SignedInteger>(inRange range: ClosedRange<T> = 1...
     let value = Int64(arc4random()) % length + Int64(range.lowerBound)
     return T(value)
 }
+
+
 extension Collection {
     func randomItem() -> Self.Iterator.Element {
         let count = distance(from: startIndex, to: endIndex)

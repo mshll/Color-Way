@@ -107,21 +107,20 @@ extension GameScene {
     
     func hideStartScreen(){
 
+        btnBuy.isHidden = true
         btnStart.animation = "zoomIn"
         logo1.animation = "squeezeRight"
         logo2.animation = "squeezeLeft"
 
-
-
-        btnBuy.isHidden = true
-
+        self.btnStart.animateTo()
+        self.logo1.animateTo()
+        self.logo2.animateTo()
+        
+        logo1.animation = "fadeOut"
+        logo2.animation = "fadeOut"
         self.logo1.animateTo()
         self.logo2.animateTo()
 
-        self.btnStart.animateToNext {
-            self.logo1.isHidden = true
-            self.logo2.isHidden = true
-        }
 
 
         self.cellBackground.isHidden = true
@@ -198,7 +197,7 @@ extension GameScene {
             Defaults[\.highScore] = score
             lblGOHiScore.text = "New Highscore!!"
         } else {
-            lblGOHiScore.text = "Best: \(Defaults[\.highScore])"
+            lblGOHiScore.text = "BEST: \(Defaults[\.highScore])"
         }
         
         lblGOHiScore.font = UIFont(name: "Odin-Bold", size: 32)
@@ -228,24 +227,28 @@ extension GameScene {
         self.coinImage.animation = "squeezeLeft"
         self.coinsLabel.animation = "squeezeLeft"
             
-        self.view?.shake()
-        //self.SnapshotAnim()
-        self.coinImage.animateTo()
-        self.coinsLabel.animateTo()
-
-
         self.run(.wait(forDuration: 0.2)) {
-            self.addBlur()
             
-            self.lblGO.animation = "squeezeDown"
-            self.lblGOScore.animation = "fadeIn"
-            self.lblGOHiScore.animation = "fadeIn"
-            self.btnHome.animation = "zoomIn"
+            self.view?.shake()
+            self.SnapshotAnim()
+            self.coinImage.animateTo()
+            self.coinsLabel.animateTo()
+
+
+            self.run(.wait(forDuration: 0.5)) {
+                self.addBlur()
+                
+                self.lblGO.animation = "squeezeDown"
+                self.lblGOScore.animation = "fadeIn"
+                self.lblGOHiScore.animation = "fadeIn"
+                self.btnHome.animation = "zoomIn"
+                
+                self.lblGO.animate()
+                self.lblGOScore.animate()
+                self.lblGOHiScore.animate()
+                self.btnHome.animate()
+            }
             
-            self.lblGO.animate()
-            self.lblGOScore.animate()
-            self.lblGOHiScore.animate()
-            self.btnHome.animate()
         }
         
         print("Player died.")
