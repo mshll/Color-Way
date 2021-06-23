@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import SpriteKit
 
-
-var playerPOS = 3
-
-
 class TouchableNode : SKShapeNode
 {
     open var onClickAction: ((TouchableNode)->Void)?
@@ -64,39 +60,36 @@ extension GameScene{
     func tap(dir: Bool) {
         
         // Remove rotation animations
-        player.removeAction(forKey: "rotatePlayer")
-        playerParticle.removeAction(forKey: "rotateParticle")
+        if !((dir && player.pos == 1) || (!dir && player.pos == 5)) {
+            player.node.removeAction(forKey: "rotatePlayer")
+        }
         
         // Rotation angle, Rotation duration & Movement duration
-        let angle: CGFloat = 0.25
+        let angle: CGFloat = 0.3
         let rotDur = 0.10
-        let dur = 0.3
+        let dur = 0.25
         
         
         /// Moves the player to a certain x location
         ///
         /// - Parameter to: X location to move player to.
         func movePlayer(_ to: CGFloat) {
-            playerPOS += dir ? -1 : 1
+            player.pos += dir ? -1 : 1
             let dirSign: CGFloat = dir ? 1 : -1
             
-            // Player's rotation animation and player particle's.
+            // Player's rotation animation.
             let rotateP = SKAction.sequence([.rotate(toAngle: dirSign*angle, duration: rotDur),
                                               .wait(forDuration: dur-rotDur),
                                               .rotate(toAngle: 0, duration: rotDur)])
-            let rotatePP = SKAction.sequence([.rotate(toAngle: dirSign*(angle*3), duration: rotDur),
-                                              .wait(forDuration: dur-rotDur),
-                                              .rotate(toAngle: 0, duration: rotDur)])
             
-            player.run(.moveTo(x: to, duration: dur)) // Move
-            player.run(rotateP, withKey: "rotatePlayer") // Rotate
-            playerParticle.run(rotatePP, withKey: "rotateParticle") // Rotate
+            player.node.run(.moveTo(x: to, duration: dur)) // Move
+            player.node.run(rotateP, withKey: "rotatePlayer") // Rotate
         }
         
         
         // Deciding where to move player
-        if !playerDead {
-            switch playerPOS {
+        if !player.isDead {
+            switch player.pos {
             case 1:
                 //                       {left tap} : {right tap}
                 dir ? (print("can't move further")) : (movePlayer(-screenDiv))

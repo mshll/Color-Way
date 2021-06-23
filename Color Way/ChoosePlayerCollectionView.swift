@@ -83,14 +83,14 @@ extension GameScene{
         
         
         
-        CellsLabel.text = "1/200000000"
-        CellsLabel.font = UIFont(name: "Odin-Bold", size: 16)
-        CellsLabel.sizeToFit()
-        CellsLabel.textColor = clrGray
-        CellsLabel.textAlignment = .center
-        CellsLabel.center.x = (view?.center.x)!
-        CellsLabel.center.y = (view?.center.y)! + 100
-        view?.addSubview(CellsLabel)
+        cellLabel.text = "1/200000000"
+        cellLabel.font = UIFont(name: "Odin-Bold", size: 16)
+        cellLabel.sizeToFit()
+        cellLabel.textColor = clrGray
+        cellLabel.textAlignment = .center
+        cellLabel.center.x = (view?.center.x)!
+        cellLabel.center.y = (view?.center.y)! + 100
+        view?.addSubview(cellLabel)
         
         
         btnBuy.image = UIImage(named: "coin")
@@ -113,15 +113,15 @@ extension GameScene: UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return playerSkins.count
+        return player.skins.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //.......
-        CellsLabel.text = "\(indexPath.item + 1)/\(playerSkins.count)"
+        cellLabel.text = "\(indexPath.item + 1)/\(player.skins.count)"
         
         func unlockCell() {
-            cell.pImage.image = UIImage(named: playerSkins[indexPath.item])
+            cell.pImage.image = UIImage(named: player.skins[indexPath.item])
             cellBackground.alpha = 0.7
             
             btnBuy.fadeOut(withDuration: 0.2)
@@ -131,7 +131,7 @@ extension GameScene: UICollectionViewDataSource {
             cellParticle.particleBirthRate = 2
             cellParticle.resetSimulation()
 
-            Defaults[\.selectedSkin] = playerSkins[indexPath.item]
+            Defaults[\.selectedSkin] = player.skins[indexPath.item]
         }
         
         let cell = playerCollectionView.dequeueReusableCell(withReuseIdentifier: "pCell", for: indexPath) as! playerCell

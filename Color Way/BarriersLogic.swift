@@ -16,23 +16,26 @@ import Spring
 extension GameScene {
 
 
-    func getRandomWeightedLoot(_ elements: [String], _ weights: [Int]) -> String {
-        var randNum = randomNumber(inRange: 1...100)
-        for (element, weight) in zip(elements, weights) {
+    func getRandomWeightedLoot() -> Int {
+        var i = 0, randNum = randomNumber(inRange: 1...100)
+        for weight in lootWeight {
             
             if randNum < weight {
-                return element
+                return i
             }
             randNum -= weight
+            i += 1
         }
         print("ERROR: couldn't select element")
-        return elements[0]
+        return 0
     }
 
 
     func summonBarriers(){
+        if player.isDead { return }
+        
         let firstObst = 4
-        let vagueClr = player.color
+        let vagueClr = player.node.color
 
         // All 5 barriers array.
         var barr = Array(repeating: SKShapeNode(), count: 5)
@@ -78,14 +81,14 @@ extension GameScene {
         }
         
         
-        // Keeps barriers color vague until after 1.3 seconds
+        // Keeps barriers color vague until after `spawnDur/1.333` seconds
         if barrierNum >= firstObst {
-            colorsArray.shuffle()
-            self.run(.wait(forDuration: 1.3)) {
-                [self] in
+            let clrsArray = colorsArray
+            self.run(.wait(forDuration: spawnDur/1.333)) {
+                //[self] in
                 for i in 0...4 {
-                    barr[i].run(.colorTransitionAction(fromColor: vagueClr, toColor: colorsArray[i], duration: 0.3)) {
-                        barr[i].fillColor = colorsArray[i]
+                    barr[i].run(.colorTransitionAction(fromColor: vagueClr, toColor: clrsArray[i], duration: 0.3)) {
+                        barr[i].fillColor = clrsArray[i]
                     }
                 }
                 
@@ -117,8 +120,8 @@ extension GameScene {
         
         // Place the barriers line and start moving it
         barriersLine.position.y = (displaySize.height / 2) + barriersLine.frame.height
-        barriersLine.name = "BLine"
-        barriersLine.run(moveRemoveAction, withKey: "moveRemove")
+        barriersLine.name = "barrierLine"
+        barriersLine.run(moveRemoveAction, withKey: "barrierMoveRemove")
         addChild(barriersLine)
         barrierNum += 1
     }
@@ -126,16 +129,18 @@ extension GameScene {
 
 
     func summonLoot(){
+        if player.isDead { return }
+        
         var lootArray = Array(repeating: SKSpriteNode(), count: 5)
         
         let coinRotate = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 0.5))
-        var spawnedShield = false
+        var lootCount = Array(repeating: 0, count: 5) // Cmp against [5, 3, 2, 2, 0]
 
         
         func getLootFor(node: SKSpriteNode){
             
             // Get random loot from weighted loot array
-            let loot = getRandomWeightedLoot(loots, lootWeight)
+            let loot = getRandomWeightedLoot()
             
             // For pulse animation
             let pulseUp = SKAction.scale(to: 0.135, duration: 0.1) // og scale 0.12
@@ -144,42 +149,37 @@ extension GameScene {
             let repeatPulse = SKAction.repeatForever(pulse)
             
             
-            node.texture = SKTexture(imageNamed: loot)
-            node.name = loot
-            
+            node.texture = SKTexture(imageNamed: loots[loot])
+            node.name = loots[loot]
+
             switch loot {
-            
-            case loots[0]:
-                node.isHidden = true
                 
-            case loots[1]:
+            case 1 where lootCount[loot] < lootMax[loot]:
                 node.run(coinRotate)
                 
-            case loots[2]:
-                if !spawnedShield {
-                    node.addGlow()
-                    node.run(repeatPulse)
-                    spawnedShield = true
-                } else {
-                    node.name = loots[0]
-                    node.isHidden = true
-                }
-                
-            case loots[3]:
+            case 2 where lootCount[loot] < lootMax[loot]:
                 node.addGlow()
                 node.run(repeatPulse)
                 
+            case 3 where lootCount[loot] < lootMax[loot]:
+                node.addGlow()
+                node.run(repeatPulse)
+                
+            //case 4 where lootCount[loot] < lootMax[loot]:
+                
             default:
-                print("Error assigning loot")
                 node.isHidden = true
+                node.name = loots[0]
             }
+            
+            lootCount[loot] += 1
             
         }
         
         
-        coinLine = SKNode()
-        coinLine.position.y = (displaySize.height / 2) + coinLine.frame.height
-        coinLine.name = "CoinLine"
+        lootLine = SKNode()
+        lootLine.position.y = (displaySize.height / 2) + lootLine.frame.height
+        lootLine.name = "lootLine"
         
         let lootNode = SKSpriteNode(texture: SKTexture(imageNamed: "coin"))
         lootNode.physicsBody = SKPhysicsBody(rectangleOf: lootNode.frame.size)
@@ -198,12 +198,12 @@ extension GameScene {
             
             getLootFor(node: lootArray[i])
             lootArray[i].position.x = screenSpots[i]
-            coinLine.addChild(lootArray[i])
+            lootLine.addChild(lootArray[i])
             
         }
 
-        coinLine.run(CoinmoveRemoveAction, withKey: "CoinmoveRemove")
-        addChild(coinLine)
+        lootLine.run(moveRemoveAction, withKey: "lootMoveRemove")
+        addChild(lootLine)
     }
 
 
@@ -211,42 +211,34 @@ extension GameScene {
 
 
     func startSpawning(){
-
-        let dur: CGFloat = 2.0
-
-        let spawn = SKAction.run {
-            () in
-            self.summonBarriers()
-
-        }
-        let delay = SKAction.wait(forDuration: TimeInterval(dur))
-        let spawnDelay = SKAction.sequence([spawn,delay])
-        self.run(.repeatForever(spawnDelay), withKey: "Spawning")
-
-        let distance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
-        let moveLine = SKAction.moveBy(x: 0, y: -distance, duration: TimeInterval((dur/450) * distance))
-        moveRemoveAction = .sequence([moveLine, .removeFromParent()])
-
-
-        //COINS SPAWNING...ETC:
-        let Coinspawn = SKAction.run {
-            () in
-            self.summonLoot()
-
-        }
-        let Coindelay = SKAction.wait(forDuration: TimeInterval(dur))
-        let CoinspawnDelay = SKAction.sequence([Coinspawn,Coindelay])
-
-
-        self.run(.wait(forDuration: 1.0)) {
-            self.run(.repeatForever(CoinspawnDelay), withKey: "lootSpawning")
-        }
         
-
-        let Coindistance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
-        let CoinmoveLine = SKAction.moveBy(x: 0, y: -Coindistance, duration: TimeInterval((dur/450) * Coindistance))
-        CoinmoveRemoveAction = .sequence([CoinmoveLine, .removeFromParent()])
-
+        // Set the move-remove action [for both barriers and loot]
+        var distance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
+        var moveLine = SKAction.moveBy(x: 0, y: -distance, duration: TimeInterval((spawnDur/450) * distance))
+        moveRemoveAction = .sequence([moveLine, .removeFromParent()])
+        
+        let spawnDelay: CGFloat = 1.75
+        
+        let spawningAction = SKAction.sequence([.run {
+            [self] in
+            
+            if barrierNum >= 4 && spawnDur > 1.5 {
+                spawnDur -= 0.1
+                // Update the move-remove action
+                distance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
+                moveLine = SKAction.moveBy(x: 0, y: -distance, duration: TimeInterval((spawnDur/450) * distance))
+                moveRemoveAction = .sequence([moveLine, .removeFromParent()])
+            }
+            
+            summonBarriers()
+            run(.wait(forDuration: spawnDelay/2)) {
+                summonLoot()
+            }
+            
+        }, .wait(forDuration: spawnDelay)])
+        
+        self.run(.repeatForever(spawningAction), withKey: "spawning")
+        
     }
 
 

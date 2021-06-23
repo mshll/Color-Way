@@ -16,7 +16,7 @@
 		518846AD25AE82CD0090049D /* SettingUpGameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846AC25AE82CD0090049D /* SettingUpGameplay.swift */; };
 		518846B025AE82E90090049D /* BarriersLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846AF25AE82E90090049D /* BarriersLogic.swift */; };
 		518846B325AE82FF0090049D /* Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846B225AE82FF0090049D /* Physics.swift */; };
-		518846B725AE83290090049D /* Swipes_Taps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846B625AE83290090049D /* Swipes_Taps.swift */; };
+		518846B725AE83290090049D /* Taps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846B625AE83290090049D /* Taps.swift */; };
 		518846BB25AE83430090049D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846BA25AE83430090049D /* Extensions.swift */; };
 		518846BF25AE835A0090049D /* ChoosePlayerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */; };
 		518846D525AE858F0090049D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518846D425AE858F0090049D /* Assets.xcassets */; };
@@ -49,7 +49,7 @@
 		518846AC25AE82CD0090049D /* SettingUpGameplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUpGameplay.swift; sourceTree = "<group>"; };
 		518846AF25AE82E90090049D /* BarriersLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarriersLogic.swift; sourceTree = "<group>"; };
 		518846B225AE82FF0090049D /* Physics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Physics.swift; sourceTree = "<group>"; };
-		518846B625AE83290090049D /* Swipes_Taps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swipes_Taps.swift; sourceTree = "<group>"; };
+		518846B625AE83290090049D /* Taps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taps.swift; sourceTree = "<group>"; };
 		518846BA25AE83430090049D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlayerCollectionView.swift; sourceTree = "<group>"; };
 		518846D425AE858F0090049D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				518846AC25AE82CD0090049D /* SettingUpGameplay.swift */,
 				518846AF25AE82E90090049D /* BarriersLogic.swift */,
 				518846B225AE82FF0090049D /* Physics.swift */,
-				518846B625AE83290090049D /* Swipes_Taps.swift */,
+				518846B625AE83290090049D /* Taps.swift */,
 				51D2CE6D25AE80C300F4EB2E /* cButton.swift */,
 				518846BA25AE83430090049D /* Extensions.swift */,
 				518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */,
@@ -248,7 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				518846B725AE83290090049D /* Swipes_Taps.swift in Sources */,
+				518846B725AE83290090049D /* Taps.swift in Sources */,
 				518846BB25AE83430090049D /* Extensions.swift in Sources */,
 				518846BF25AE835A0090049D /* ChoosePlayerCollectionView.swift in Sources */,
 				512BAFF925ADED6E008C220B /* GameScene.swift in Sources */,
