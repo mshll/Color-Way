@@ -160,6 +160,10 @@ extension GameScene: UICollectionViewDataSource {
                     coinsLabel.animation = "morph"
                     coinsLabel.animateTo()
                     
+                    // Confetti
+//                    view!.addSubview(confetti)
+//                    confetti.play { _ in confetti.removeFromSuperview() }
+                    
                     unlockCell()
                 }
                 

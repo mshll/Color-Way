@@ -27,6 +27,11 @@
 		519A48BD26803FD70003C70A /* SwiftyUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48BC26803FD70003C70A /* SwiftyUserDefaults */; };
 		519A48C62680415F0003C70A /* Spring in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48C52680415F0003C70A /* Spring */; };
 		519A48C9268042DF0003C70A /* LNZCollectionLayouts in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48C8268042DF0003C70A /* LNZCollectionLayouts */; };
+		51A2C7012683EBA0008DE1D6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 51A2C7002683EBA0008DE1D6 /* Lottie */; };
+		51A2C7772683F38D008DE1D6 /* shield.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A2C7762683F38D008DE1D6 /* shield.json */; };
+		51A2C7832683FF09008DE1D6 /* conf.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A2C7822683FF08008DE1D6 /* conf.json */; };
+		51A2C793268438DF008DE1D6 /* RevealingSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A2C791268438DF008DE1D6 /* RevealingSplashView.swift */; };
+		51A2C795268438DF008DE1D6 /* SplashAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A2C78D268438DF008DE1D6 /* SplashAnimatable.swift */; };
 		51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */; };
 		51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */; };
 		51D2CE6525AE800400F4EB2E /* snowingParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */; };
@@ -57,6 +62,10 @@
 		518846E025AE88900090049D /* odin-rounded.bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.bold.otf"; sourceTree = "<group>"; };
 		518846E125AE88900090049D /* odin-rounded.light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.light.otf"; sourceTree = "<group>"; };
 		518846E825AE89C10090049D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		51A2C7762683F38D008DE1D6 /* shield.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shield.json; sourceTree = "<group>"; };
+		51A2C7822683FF08008DE1D6 /* conf.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conf.json; sourceTree = "<group>"; };
+		51A2C78D268438DF008DE1D6 /* SplashAnimatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashAnimatable.swift; sourceTree = "<group>"; };
+		51A2C791268438DF008DE1D6 /* RevealingSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealingSplashView.swift; sourceTree = "<group>"; };
 		51B613CC267BF66100316E84 /* Color Way.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Color Way.entitlements"; sourceTree = "<group>"; };
 		51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = inGamesnow.sks; sourceTree = "<group>"; };
 		51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosionParticle.sks; sourceTree = "<group>"; };
@@ -76,6 +85,7 @@
 				519A48C9268042DF0003C70A /* LNZCollectionLayouts in Frameworks */,
 				519A48C62680415F0003C70A /* Spring in Frameworks */,
 				519A48BD26803FD70003C70A /* SwiftyUserDefaults in Frameworks */,
+				51A2C7012683EBA0008DE1D6 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,10 +122,11 @@
 				518846BA25AE83430090049D /* Extensions.swift */,
 				518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */,
 				512BAFFA25ADED6E008C220B /* GameViewController.swift */,
+				51A2C796268438F3008DE1D6 /* Splash */,
 				51D2CE6B25AE801800F4EB2E /* Particles */,
 				51D2CE6C25AE808C00F4EB2E /* Support Files */,
 				518846E625AE88940090049D /* Fonts */,
-				518846D425AE858F0090049D /* Assets.xcassets */,
+				51B523EF26844163008A27BF /* Assets */,
 				512BB00125ADED73008C220B /* Info.plist */,
 			);
 			path = "Color Way";
@@ -129,6 +140,25 @@
 				518846DF25AE88900090049D /* odin-rounded.regular.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		51A2C796268438F3008DE1D6 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				51A2C791268438DF008DE1D6 /* RevealingSplashView.swift */,
+				51A2C78D268438DF008DE1D6 /* SplashAnimatable.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		51B523EF26844163008A27BF /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				518846D425AE858F0090049D /* Assets.xcassets */,
+				51A2C7822683FF08008DE1D6 /* conf.json */,
+				51A2C7762683F38D008DE1D6 /* shield.json */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		51D2CE6B25AE801800F4EB2E /* Particles */ = {
@@ -176,6 +206,7 @@
 				519A48BC26803FD70003C70A /* SwiftyUserDefaults */,
 				519A48C52680415F0003C70A /* Spring */,
 				519A48C8268042DF0003C70A /* LNZCollectionLayouts */,
+				51A2C7002683EBA0008DE1D6 /* Lottie */,
 			);
 			productName = "Color Way";
 			productReference = 512BAFEF25ADED6E008C220B /* Color Way.app */;
@@ -208,6 +239,7 @@
 				519A48BB26803FD70003C70A /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
 				519A48C42680415F0003C70A /* XCRemoteSwiftPackageReference "Spring" */,
 				519A48C7268042DF0003C70A /* XCRemoteSwiftPackageReference "LNZCollectionLayouts" */,
+				51A2C6FF2683EBA0008DE1D6 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 512BAFF025ADED6E008C220B /* Products */;
 			projectDirPath = "";
@@ -224,6 +256,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */,
+				51A2C7772683F38D008DE1D6 /* shield.json in Resources */,
+				51A2C7832683FF09008DE1D6 /* conf.json in Resources */,
 				518846E425AE88900090049D /* odin-rounded.light.otf in Resources */,
 				51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */,
 				518846E925AE89C10090049D /* LaunchScreen.storyboard in Resources */,
@@ -253,9 +287,11 @@
 				518846BF25AE835A0090049D /* ChoosePlayerCollectionView.swift in Sources */,
 				512BAFF925ADED6E008C220B /* GameScene.swift in Sources */,
 				518846B025AE82E90090049D /* BarriersLogic.swift in Sources */,
+				51A2C795268438DF008DE1D6 /* SplashAnimatable.swift in Sources */,
 				518846AD25AE82CD0090049D /* SettingUpGameplay.swift in Sources */,
 				512BAFFB25ADED6E008C220B /* GameViewController.swift in Sources */,
 				512BAFF325ADED6E008C220B /* AppDelegate.swift in Sources */,
+				51A2C793268438DF008DE1D6 /* RevealingSplashView.swift in Sources */,
 				518846B325AE82FF0090049D /* Physics.swift in Sources */,
 				51D2CE6E25AE80C300F4EB2E /* cButton.swift in Sources */,
 			);
@@ -485,6 +521,14 @@
 				minimumVersion = 1.2.4;
 			};
 		};
+		51A2C6FF2683EBA0008DE1D6 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -502,6 +546,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 519A48C7268042DF0003C70A /* XCRemoteSwiftPackageReference "LNZCollectionLayouts" */;
 			productName = LNZCollectionLayouts;
+		};
+		51A2C7002683EBA0008DE1D6 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51A2C6FF2683EBA0008DE1D6 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

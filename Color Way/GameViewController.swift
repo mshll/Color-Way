@@ -9,7 +9,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-let displaySize: CGRect = UIScreen.main.bounds
+var displaySize = UIScreen.main.bounds
 
 
 class GameViewController: UIViewController {
@@ -20,22 +20,38 @@ class GameViewController: UIViewController {
     // MARK - Set up view and load game scene
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
         
         skView = self.view as! SKView
+        
+        // Initialize splash view
+        let splashView = RevealingSplashView(iconImage: UIImage(named: "mshlLogo")!,
+                                                      iconInitialSize: CGSize(width: 130, height: 110),
+                                                      backgroundColor: UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 1.00))
+        
+        splashView.animationType = .woobleAndZoomOut
+        self.view.addSubview(splashView)
+    
+        // Starts animation
+        splashView.startAnimation()
+        
         if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
+            displaySize = UIScreen.main.bounds // Update display size just in case
+            
             scene.scaleMode = .aspectFill
             scene.size = view.bounds.size
             skView.ignoresSiblingOrder = true
-            
-            skView.showsNodeCount = false
-            //skView.showsFields = true
-            skView.showsFPS = false
-            //skView.showsPhysics = true
-            
-            
+
+            let debug = false
+            skView.showsNodeCount = debug
+            skView.showsFields = debug
+            skView.showsFPS = debug
+            skView.showsPhysics = debug
+
             skView.presentScene(scene)
+            
         }
+        
         
     }
     
@@ -65,13 +81,12 @@ class GameViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return false
     }
+        
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return .all
+    }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        if UIDevice.current.userInterfaceIdiom == .phone {
-//            return .allButUpsideDown
-//        } else {
-//            return .all
-//        }
         return .portrait
     }
 

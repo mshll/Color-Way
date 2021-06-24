@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 import SpriteKit
-
 import Spring
 import SwiftyUserDefaults
+import Lottie
 
 
 extension DefaultsKeys {
@@ -72,36 +72,45 @@ extension GameScene {
         //- ANIMATIONS:
         logo1.animation = "squeezeRight"
         logo2.animation = "squeezeLeft"
+        logo1.alpha = 0
+        logo2.alpha = 0
         
         logo1.delay = 0.2
         logo2.delay = 0.7
         
         btnStart.animation = "zoomIn"
-        coinImage.animation = "squeezeLeft"
         coinsLabel.animation = "squeezeLeft"
+        bestLabel.animation = "zoomIn"
         
         btnStart.isHidden = true
-        coinImage.alpha = 0
         coinsLabel.alpha = 0
+        bestLabel.alpha = 0
         cellLabel.alpha = 0
         playerCollectionView.alpha = 0
         cellBackground.isHidden = true
         
-        logo1.animate()
-        logo2.animateNext(completion: {
+        run(.wait(forDuration: launchDelay)) {
             [self] in
+            launchDelay = 0
             
-            cellBackground.isHidden = false
-            playerCollectionView.fadeIn()
-            cellLabel.fadeIn()
-            addChild(cellParticle)
-
-            coinImage.animate()
-            coinsLabel.animate()
-            btnStart.isHidden = false
-            btnStart.animate()
+            logo1.animate()
+            logo2.animateNext(completion: {
                 
-            })
+                cellBackground.isHidden = false
+                playerCollectionView.fadeIn()
+                cellLabel.fadeIn()
+                addChild(cellParticle)
+
+                coinsLabel.animate()
+                btnStart.isHidden = false
+                btnStart.animate()
+                
+                if Defaults[\.highScore] > 0 {
+                    bestLabel.animate()
+                }
+                    
+                })
+        }
         //- END OF ANIMATIONS
     }
     
@@ -158,7 +167,7 @@ extension GameScene {
     func hideStartScreen(){
 
         btnBuy.isHidden = true
-        btnStart.animation = "zoomIn"
+        btnStart.animation = "fadeOut"
         logo1.animation = "squeezeRight"
         logo2.animation = "squeezeLeft"
 
@@ -174,6 +183,7 @@ extension GameScene {
         cellBackground.isHidden = true
         playerCollectionView.fadeOut()
         cellLabel.fadeOut()
+        bestLabel.fadeOut()
         
     }
     
@@ -203,8 +213,13 @@ extension GameScene {
         player.node.texture = SKTexture(imageNamed: Defaults[\.selectedSkin]!)
         player.node.position.y = -(displaySize.height)
 
+        rightBlock.isUserInteractionEnabled = false
+        leftBlock.isUserInteractionEnabled = false
+        
         player.node.run(.moveTo(y: -(displaySize.midY / 3), duration: 2)) {
             [self] in
+            rightBlock.isUserInteractionEnabled = true
+            leftBlock.isUserInteractionEnabled = true
             
             startSpawning()
             addChild(rain)
@@ -215,6 +230,7 @@ extension GameScene {
             snowing.particleSpeed = 250
             snowing.resetSimulation()
             addChild(snowing)
+            
         }
         
         
@@ -243,20 +259,15 @@ extension GameScene {
         lblGOScore.center.x = (view?.center.x)!
         lblGOScore.center.y = (view?.center.y)! / 1.2
         
-        // Set Highscore label text
-        if score >= Defaults[\.highScore] {
-            Defaults[\.highScore] = score
-            lblGOHiScore.text = "NEW HIGHSCORE"
-        } else {
-            lblGOHiScore.text = "BEST: \(Defaults[\.highScore])"
-        }
-        
         // Highscore label
-        lblGOHiScore.font = UIFont(name: "Odin-Bold", size: 32)
-        lblGOHiScore.textColor = clrWhite
-        lblGOHiScore.sizeToFit()
-        lblGOHiScore.center.x = (view?.center.x)!
-        lblGOHiScore.center.y = (view?.center.y)! / 0.9
+        bestLabel.text = "999999999999999"
+        bestLabel.font = UIFont(name: "Odin-Bold", size: 32)
+        bestLabel.textColor = clrWhite
+        bestLabel.sizeToFit()
+        bestLabel.frame.size.height *= 2
+        bestLabel.set(image: UIImage(named: "crown")!, with: "\(Defaults[\.highScore])", RorL: 0)
+        bestLabel.center.x = (view?.center.x)!
+        bestLabel.center.y = (view?.center.y)! / 0.9
         
         // Go home button
         btnHome.color = clrWatermelon
@@ -281,19 +292,19 @@ extension GameScene {
         // - Animations - //
         lblGO.alpha = 0
         lblGOScore.alpha = 0
-        lblGOHiScore.alpha = 0
+        bestLabel.alpha = 0
         btnHome.alpha = 0
         
-        coinImage.animation = "squeezeLeft"
         coinsLabel.animation = "squeezeLeft"
+        
         
         run(.wait(forDuration: 0.2)) {
             [self] in
             
             view?.shake() // Shake view
             SnapshotAnim() // Flash screen white
-            coinImage.animateTo()
             coinsLabel.animateTo()
+            
 
             self.run(.wait(forDuration: 0.5)) {
                 
@@ -301,15 +312,24 @@ extension GameScene {
                 
                 lblGO.animation = "squeezeDown"
                 lblGOScore.animation = "fadeIn"
-                lblGOHiScore.animation = "fadeIn"
+                bestLabel.animation = "fadeIn"
                 btnHome.animation = "zoomIn"
                 btnPlayAgain.animation = "zoomIn"
                 
                 lblGO.animate()
                 lblGOScore.animate()
-                lblGOHiScore.animate()
+                bestLabel.animate()
                 btnHome.animate()
                 btnPlayAgain.animate()
+                
+                // Play confetti effect if new highscore
+                if score > Defaults[\.highScore] {
+                    Defaults[\.highScore] = score
+                    view!.addSubview(confetti)
+                    confetti.play { _ in confetti.removeFromSuperview() }
+                    bestLabel.text = "NEW HIGHSCORE"
+                }
+                
             }
             
         }

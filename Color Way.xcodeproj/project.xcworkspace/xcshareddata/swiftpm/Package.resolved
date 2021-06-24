@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "lottie-ios",
+        "repositoryURL": "https://github.com/airbnb/lottie-ios",
+        "state": {
+          "branch": null,
+          "revision": "79a0b70547f7c40ea54c67487f935fa2f2eaaadc",
+          "version": "3.2.3"
+        }
+      },
+      {
         "package": "Spring",
         "repositoryURL": "https://github.com/MengTo/Spring.git",
         "state": {

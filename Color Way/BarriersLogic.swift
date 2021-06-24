@@ -133,7 +133,6 @@ extension GameScene {
         
         var lootArray = Array(repeating: SKSpriteNode(), count: 5)
         
-        let coinRotate = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 0.5))
         var lootCount = Array(repeating: 0, count: 5) // Cmp against [5, 3, 2, 2, 0]
 
         
@@ -148,6 +147,17 @@ extension GameScene {
             let pulse = SKAction.sequence([pulseUp, pulseDown, pulseUp, pulseDown, .wait(forDuration: 0.3)])
             let repeatPulse = SKAction.repeatForever(pulse)
             
+            // Coin flip animation
+            let flipDur = 0.4
+            let flipScale = SKAction.sequence([.scaleX(to: 0.012, duration: flipDur),
+                                                .scaleX(to: 0.12, duration: flipDur)])
+            let flipDarken = SKAction.sequence([.colorize(with: SKColor.black, colorBlendFactor: 0.25, duration: flipDur),
+                                                .colorize(withColorBlendFactor: 0, duration: flipDur)])
+            let flip = SKAction.group([flipScale, flipDarken])
+            let repeatFlip = SKAction.repeatForever(flip)
+            // Coin rotation animation
+            //let coinRotate = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 0.5))
+            
             
             node.texture = SKTexture(imageNamed: loots[loot])
             node.name = loots[loot]
@@ -155,14 +165,18 @@ extension GameScene {
             switch loot {
                 
             case 1 where lootCount[loot] < lootMax[loot]:
-                node.run(coinRotate)
+                //node.run(coinRotate)
+               
+               node.run(repeatFlip)
+                                            
                 
-            case 2 where lootCount[loot] < lootMax[loot]:
-                node.addGlow()
-                node.run(repeatPulse)
-                
-            case 3 where lootCount[loot] < lootMax[loot]:
-                node.addGlow()
+            case 2 where lootCount[loot] < lootMax[loot],
+                 3 where lootCount[loot] < lootMax[loot]:
+                //node.addGlow()
+                let glowNode = SKSpriteNode(texture: SKTexture(imageNamed: "\(loots[loot])Glow"))
+                glowNode.zPosition = -1
+                glowNode.setScale(1.1)
+                node.addChild(glowNode)
                 node.run(repeatPulse)
                 
             //case 4 where lootCount[loot] < lootMax[loot]:

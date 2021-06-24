@@ -10,6 +10,7 @@ import GameplayKit
 import Spring
 import SwiftyUserDefaults
 import LNZCollectionLayouts
+import Lottie
 
 
 //FONTS USED :: Odin Rounded ["OdinRounded-Light", "Odin-Bold", "OdinRounded"] (for reference)
@@ -26,13 +27,15 @@ let clrYellow = UIColor(hue: 0.13, saturation: 0.99, brightness: 1.00, alpha: 1)
 let clrGreen = UIColor(red: 0.18, green: 0.80, blue: 0.44, alpha: 1.00)
 let clrWhite = UIColor(red: 0.93, green: 0.94, blue: 0.95, alpha: 1.00)
 let clrGray = UIColor(red: 0.58, green: 0.65, blue: 0.65, alpha: 1.00)
-let clrBlackDark = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.00)
+let clrBlack = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.00)
+let clrBlackDark = UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 1.00)
 let clrYellowDark = UIColor(red: 1.00, green: 0.66, blue: 0.00, alpha: 1.00)
 let clrRed = UIColor(red: 0.75, green: 0.22, blue: 0.17, alpha: 1.00)
 
 
 var screenDiv : CGFloat = 0 // Screen divider
 var playAgain: Bool = false // Indicates if game should start immediately upon scene load or not
+var launchDelay = 2.0       // After how many seconds should the scene get shown (waiting for splash screen animations)
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -50,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    //  ***  Variables  ***  //
+    // MARK: Variables  //
     
     var player = Player()   // initalize player
     var spawnDur: CGFloat = 2.0 // Interval between each barrier/loot spawn
@@ -79,8 +82,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var barrierNum = 0 // Indicates how many barriers spawned so far
     
     // Coins label and image
-    let coinImage = SpringImageView(image: UIImage(named: "coin"))
     let coinsLabel = SpringLabel()
+    let bestLabel = SpringLabel()
     
     // Dividing the screen to 5 parts
     var screenSpots: [CGFloat] = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
@@ -119,10 +122,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let lootWeight = [70, 20, 5, 5, 0]  // Weight for loot [i] to be chosen -: SHOULD ADD UP TO 100!
     let lootMax = [5, 3, 2, 2, 0]       // Max # of loot [i] in a line (Max # = 5)
 
+    let confetti = AnimationView(name: "conf")
     //  ***  End of Variables  ***  //
     
     
-    /// When scene is shown
+    // MARK: didMove to view
     override func didMove(to view: SKView) {
         
         // Set player skins names
@@ -168,12 +172,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinsLabel.set(image: UIImage(named: "coin")!, with: "\(Defaults[\.coinsOwned])")
         view.addSubview(coinsLabel)
         
+        // Setup best score label
+        bestLabel.text = "999999999999999"
+        bestLabel.font = UIFont(name: "Odin-Bold", size: 24)
+        bestLabel.sizeToFit()
+        bestLabel.frame.size.height *= 2
+        bestLabel.textColor = clrWhite
+        bestLabel.textAlignment = .center
+        bestLabel.center = view.center
+        bestLabel.center.y /= 1.3
+        bestLabel.set(image: UIImage(named: "crown")!, with: "\(Defaults[\.highScore])", RorL: 0)
+        view.addSubview(bestLabel)
+        bestLabel.alpha = 0
+        
         // Preparing GameOver screen stuff
         view.addSubview(btnHome)
         view.addSubview(btnPlayAgain)
         view.addSubview(lblGO)
         view.addSubview(lblGOScore)
-        view.addSubview(lblGOHiScore)
+        //view.addSubview(lblGOHiScore)
         btnHome.alpha = 0
         btnPlayAgain.alpha = 0
         lblGO.alpha = 0
@@ -190,6 +207,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblCurrentScore.alpha = 0
         lblCurrentScore.textAlignment = .center
         view.addSubview(lblCurrentScore)
+        
+        // Lottie confetti
+        confetti.loopMode = .repeat(1)
+        confetti.frame = view.bounds
+        confetti.isUserInteractionEnabled = false
         
         
         if playAgain {

@@ -77,7 +77,7 @@ extension GameScene {
                     second.node!.alpha = 0
                     secondNode.run(.sequence([.scale(by: 1.5, duration: 0.05),
                                               .scale(to: 0, duration: 0.2)]))
-                    secondNode.run(.move(to: convertPoint(fromView: coinsLabel.center), duration: 0.2)) {
+                    secondNode.run(.move(to: convertPoint(fromView: CGPoint(x: coinsLabel.frame.maxX, y: coinsLabel.center.y)), duration: 0.2)) {
                         secondNode.removeFromParent()
                         self.coinsLabel.animation = "pop"
                         self.coinsLabel.animate()
