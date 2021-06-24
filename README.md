@@ -6,17 +6,16 @@ This game was written as an exercise while learning Swift.
 
 
 ## Preview
+https://user-images.githubusercontent.com/17913113/123208447-f57efd80-d473-11eb-8243-c745b69dd6c6.mov
 
-![](preview.gif)
 
 
 ## Installation & Usage
-
-Download the package and compile it using Xcode.
+Clone the repo using `$ git clone` or download it and build the project using Xcode.
 
 
 ## Contributing
-Pull requests are welcome if you want to make some tweaks on the game, it is by no means polished and I will still be updating it in my free time.
+Contributions are welcomed!
 
 
 ## License
