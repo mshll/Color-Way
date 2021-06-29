@@ -28,10 +28,24 @@
 		519A48C62680415F0003C70A /* Spring in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48C52680415F0003C70A /* Spring */; };
 		519A48C9268042DF0003C70A /* LNZCollectionLayouts in Frameworks */ = {isa = PBXBuildFile; productRef = 519A48C8268042DF0003C70A /* LNZCollectionLayouts */; };
 		51A2C7012683EBA0008DE1D6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 51A2C7002683EBA0008DE1D6 /* Lottie */; };
-		51A2C7772683F38D008DE1D6 /* shield.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A2C7762683F38D008DE1D6 /* shield.json */; };
 		51A2C7832683FF09008DE1D6 /* conf.json in Resources */ = {isa = PBXBuildFile; fileRef = 51A2C7822683FF08008DE1D6 /* conf.json */; };
 		51A2C793268438DF008DE1D6 /* RevealingSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A2C791268438DF008DE1D6 /* RevealingSplashView.swift */; };
 		51A2C795268438DF008DE1D6 /* SplashAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A2C78D268438DF008DE1D6 /* SplashAnimatable.swift */; };
+		51B5240E2684768D008A27BF /* CFAlertActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51B523F72684768D008A27BF /* CFAlertActionTableViewCell.xib */; };
+		51B5240F2684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B523F82684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.swift */; };
+		51B524102684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51B523F92684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.xib */; };
+		51B524112684768D008A27BF /* CFAlertActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B523FA2684768D008A27BF /* CFAlertActionTableViewCell.swift */; };
+		51B524122684768D008A27BF /* CFAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51B523FB2684768D008A27BF /* CFAlertViewController.xib */; };
+		51B524132684768D008A27BF /* CFPushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B523FE2684768D008A27BF /* CFPushButton.swift */; };
+		51B524142684768D008A27BF /* CFAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B523FF2684768D008A27BF /* CFAlertViewController.swift */; };
+		51B524152684768D008A27BF /* CFAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B524012684768D008A27BF /* CFAlertAction.swift */; };
+		51B524162684768D008A27BF /* CFAlertPopupTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B524042684768D008A27BF /* CFAlertPopupTransition.swift */; };
+		51B524172684768D008A27BF /* CFAlertActionSheetInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B524062684768D008A27BF /* CFAlertActionSheetInteractiveTransition.swift */; };
+		51B524182684768D008A27BF /* CFAlertActionSheetTransitionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B524072684768D008A27BF /* CFAlertActionSheetTransitionGestureRecognizer.swift */; };
+		51B524192684768D008A27BF /* CFAlertNotificationTransitionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B524092684768D008A27BF /* CFAlertNotificationTransitionGestureRecognizer.swift */; };
+		51B5241A2684768D008A27BF /* CFAlertNotificationInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B5240A2684768D008A27BF /* CFAlertNotificationInteractiveTransition.swift */; };
+		51B5241B2684768D008A27BF /* CFAlertBaseInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B5240C2684768D008A27BF /* CFAlertBaseInteractiveTransition.swift */; };
+		51B5241C2684768D008A27BF /* CFAlertBaseTransitionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B5240D2684768D008A27BF /* CFAlertBaseTransitionGestureRecognizer.swift */; };
 		51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */; };
 		51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */; };
 		51D2CE6525AE800400F4EB2E /* snowingParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 51D2CE5E25AE800300F4EB2E /* snowingParticle.sks */; };
@@ -62,10 +76,24 @@
 		518846E025AE88900090049D /* odin-rounded.bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.bold.otf"; sourceTree = "<group>"; };
 		518846E125AE88900090049D /* odin-rounded.light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "odin-rounded.light.otf"; sourceTree = "<group>"; };
 		518846E825AE89C10090049D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		51A2C7762683F38D008DE1D6 /* shield.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shield.json; sourceTree = "<group>"; };
 		51A2C7822683FF08008DE1D6 /* conf.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conf.json; sourceTree = "<group>"; };
 		51A2C78D268438DF008DE1D6 /* SplashAnimatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashAnimatable.swift; sourceTree = "<group>"; };
 		51A2C791268438DF008DE1D6 /* RevealingSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealingSplashView.swift; sourceTree = "<group>"; };
+		51B523F72684768D008A27BF /* CFAlertActionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CFAlertActionTableViewCell.xib; sourceTree = "<group>"; };
+		51B523F82684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertTitleSubtitleTableViewCell.swift; sourceTree = "<group>"; };
+		51B523F92684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CFAlertTitleSubtitleTableViewCell.xib; sourceTree = "<group>"; };
+		51B523FA2684768D008A27BF /* CFAlertActionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertActionTableViewCell.swift; sourceTree = "<group>"; };
+		51B523FB2684768D008A27BF /* CFAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CFAlertViewController.xib; sourceTree = "<group>"; };
+		51B523FE2684768D008A27BF /* CFPushButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFPushButton.swift; sourceTree = "<group>"; };
+		51B523FF2684768D008A27BF /* CFAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertViewController.swift; sourceTree = "<group>"; };
+		51B524012684768D008A27BF /* CFAlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertAction.swift; sourceTree = "<group>"; };
+		51B524042684768D008A27BF /* CFAlertPopupTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertPopupTransition.swift; sourceTree = "<group>"; };
+		51B524062684768D008A27BF /* CFAlertActionSheetInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertActionSheetInteractiveTransition.swift; sourceTree = "<group>"; };
+		51B524072684768D008A27BF /* CFAlertActionSheetTransitionGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertActionSheetTransitionGestureRecognizer.swift; sourceTree = "<group>"; };
+		51B524092684768D008A27BF /* CFAlertNotificationTransitionGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertNotificationTransitionGestureRecognizer.swift; sourceTree = "<group>"; };
+		51B5240A2684768D008A27BF /* CFAlertNotificationInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertNotificationInteractiveTransition.swift; sourceTree = "<group>"; };
+		51B5240C2684768D008A27BF /* CFAlertBaseInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertBaseInteractiveTransition.swift; sourceTree = "<group>"; };
+		51B5240D2684768D008A27BF /* CFAlertBaseTransitionGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFAlertBaseTransitionGestureRecognizer.swift; sourceTree = "<group>"; };
 		51B613CC267BF66100316E84 /* Color Way.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Color Way.entitlements"; sourceTree = "<group>"; };
 		51D2CE5C25AE800300F4EB2E /* inGamesnow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = inGamesnow.sks; sourceTree = "<group>"; };
 		51D2CE5D25AE800300F4EB2E /* explosionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosionParticle.sks; sourceTree = "<group>"; };
@@ -122,14 +150,24 @@
 				518846BA25AE83430090049D /* Extensions.swift */,
 				518846BE25AE835A0090049D /* ChoosePlayerCollectionView.swift */,
 				512BAFFA25ADED6E008C220B /* GameViewController.swift */,
+				51B523F52684768D008A27BF /* CFAlertViewController */,
 				51A2C796268438F3008DE1D6 /* Splash */,
 				51D2CE6B25AE801800F4EB2E /* Particles */,
 				51D2CE6C25AE808C00F4EB2E /* Support Files */,
 				518846E625AE88940090049D /* Fonts */,
-				51B523EF26844163008A27BF /* Assets */,
+				516FA3442684A56700B77294 /* Assets */,
 				512BB00125ADED73008C220B /* Info.plist */,
 			);
 			path = "Color Way";
+			sourceTree = "<group>";
+		};
+		516FA3442684A56700B77294 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				518846D425AE858F0090049D /* Assets.xcassets */,
+				51A2C7822683FF08008DE1D6 /* conf.json */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		518846E625AE88940090049D /* Fonts */ = {
@@ -151,14 +189,98 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		51B523EF26844163008A27BF /* Assets */ = {
+		51B523F52684768D008A27BF /* CFAlertViewController */ = {
 			isa = PBXGroup;
 			children = (
-				518846D425AE858F0090049D /* Assets.xcassets */,
-				51A2C7822683FF08008DE1D6 /* conf.json */,
-				51A2C7762683F38D008DE1D6 /* shield.json */,
+				51B523FB2684768D008A27BF /* CFAlertViewController.xib */,
+				51B523FF2684768D008A27BF /* CFAlertViewController.swift */,
+				51B523F62684768D008A27BF /* Cells */,
+				51B523FC2684768D008A27BF /* Subclass */,
+				51B524002684768D008A27BF /* Models */,
+				51B524022684768D008A27BF /* Transitions */,
 			);
-			path = Assets;
+			path = CFAlertViewController;
+			sourceTree = "<group>";
+		};
+		51B523F62684768D008A27BF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				51B523F72684768D008A27BF /* CFAlertActionTableViewCell.xib */,
+				51B523F82684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.swift */,
+				51B523F92684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.xib */,
+				51B523FA2684768D008A27BF /* CFAlertActionTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		51B523FC2684768D008A27BF /* Subclass */ = {
+			isa = PBXGroup;
+			children = (
+				51B523FD2684768D008A27BF /* CFPushButton */,
+			);
+			path = Subclass;
+			sourceTree = "<group>";
+		};
+		51B523FD2684768D008A27BF /* CFPushButton */ = {
+			isa = PBXGroup;
+			children = (
+				51B523FE2684768D008A27BF /* CFPushButton.swift */,
+			);
+			path = CFPushButton;
+			sourceTree = "<group>";
+		};
+		51B524002684768D008A27BF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				51B524012684768D008A27BF /* CFAlertAction.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		51B524022684768D008A27BF /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				51B524032684768D008A27BF /* Popup */,
+				51B524052684768D008A27BF /* Action Sheet */,
+				51B524082684768D008A27BF /* Notification */,
+				51B5240B2684768D008A27BF /* Base */,
+			);
+			path = Transitions;
+			sourceTree = "<group>";
+		};
+		51B524032684768D008A27BF /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				51B524042684768D008A27BF /* CFAlertPopupTransition.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
+		51B524052684768D008A27BF /* Action Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				51B524062684768D008A27BF /* CFAlertActionSheetInteractiveTransition.swift */,
+				51B524072684768D008A27BF /* CFAlertActionSheetTransitionGestureRecognizer.swift */,
+			);
+			path = "Action Sheet";
+			sourceTree = "<group>";
+		};
+		51B524082684768D008A27BF /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				51B524092684768D008A27BF /* CFAlertNotificationTransitionGestureRecognizer.swift */,
+				51B5240A2684768D008A27BF /* CFAlertNotificationInteractiveTransition.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		51B5240B2684768D008A27BF /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				51B5240C2684768D008A27BF /* CFAlertBaseInteractiveTransition.swift */,
+				51B5240D2684768D008A27BF /* CFAlertBaseTransitionGestureRecognizer.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		51D2CE6B25AE801800F4EB2E /* Particles */ = {
@@ -256,8 +378,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				51D2CE6325AE800400F4EB2E /* inGamesnow.sks in Resources */,
-				51A2C7772683F38D008DE1D6 /* shield.json in Resources */,
+				51B524102684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.xib in Resources */,
 				51A2C7832683FF09008DE1D6 /* conf.json in Resources */,
+				51B5240E2684768D008A27BF /* CFAlertActionTableViewCell.xib in Resources */,
 				518846E425AE88900090049D /* odin-rounded.light.otf in Resources */,
 				51D2CE6425AE800400F4EB2E /* explosionParticle.sks in Resources */,
 				518846E925AE89C10090049D /* LaunchScreen.storyboard in Resources */,
@@ -267,6 +390,7 @@
 				512BAFFE25ADED6E008C220B /* Main.storyboard in Resources */,
 				51D2CE6525AE800400F4EB2E /* snowingParticle.sks in Resources */,
 				518846E325AE88900090049D /* odin-rounded.bold.otf in Resources */,
+				51B524122684768D008A27BF /* CFAlertViewController.xib in Resources */,
 				51D2CE6825AE800400F4EB2E /* rainParticle.sks in Resources */,
 				51D2CE6725AE800400F4EB2E /* sparkleStar.sks in Resources */,
 				51D2CE6925AE800400F4EB2E /* playerExplo.sks in Resources */,
@@ -282,18 +406,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51B524112684768D008A27BF /* CFAlertActionTableViewCell.swift in Sources */,
+				51B524152684768D008A27BF /* CFAlertAction.swift in Sources */,
+				51B5241A2684768D008A27BF /* CFAlertNotificationInteractiveTransition.swift in Sources */,
 				518846B725AE83290090049D /* Taps.swift in Sources */,
 				518846BB25AE83430090049D /* Extensions.swift in Sources */,
+				51B524182684768D008A27BF /* CFAlertActionSheetTransitionGestureRecognizer.swift in Sources */,
+				51B524192684768D008A27BF /* CFAlertNotificationTransitionGestureRecognizer.swift in Sources */,
 				518846BF25AE835A0090049D /* ChoosePlayerCollectionView.swift in Sources */,
 				512BAFF925ADED6E008C220B /* GameScene.swift in Sources */,
 				518846B025AE82E90090049D /* BarriersLogic.swift in Sources */,
+				51B524162684768D008A27BF /* CFAlertPopupTransition.swift in Sources */,
+				51B524142684768D008A27BF /* CFAlertViewController.swift in Sources */,
 				51A2C795268438DF008DE1D6 /* SplashAnimatable.swift in Sources */,
+				51B5241C2684768D008A27BF /* CFAlertBaseTransitionGestureRecognizer.swift in Sources */,
 				518846AD25AE82CD0090049D /* SettingUpGameplay.swift in Sources */,
 				512BAFFB25ADED6E008C220B /* GameViewController.swift in Sources */,
+				51B5240F2684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.swift in Sources */,
 				512BAFF325ADED6E008C220B /* AppDelegate.swift in Sources */,
 				51A2C793268438DF008DE1D6 /* RevealingSplashView.swift in Sources */,
+				51B524132684768D008A27BF /* CFPushButton.swift in Sources */,
+				51B5241B2684768D008A27BF /* CFAlertBaseInteractiveTransition.swift in Sources */,
 				518846B325AE82FF0090049D /* Physics.swift in Sources */,
 				51D2CE6E25AE80C300F4EB2E /* cButton.swift in Sources */,
+				51B524172684768D008A27BF /* CFAlertActionSheetInteractiveTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

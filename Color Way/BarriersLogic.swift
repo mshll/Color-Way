@@ -81,10 +81,10 @@ extension GameScene {
         }
         
         
-        // Keeps barriers color vague until after `spawnDur/1.333` seconds
+        // Keeps barriers color vague for a bit
         if barrierNum >= firstObst {
             let clrsArray = colorsArray
-            self.run(.wait(forDuration: spawnDur/1.333)) {
+            self.run(.wait(forDuration: vagueClrDur)) {
                 //[self] in
                 for i in 0...4 {
                     barr[i].run(.colorTransitionAction(fromColor: vagueClr, toColor: clrsArray[i], duration: 0.3)) {
@@ -166,9 +166,7 @@ extension GameScene {
                 
             case 1 where lootCount[loot] < lootMax[loot]:
                 //node.run(coinRotate)
-               
-               node.run(repeatFlip)
-                                            
+                node.run(repeatFlip)
                 
             case 2 where lootCount[loot] < lootMax[loot],
                  3 where lootCount[loot] < lootMax[loot]:
@@ -227,21 +225,24 @@ extension GameScene {
     func startSpawning(){
         
         // Set the move-remove action [for both barriers and loot]
-        var distance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
-        var moveLine = SKAction.moveBy(x: 0, y: -distance, duration: TimeInterval((spawnDur/450) * distance))
+        distanceBarr = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
+        moveLine = SKAction.moveBy(x: 0, y: -distanceBarr, duration: TimeInterval((spawnDur/450) * distanceBarr))
         moveRemoveAction = .sequence([moveLine, .removeFromParent()])
+        vagueClrDur = ((spawnDur/1300) * distanceBarr)
         
         let spawnDelay: CGFloat = 1.75
         
         let spawningAction = SKAction.sequence([.run {
             [self] in
             
+            // Speed up barriers movement after reaching a score of 5
             if barrierNum >= 4 && spawnDur > 1.5 {
                 spawnDur -= 0.1
                 // Update the move-remove action
-                distance = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
-                moveLine = SKAction.moveBy(x: 0, y: -distance, duration: TimeInterval((spawnDur/450) * distance))
+                distanceBarr = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
+                moveLine = SKAction.moveBy(x: 0, y: -distanceBarr, duration: TimeInterval((spawnDur/450) * distanceBarr))
                 moveRemoveAction = .sequence([moveLine, .removeFromParent()])
+                vagueClrDur = ((spawnDur/1300) * distanceBarr)
             }
             
             summonBarriers()

@@ -59,15 +59,15 @@ extension GameScene{
     /// - Parameter dir: Indicates direction (`true` for left and `false` for right).
     func tap(dir: Bool) {
         
-        // Remove rotation animations
+        // Remove rotation animations when moving player to another position.
         if !((dir && player.pos == 1) || (!dir && player.pos == 5)) {
             player.node.removeAction(forKey: "rotatePlayer")
         }
         
         // Rotation angle, Rotation duration & Movement duration
-        let angle: CGFloat = 0.3
-        let rotDur = 0.10
-        let dur = 0.25
+        let angle: CGFloat = 0.27 //.3
+        let rotDur = 0.07 //.1
+        let moveDur = 0.22 //.25
         
         
         /// Moves the player to a certain x location
@@ -79,10 +79,10 @@ extension GameScene{
             
             // Player's rotation animation.
             let rotateP = SKAction.sequence([.rotate(toAngle: dirSign*angle, duration: rotDur),
-                                              .wait(forDuration: dur-rotDur),
+                                              .wait(forDuration: moveDur-rotDur),
                                               .rotate(toAngle: 0, duration: rotDur)])
             
-            player.node.run(.moveTo(x: to, duration: dur)) // Move
+            player.node.run(.moveTo(x: to, duration: moveDur)) // Move
             player.node.run(rotateP, withKey: "rotatePlayer") // Rotate
         }
         

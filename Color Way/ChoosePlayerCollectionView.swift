@@ -161,8 +161,8 @@ extension GameScene: UICollectionViewDataSource {
                     coinsLabel.animateTo()
                     
                     // Confetti
-//                    view!.addSubview(confetti)
-//                    confetti.play { _ in confetti.removeFromSuperview() }
+                    view!.addSubview(confetti)
+                    confetti.play { _ in confetti.removeFromSuperview() }
                     
                     unlockCell()
                 }
@@ -191,6 +191,8 @@ extension GameScene: UICollectionViewDataSource {
             
             if Defaults[\.coinsOwned] < 250{
                 btnBuy.setTitleColor(clrWatermelon, for: [])
+            } else {
+                btnBuy.setTitleColor(.white, for: [])
             }
             
         }

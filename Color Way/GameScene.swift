@@ -75,11 +75,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let snowing = SKEmitterNode(fileNamed: "snowingParticle.sks")!
     let rain = SKEmitterNode(fileNamed: "rainParticle.sks")!
     let inGamesnow = SKEmitterNode(fileNamed: "inGamesnow.sks")!
-        
-    // The lines that spawn
+    
+    // The barriers and loot movement stuff
     var barriersLine = SKNode()
     var lootLine = SKNode()
     var barrierNum = 0 // Indicates how many barriers spawned so far
+    var vagueClrDur = TimeInterval()
+    // the move-remove actions
+    var distanceBarr: CGFloat = 0.0
+    var moveLine = SKAction()
+    var moveRemoveAction = SKAction()
     
     // Coins label and image
     let coinsLabel = SpringLabel()
@@ -87,9 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Dividing the screen to 5 parts
     var screenSpots: [CGFloat] = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
-    
-    // Gameplay action (moving barriers and loot)
-    var moveRemoveAction = SKAction()
     
     // Barriers colors
     var colorsArray : [UIColor] = [clrSkyBlue, clrPurple, clrMint, clrWatermelon, clrYellow]
@@ -104,6 +106,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Start button
     var btnStart = cButton(btitle: "Play")
+    var btnInfo = cButton(btitle: "i")
+    var secretCounter1 = 0
+    var secretCounter2 = 0
     
     // Keeping track of current score
     var score: Int = 0
@@ -113,7 +118,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let btnPlayAgain = cButton(btitle: "Play Again")
     let lblGO = SpringLabel()
     let lblGOScore = SpringLabel()
-    let lblGOHiScore = SpringLabel()
     
     let lblCurrentScore = SpringLabel() // Current score label in-game
     
@@ -190,12 +194,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view.addSubview(btnPlayAgain)
         view.addSubview(lblGO)
         view.addSubview(lblGOScore)
-        //view.addSubview(lblGOHiScore)
         btnHome.alpha = 0
         btnPlayAgain.alpha = 0
         lblGO.alpha = 0
         lblGOScore.alpha = 0
-        lblGOHiScore.alpha = 0
         
         // Preparing current score label for in-game
         lblCurrentScore.text = "\(score)"

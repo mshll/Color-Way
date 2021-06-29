@@ -25,6 +25,27 @@ extension DefaultsKeys {
 
 extension GameScene {
     
+    
+    @objc private func secretTap(_ recognizer: UITapGestureRecognizer) {
+        secretCounter1 += 1
+        if secretCounter1 >= 15 {
+            secretCounter1 = 0
+            SnapshotAnim()
+            player.god = !player.god
+        }
+    }
+    
+    @objc private func secretPinch(_ recognizer: UIPinchGestureRecognizer) {
+        secretCounter2 += 1
+        if secretCounter2 >= 50 {
+            secretCounter2 = 0
+            SnapshotAnim()
+            Defaults[\.coinsOwned] += 250
+            coinsLabel.set(image: UIImage(named: "coin")!, with: "\(Defaults[\.coinsOwned])")
+        }
+    }
+    
+    // MARK: Start Screen
     func setStartScreen() {
         // Add snowing particle to startscreen
         snowing.targetNode = self
@@ -54,6 +75,54 @@ extension GameScene {
         btnStart.color = clrMint
         view!.addSubview(btnStart)
         
+        
+        // Info button
+        btnInfo.frame.size = CGSize(width: 35, height: 35)
+        btnInfo.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        btnInfo.titleLabel?.sizeToFit()
+        btnInfo.center.x = (view?.bounds.maxX)! / 1.12
+        btnInfo.center.y = (view?.bounds.maxY)! / 1.08
+        btnInfo.color = .clear
+        btnInfo.layer.borderWidth = 1
+        btnInfo.layer.borderColor = clrWatermelon.cgColor
+        btnInfo.setTitleColor(clrWatermelon, for: [])
+        view!.addSubview(btnInfo)
+        btnInfo.onClickAction = {
+            (button) in
+            
+            let alertController = CFAlertViewController(title: "Color Way",
+                                                        message: "Developed by Meshal Almutairi\n\nThis game is written completely in Swift using SpriteKit and is open-sourced, you can find the repository on my GitHub.\n",
+                                                        textAlignment: .center, preferredStyle: .actionSheet, didDismissAlertHandler: nil)
+
+            let frstAction = CFAlertAction(title: "Website", style: .Destructive, alignment: .center,
+                                           backgroundColor: clrWatermelon, textColor: clrWatermelon, handler: { (action) in
+                if let url = URL(string: "https://mshl.me") { UIApplication.shared.open(url) }
+            })
+                
+//            _ = CFAlertAction(title: "Close", style: .Default, alignment: .justified,
+//                                              backgroundColor: .clear, textColor: nil, handler: { (action) in
+//                print("Button with title '" + action.title! + "' tapped")
+//            })
+            
+
+            let headerView = UIImageView(image: UIImage(named: "mshlLogoCircle"))
+            headerView.contentMode = .scaleAspectFit
+            headerView.clipsToBounds = true
+            headerView.frame = CGRect(x: 0, y: 0, width: alertController.containerView?.frame.size.width ?? 0.0, height: 110.0)
+            headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.secretTap)))
+            headerView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.secretPinch)))
+            headerView.isUserInteractionEnabled = true
+            
+            alertController.addAction(frstAction)
+            alertController.backgroundStyle = .blur
+            alertController.containerBackgroundColor = .clear
+            alertController.titleColor = .white
+            alertController.headerView = headerView
+            self.view?.window?.rootViewController?.present(alertController, animated: true, completion: {})
+
+        }
+        
+        
         // Setup the player selection view
         setCollectionView()
         view!.addSubview(playerCollectionView)
@@ -79,10 +148,12 @@ extension GameScene {
         logo2.delay = 0.7
         
         btnStart.animation = "zoomIn"
+        btnInfo.animation = "squeezeUp"
         coinsLabel.animation = "squeezeLeft"
         bestLabel.animation = "zoomIn"
         
         btnStart.isHidden = true
+        btnInfo.isHidden = true
         coinsLabel.alpha = 0
         bestLabel.alpha = 0
         cellLabel.alpha = 0
@@ -104,6 +175,8 @@ extension GameScene {
                 coinsLabel.animate()
                 btnStart.isHidden = false
                 btnStart.animate()
+                btnInfo.isHidden = false
+                btnInfo.animate()
                 
                 if Defaults[\.highScore] > 0 {
                     bestLabel.animate()
@@ -168,10 +241,12 @@ extension GameScene {
 
         btnBuy.isHidden = true
         btnStart.animation = "fadeOut"
+        btnInfo.animation = "squeezeUp"
         logo1.animation = "squeezeRight"
         logo2.animation = "squeezeLeft"
 
         btnStart.animateTo()
+        btnInfo.animateTo()
         logo1.animateTo()
         logo2.animateTo()
         
@@ -237,6 +312,7 @@ extension GameScene {
     } // End of startGame()
     
     
+    // MARK: Player Death
     func whenDead(){
         
         player.isDead = true

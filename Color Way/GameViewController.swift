@@ -25,7 +25,7 @@ class GameViewController: UIViewController {
         skView = self.view as! SKView
         
         // Initialize splash view
-        let splashView = RevealingSplashView(iconImage: UIImage(named: "mshlLogo")!,
+        let splashView = RevealingSplashView(iconImage: UIImage(named: "mshlLogoCircle")!,
                                                       iconInitialSize: CGSize(width: 130, height: 110),
                                                       backgroundColor: UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 1.00))
         
