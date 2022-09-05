@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51238920296671C500D62E4C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5123891F296671C500D62E4C /* Config.swift */; };
 		512BAFF325ADED6E008C220B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512BAFF225ADED6E008C220B /* AppDelegate.swift */; };
 		512BAFF525ADED6E008C220B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 512BAFF425ADED6E008C220B /* GameScene.sks */; };
 		512BAFF725ADED6E008C220B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 512BAFF625ADED6E008C220B /* Actions.sks */; };
@@ -57,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5123891F296671C500D62E4C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		512BAFEF25ADED6E008C220B /* Color Way.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Way.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		512BAFF225ADED6E008C220B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		512BAFF425ADED6E008C220B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				51B613CC267BF66100316E84 /* Color Way.entitlements */,
 				512BAFF225ADED6E008C220B /* AppDelegate.swift */,
 				512BAFF825ADED6E008C220B /* GameScene.swift */,
+				5123891F296671C500D62E4C /* Config.swift */,
 				518846AC25AE82CD0090049D /* SettingUpGameplay.swift */,
 				518846AF25AE82E90090049D /* BarriersLogic.swift */,
 				518846B225AE82FF0090049D /* Physics.swift */,
@@ -425,6 +428,7 @@
 				51B5240F2684768D008A27BF /* CFAlertTitleSubtitleTableViewCell.swift in Sources */,
 				512BAFF325ADED6E008C220B /* AppDelegate.swift in Sources */,
 				51A2C793268438DF008DE1D6 /* RevealingSplashView.swift in Sources */,
+				51238920296671C500D62E4C /* Config.swift in Sources */,
 				51B524132684768D008A27BF /* CFPushButton.swift in Sources */,
 				51B5241B2684768D008A27BF /* CFAlertBaseInteractiveTransition.swift in Sources */,
 				518846B325AE82FF0090049D /* Physics.swift in Sources */,

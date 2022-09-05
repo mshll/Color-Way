@@ -7,31 +7,28 @@
 //
 
 import Foundation
-import UIKit
-import SpriteKit
-import Spring
-import SwiftyUserDefaults
 import Lottie
-
+import Spring
+import SpriteKit
+import SwiftyUserDefaults
+import UIKit
 
 extension DefaultsKeys {
-     var highScore: DefaultsKey<Int> { .init("highScore", defaultValue: 0) }
-     var selectedSkin: DefaultsKey<String?> { .init("selectedSkin") }
-     var coinsOwned: DefaultsKey<Int> { .init("coinsOwned", defaultValue: 0) }
-     var lockedSkins: DefaultsKey<[Int]?> { .init("lockedSkins")}
-    
+    var highScore: DefaultsKey<Int> { .init("highScore", defaultValue: 0) }
+    var selectedSkin: DefaultsKey<String?> { .init("selectedSkin") }
+    var coinsOwned: DefaultsKey<Int> { .init("coinsOwned", defaultValue: 0) }
+    var lockedSkins: DefaultsKey<[Int]?> { .init("lockedSkins") }
 }
 
-
 extension GameScene {
-    
-    
     @objc private func secretTap(_ recognizer: UITapGestureRecognizer) {
         secretCounter1 += 1
         if secretCounter1 >= 15 {
             secretCounter1 = 0
             SnapshotAnim()
             player.god = !player.god
+            Defaults[\.coinsOwned] += unlockPrice * 10
+            coinsLabel.set(image: UIImage(named: "coin")!, with: "\(Defaults[\.coinsOwned])")
         }
     }
     
@@ -40,16 +37,19 @@ extension GameScene {
         if secretCounter2 >= 50 {
             secretCounter2 = 0
             SnapshotAnim()
-            Defaults[\.coinsOwned] += 250
+            Defaults[\.coinsOwned] += unlockPrice
             coinsLabel.set(image: UIImage(named: "coin")!, with: "\(Defaults[\.coinsOwned])")
         }
     }
     
     // MARK: Start Screen
+
     func setStartScreen() {
+        gameState = STARTSCREEN
+        
         // Add snowing particle to startscreen
         snowing.targetNode = self
-        snowing.position.y = displaySize.height / 2
+        snowing.position.y = frame.maxY
         addChild(snowing)
         
         // Setup game logo
@@ -69,12 +69,15 @@ extension GameScene {
         btnStart.center.x = view!.center.x
         btnStart.center.y = view!.center.y * 1.5
         btnStart.onClickAction = {
-            (button) in
-            self.startGame()
+            [self] btn in
+            if btn.currentTitle == "Buy Skin" {
+                purchaseSkin()
+            } else if btn.currentTitle == "Play" {
+                startGame()
+            }
         }
         btnStart.color = clrMint
         view!.addSubview(btnStart)
-        
         
         // Info button
         btnInfo.frame.size = CGSize(width: 35, height: 35)
@@ -83,29 +86,28 @@ extension GameScene {
         btnInfo.center.x = (view?.bounds.maxX)! / 1.12
         btnInfo.center.y = (view?.bounds.maxY)! / 1.08
         btnInfo.color = .clear
-        btnInfo.layer.borderWidth = 1
+        btnInfo.layer.borderWidth = 2
         btnInfo.layer.borderColor = clrWatermelon.cgColor
         btnInfo.setTitleColor(clrWatermelon, for: [])
         view!.addSubview(btnInfo)
         btnInfo.onClickAction = {
-            (button) in
+            _ in
             
             let alertController = CFAlertViewController(title: "Color Way",
-                                                        message: "Developed by Meshal Almutairi\n\nThis game is written completely in Swift using SpriteKit and is open-sourced, you can find the repository on my GitHub.\n",
+                                                        message: "Developed by Meshal Almutairi\n\nThis game is written completely in Swift using SpriteKit and is open-source.\n",
                                                         textAlignment: .center, preferredStyle: .actionSheet, didDismissAlertHandler: nil)
 
-            let frstAction = CFAlertAction(title: "Website", style: .Destructive, alignment: .center,
-                                           backgroundColor: clrWatermelon, textColor: clrWatermelon, handler: { (action) in
-                if let url = URL(string: "https://mshl.me") { UIApplication.shared.open(url) }
-            })
+            let frstAction = CFAlertAction(title: "Source code", style: .Destructive, alignment: .center,
+                                           backgroundColor: clrWatermelon, textColor: clrWatermelon, handler: { _ in
+                                               if let url = URL(string: "https://github.com/mshll/Color-Way") { UIApplication.shared.open(url) }
+                                           })
                 
-//            _ = CFAlertAction(title: "Close", style: .Default, alignment: .justified,
-//                                              backgroundColor: .clear, textColor: nil, handler: { (action) in
-//                print("Button with title '" + action.title! + "' tapped")
-//            })
+            let closeAction = CFAlertAction(title: "Close", style: .Default, alignment: .justified,
+                                            backgroundColor: .clear, textColor: nil, handler: { action in
+                                                print("Button with title '" + action.title! + "' tapped")
+                                            })
             
-
-            let headerView = UIImageView(image: UIImage(named: "mshlLogoCircle"))
+            let headerView = UIImageView(image: Bundle.main.icon)
             headerView.contentMode = .scaleAspectFit
             headerView.clipsToBounds = true
             headerView.frame = CGRect(x: 0, y: 0, width: alertController.containerView?.frame.size.width ?? 0.0, height: 110.0)
@@ -114,14 +116,13 @@ extension GameScene {
             headerView.isUserInteractionEnabled = true
             
             alertController.addAction(frstAction)
+            alertController.addAction(closeAction)
             alertController.backgroundStyle = .blur
             alertController.containerBackgroundColor = .clear
             alertController.titleColor = .white
             alertController.headerView = headerView
             self.view?.window?.rootViewController?.present(alertController, animated: true, completion: {})
-
         }
-        
         
         // Setup the player selection view
         setCollectionView()
@@ -137,8 +138,7 @@ extension GameScene {
         cellParticle.targetNode = self
         cellParticle.position.y = -23
         
-        
-        //- ANIMATIONS:
+        // - ANIMATIONS:
         logo1.animation = "squeezeRight"
         logo2.animation = "squeezeLeft"
         logo1.alpha = 0
@@ -166,7 +166,7 @@ extension GameScene {
             
             logo1.animate()
             logo2.animateNext(completion: {
-                
+                [self] in
                 cellBackground.isHidden = false
                 playerCollectionView.fadeIn()
                 cellLabel.fadeIn()
@@ -178,36 +178,34 @@ extension GameScene {
                 btnInfo.isHidden = false
                 btnInfo.animate()
                 
+                bgRadial.run(.fadeAlpha(to: 0.8, duration: 2))
+                
                 if Defaults[\.highScore] > 0 {
                     bestLabel.animate()
                 }
                     
-                })
+            })
         }
-        //- END OF ANIMATIONS
+        // - END OF ANIMATIONS
     }
     
-    
-    func setBgLines(){
+    func setBgLines() {
         var bgLines = Array(repeating: SKShapeNode(), count: 4)
         
-        for i in 0...3 {
-            let refX = -self.frame.maxX + (displaySize.width / 5) * CGFloat(i+1)
+        for i in 0 ... 3 {
+            let refX = -self.frame.maxX + (displaySize.width / 5) * CGFloat(i + 1)
             bgLines[i] = SKShapeNode(rect: CGRect(x: 0, y: -self.frame.maxY, width: 2.5, height: displaySize.height))
             bgLines[i].position.x = refX - 1.25
             bgLines[i].strokeColor = .clear
-            bgLines[i].fillColor = .gray
-            bgLines[i].alpha = 0.04
+            bgLines[i].fillColor = UIColor(red: 0.14, green: 0.15, blue: 0.16, alpha: 0.3)
+//            bgLines[i].alpha = 0.04
             bgLines[i].zPosition = -2
             addChild(bgLines[i])
         }
-        
     }
     
-    
-    func setPlayer(){
-        
-        player.node.position.y = -(displaySize.height / 1.5)
+    func setPlayer() {
+        player.node.position.y = frame.minY - 10
         player.node.position.x = 0
         player.node.setScale(0.2)
         player.node.zPosition = 5
@@ -219,26 +217,22 @@ extension GameScene {
         player.phyNode.physicsBody?.contactTestBitMask = phyCatg.lineCATG
         player.phyNode.physicsBody?.affectedByGravity = false
         player.phyNode.physicsBody?.isDynamic = true
-        player.phyNode.position.y = player.node.frame.maxX / 1.1
         
         player.particle.targetNode = self
         player.particle.zPosition = 0
         player.particle.position.y = -(player.node.frame.height * 7)
         player.particle.particleColorSequence = nil
         
-        let randomColor = colorsArray.randomItem()
+        randomColor = colorsArray.randomItem()
         player.particle.particleColor = randomColor
         player.node.changeColorTo(randomColor, dur: 0.3)
-        
         
         player.node.addChild(player.particle)
         player.node.addChild(player.phyNode)
         addChild(player.node)
     }
     
-    
-    func hideStartScreen(){
-
+    func hideStartScreen() {
         btnBuy.isHidden = true
         btnStart.animation = "fadeOut"
         btnInfo.animation = "squeezeUp"
@@ -248,7 +242,13 @@ extension GameScene {
         btnStart.animateTo()
         btnInfo.animateTo()
         logo1.animateTo()
-        logo2.animateTo()
+        logo2.animateToNext {
+            [self] in
+            btnStart.isHidden = true
+            btnInfo.isHidden = true
+            logo1.isHidden = true
+            logo2.isHidden = true
+        }
         
         logo1.animation = "fadeOut"
         logo2.animation = "fadeOut"
@@ -259,34 +259,33 @@ extension GameScene {
         playerCollectionView.fadeOut()
         cellLabel.fadeOut()
         bestLabel.fadeOut()
-        
     }
     
-    @objc func startGame(){
+    @objc func startGame() {
+        gameState = INGAME
         
-        player.isDead = false
-        
-        hideStartScreen()
-        setBgLines()
+        self.hideStartScreen()
+        self.setBgLines()
         setTaps()
+        
+        bgRadial.run(.fadeAlpha(to: 0.3, duration: 2))
 
         lblCurrentScore.isHidden = false
 
-        barrierNum = 0  // Set # of barriers to 0
+        barrierNum = 0 // Set # of barriers to 0
 
         rain.targetNode = self
-        rain.position.y = displaySize.height / 1.8
+        rain.position.y = frame.maxY
 
         inGamesnow.targetNode = self
         inGamesnow.position.y = (displaySize.height / 1.8)
-        
         
         snowing.removeFromParent()
         player.pos = 3 // Set initial player position
         cellParticle.removeFromParent()
 
-        player.node.texture = SKTexture(imageNamed: Defaults[\.selectedSkin]!)
-        player.node.position.y = -(displaySize.height)
+        player.node.texture = SKTexture(imageNamed: Defaults[\.selectedSkin] ?? "playerSkin1")
+        player.node.position.y = frame.minY * 1.5
 
         rightBlock.isUserInteractionEnabled = false
         leftBlock.isUserInteractionEnabled = false
@@ -305,20 +304,16 @@ extension GameScene {
             snowing.particleSpeed = 250
             snowing.resetSimulation()
             addChild(snowing)
-            
         }
-        
-        
     } // End of startGame()
     
-    
     // MARK: Player Death
-    func whenDead(){
-        
-        player.isDead = true
+
+    func whenDead() {
+        gameState = GAMEOVER
         lblCurrentScore.alpha = 0
         
-        // - GameOver screen stuff - //
+        // - GameOver screen labels & buttons - //
         // GAMEOVER label
         lblGO.text = "GAMEOVER"
         lblGO.font = UIFont(name: "Odin-Bold", size: 46)
@@ -350,8 +345,8 @@ extension GameScene {
         btnHome.center.x = (view?.center.x)!
         btnHome.center.y = (view?.center.y)! * 1.575
         btnHome.onClickAction = {
-            (button) in
-            playAgain = false
+            _ in
+            startOnLoad = false
             self.restartGame()
         }
         
@@ -360,8 +355,8 @@ extension GameScene {
         btnPlayAgain.center.x = (view?.center.x)!
         btnPlayAgain.center.y = (view?.center.y)! * 1.4
         btnPlayAgain.onClickAction = {
-            (button) in
-            playAgain = true
+            _ in
+            startOnLoad = true
             self.restartGame()
         }
         
@@ -373,7 +368,6 @@ extension GameScene {
         
         coinsLabel.animation = "squeezeLeft"
         
-        
         run(.wait(forDuration: 0.2)) {
             [self] in
             
@@ -381,9 +375,8 @@ extension GameScene {
             SnapshotAnim() // Flash screen white
             coinsLabel.animateTo()
             
-
             self.run(.wait(forDuration: 0.5)) {
-                
+                [self] in
                 addBlur() // Add blur over scene
                 
                 lblGO.animation = "squeezeDown"
@@ -402,27 +395,22 @@ extension GameScene {
                 if score > Defaults[\.highScore] {
                     Defaults[\.highScore] = score
                     view!.addSubview(confetti)
-                    confetti.play { _ in confetti.removeFromSuperview() }
+                    confetti.play { _ in self.confetti.removeFromSuperview() }
                     bestLabel.text = "NEW HIGHSCORE"
                 }
-                
             }
-            
         }
         // - End of Animations - //
         
         print("Player died.")
     }
     
-    
-    @objc func restartGame(){
-        
+    @objc func restartGame() {
         removeAllChildren()
         removeAllActions()
         
         for subview in (self.view?.subviews)! {
             subview.removeFromSuperview()
-            
         }
                 
         let skView = self.view!
@@ -432,11 +420,9 @@ extension GameScene {
 
             skView.presentScene(scene)
         }
-        
     }
     
-    
-    @objc func AddingScore(){
+    @objc func AddingScore() {
         score += 1
         lblCurrentScore.text = "\(score)"
         lblCurrentScore.sizeToFit()
@@ -445,8 +431,5 @@ extension GameScene {
         lblCurrentScore.duration = 0.3
         lblCurrentScore.animateNext(completion: {})
         lblCurrentScore.animate()
-        
     }
-    
-    
 }

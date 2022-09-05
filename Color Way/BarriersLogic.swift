@@ -6,20 +6,16 @@
 //  Copyright © 2020 Meshal Almutairi. All rights reserved.
 //
 
-
 import Foundation
-import UIKit
+import Spring
 import SpriteKit
 import SwiftyUserDefaults
-import Spring
+import UIKit
 
 extension GameScene {
-
-
     func getRandomWeightedLoot() -> Int {
         var i = 0, randNum = randomNumber(inRange: 1...100)
         for weight in lootWeight {
-            
             if randNum < weight {
                 return i
             }
@@ -30,12 +26,11 @@ extension GameScene {
         return 0
     }
 
-
-    func summonBarriers(){
-        if player.isDead { return }
+    func summonBarriers() {
+        if gameState != INGAME { return }
         
-        let firstObst = 4
-        let vagueClr = player.node.color
+        let firstObst = 9 // First obstacle - when barriers start with the same color then change to their true color after a delay
+        randomColor = colorsArray.randomItem() // Update random color
 
         // All 5 barriers array.
         var barr = Array(repeating: SKShapeNode(), count: 5)
@@ -45,7 +40,7 @@ extension GameScene {
 
         // Line for barriers
         barriersLine = SKNode()
-        let barrierSize = CGSize(width: displaySize.width / 5, height: 25)
+        let barrierSize = CGSize(width: displaySize.width/5, height: 25)
         
         // Barrier template
         let barrier = SKShapeNode(rectOf: barrierSize, cornerRadius: 10)
@@ -57,49 +52,42 @@ extension GameScene {
         barrier.physicsBody?.contactTestBitMask = phyCatg.playerCATG
         barrier.physicsBody?.affectedByGravity = false
         barrier.physicsBody?.isDynamic = false
-
-        // Position for each barrier
-        let barrXPosition = [-(barrier.frame.width * 2), -barrier.frame.width, displaySize.minX, barrier.frame.width, barrier.frame.width * 2]
         
         // Initiate all 5 barriers
         for i in 0...4 {
             barr[i] = barrier.copy() as! SKShapeNode
-            barr[i].position.x = barrXPosition[i]
+            barr[i].position.x = screenSection[i]
             
-            if barrierNum >= firstObst {
-                barr[i].fillColor = vagueClr
+            if barrierNum >= firstObst { // Check if reached first obstacle
+                barr[i].fillColor = randomColor // Vague color for all barriers
             } else {
-                barr[i].fillColor = colorsArray[i]
+                barr[i].fillColor = colorsArray[i] // True colors
             }
             
             barr[i].setScale(0.9)
             barr[i].physicsBody = (barrier.physicsBody?.copy() as! SKPhysicsBody)
             
-            barr[i].name = "B\(i+1)-\(barrierNum)"
+            barr[i].name = "B\(i + 1)-\(barrierNum)"
             barriersLine.addChild(barr[i])
-            
         }
-        
         
         // Keeps barriers color vague for a bit
         if barrierNum >= firstObst {
             let clrsArray = colorsArray
             self.run(.wait(forDuration: vagueClrDur)) {
-                //[self] in
+                [self] in
                 for i in 0...4 {
-                    barr[i].run(.colorTransitionAction(fromColor: vagueClr, toColor: clrsArray[i], duration: 0.3)) {
+                    barr[i].run(.colorTransitionAction(fromColor: randomColor /* vagueClr */, toColor: clrsArray[i], duration: 0.3)) {
                         barr[i].fillColor = clrsArray[i]
                     }
                 }
-                
             }
         }
-        
         
         // Show new highscore line
         if barrierNum == Defaults[\.highScore] && Defaults[\.highScore] > 0 {
             let lblNewHi = SKLabelNode()
-            lblNewHi.text = "---------------------------------------------------------------------------NEW HIGHSCORE---------------------------------------------------------------------------"
+            lblNewHi.text = "--------------------------------------------------------------------------- NEW HIGHSCORE ---------------------------------------------------------------------------"
             lblNewHi.fontName = "Odin-Bold"
             lblNewHi.fontSize = 24
             lblNewHi.color = clrWhite
@@ -114,32 +102,25 @@ extension GameScene {
                                                    .colorize(with: colorsArray[2], colorBlendFactor: 1, duration: 0.3),
                                                    .colorize(with: colorsArray[3], colorBlendFactor: 1, duration: 0.3),
                                                    .colorize(with: colorsArray[4], colorBlendFactor: 1, duration: 0.3)])))
-
         }
 
-        
         // Place the barriers line and start moving it
-        barriersLine.position.y = (displaySize.height / 2) + barriersLine.frame.height
+        barriersLine.position.y = frame.maxY + barriersLine.frame.height
         barriersLine.name = "barrierLine"
         barriersLine.run(moveRemoveAction, withKey: "barrierMoveRemove")
         addChild(barriersLine)
         barrierNum += 1
     }
 
-
-
-    func summonLoot(){
-        if player.isDead { return }
+    func summonLoot() {
+        if gameState != INGAME { return }
         
         var lootArray = Array(repeating: SKSpriteNode(), count: 5)
-        
         var lootCount = Array(repeating: 0, count: 5) // Cmp against [5, 3, 2, 2, 0]
 
-        
-        func getLootFor(node: SKSpriteNode){
-            
+        func getLootFor(node: SKSpriteNode) {
             // Get random loot from weighted loot array
-            let loot = getRandomWeightedLoot()
+            let loot = self.getRandomWeightedLoot()
             
             // For pulse animation
             let pulseUp = SKAction.scale(to: 0.135, duration: 0.1) // og scale 0.12
@@ -150,47 +131,47 @@ extension GameScene {
             // Coin flip animation
             let flipDur = 0.4
             let flipScale = SKAction.sequence([.scaleX(to: 0.012, duration: flipDur),
-                                                .scaleX(to: 0.12, duration: flipDur)])
+                                               .scaleX(to: 0.12, duration: flipDur)])
             let flipDarken = SKAction.sequence([.colorize(with: SKColor.black, colorBlendFactor: 0.25, duration: flipDur),
                                                 .colorize(withColorBlendFactor: 0, duration: flipDur)])
             let flip = SKAction.group([flipScale, flipDarken])
             let repeatFlip = SKAction.repeatForever(flip)
-            // Coin rotation animation
-            //let coinRotate = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 0.5))
-            
+
+            // Rotate animation
+            let repeatRotate = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 5))
             
             node.texture = SKTexture(imageNamed: loots[loot])
             node.name = loots[loot]
 
             switch loot {
-                
             case 1 where lootCount[loot] < lootMax[loot]:
-                //node.run(coinRotate)
                 node.run(repeatFlip)
                 
-            case 2 where lootCount[loot] < lootMax[loot],
-                 3 where lootCount[loot] < lootMax[loot]:
-                //node.addGlow()
+            case 2 where lootCount[loot] < lootMax[loot]:
                 let glowNode = SKSpriteNode(texture: SKTexture(imageNamed: "\(loots[loot])Glow"))
                 glowNode.zPosition = -1
                 glowNode.setScale(1.1)
                 node.addChild(glowNode)
                 node.run(repeatPulse)
                 
-            //case 4 where lootCount[loot] < lootMax[loot]:
+            case 3 where lootCount[loot] < lootMax[loot]:
+                let glowNode = SKSpriteNode(texture: SKTexture(imageNamed: "\(loots[loot])Glow"))
+                glowNode.zPosition = -1
+                glowNode.setScale(1.1)
+                node.addChild(glowNode)
+//                node.run(repeatRotate)
                 
+            // case 4 where lootCount[loot] < lootMax[loot]:
             default:
                 node.isHidden = true
                 node.name = loots[0]
             }
             
             lootCount[loot] += 1
-            
         }
         
-        
         lootLine = SKNode()
-        lootLine.position.y = (displaySize.height / 2) + lootLine.frame.height
+        lootLine.position.y = frame.maxY + lootLine.frame.height
         lootLine.name = "lootLine"
         
         let lootNode = SKSpriteNode(texture: SKTexture(imageNamed: "coin"))
@@ -205,58 +186,45 @@ extension GameScene {
             lootArray[i] = lootNode.copy() as! SKSpriteNode
             lootArray[i].physicsBody = (lootNode.physicsBody?.copy() as! SKPhysicsBody)
             
-            
             lootArray[i].setScale(0.12)
             
             getLootFor(node: lootArray[i])
-            lootArray[i].position.x = screenSpots[i]
+            lootArray[i].position.x = screenSection[i]
             lootLine.addChild(lootArray[i])
-            
         }
 
         lootLine.run(moveRemoveAction, withKey: "lootMoveRemove")
         addChild(lootLine)
     }
 
-
-
-
-
-    func startSpawning(){
+    func startSpawning() {
+        func setMoveRemoveActions() {
+            // Set the move-remove action [for both barriers and loot]
+            distanceBarr = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
+            moveLine = SKAction.moveBy(x: 0, y: -distanceBarr, duration: TimeInterval((spawnDur/450) * distanceBarr))
+            moveRemoveAction = .sequence([moveLine, .removeFromParent()])
+            vagueClrDur = ((spawnDur/2000) * distanceBarr)
+        }
         
-        // Set the move-remove action [for both barriers and loot]
-        distanceBarr = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
-        moveLine = SKAction.moveBy(x: 0, y: -distanceBarr, duration: TimeInterval((spawnDur/450) * distanceBarr))
-        moveRemoveAction = .sequence([moveLine, .removeFromParent()])
-        vagueClrDur = ((spawnDur/1300) * distanceBarr)
-        
+        setMoveRemoveActions()
         let spawnDelay: CGFloat = 1.75
         
         let spawningAction = SKAction.sequence([.run {
             [self] in
             
             // Speed up barriers movement after reaching a score of 5
-            if barrierNum >= 4 && spawnDur > 1.5 {
+            if barrierNum >= 4, spawnDur > 1.5 {
                 spawnDur -= 0.1
-                // Update the move-remove action
-                distanceBarr = CGFloat(displaySize.height + (barriersLine.frame.height * 3))
-                moveLine = SKAction.moveBy(x: 0, y: -distanceBarr, duration: TimeInterval((spawnDur/450) * distanceBarr))
-                moveRemoveAction = .sequence([moveLine, .removeFromParent()])
-                vagueClrDur = ((spawnDur/1300) * distanceBarr)
+                setMoveRemoveActions()
             }
             
             summonBarriers()
             run(.wait(forDuration: spawnDelay/2)) {
-                summonLoot()
+                self.summonLoot()
             }
             
         }, .wait(forDuration: spawnDelay)])
         
         self.run(.repeatForever(spawningAction), withKey: "spawning")
-        
     }
-
-
-
-
 }

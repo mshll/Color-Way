@@ -5,72 +5,44 @@
 //  Created by Meshal Almutairi on 1/12/21.
 //
 
-import SpriteKit
 import GameplayKit
-import Spring
-import SwiftyUserDefaults
 import LNZCollectionLayouts
 import Lottie
-
-
-//FONTS USED :: Odin Rounded ["OdinRounded-Light", "Odin-Bold", "OdinRounded"] (for reference)
-
-
-// - Main game colors
-let clrSkyBlue = UIColor(hue: 0.57, saturation: 0.76, brightness: 0.86, alpha: 1)
-let clrPurple = UIColor(hue: 0.70, saturation: 0.52, brightness: 0.77, alpha: 1)
-let clrMint = UIColor(hue: 0.47, saturation: 0.86, brightness: 0.74, alpha: 1)
-let clrWatermelon = UIColor(hue: 0.99, saturation: 0.53, brightness: 0.94, alpha: 1)
-let clrYellow = UIColor(hue: 0.13, saturation: 0.99, brightness: 1.00, alpha: 1)
-
-// - Other colors used
-let clrGreen = UIColor(red: 0.18, green: 0.80, blue: 0.44, alpha: 1.00)
-let clrWhite = UIColor(red: 0.93, green: 0.94, blue: 0.95, alpha: 1.00)
-let clrGray = UIColor(red: 0.58, green: 0.65, blue: 0.65, alpha: 1.00)
-let clrBlack = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.00)
-let clrBlackDark = UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 1.00)
-let clrYellowDark = UIColor(red: 1.00, green: 0.66, blue: 0.00, alpha: 1.00)
-let clrRed = UIColor(red: 0.75, green: 0.22, blue: 0.17, alpha: 1.00)
-
-
-var screenDiv : CGFloat = 0 // Screen divider
-var playAgain: Bool = false // Indicates if game should start immediately upon scene load or not
-var launchDelay = 2.0       // After how many seconds should the scene get shown (waiting for splash screen animations)
-
+import Spring
+import SpriteKit
+import SwiftyUserDefaults
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
     // Player structure
     struct Player {
         var node = SKSpriteNode(imageNamed: "playerSkin1")
         let particle = SKEmitterNode(fileNamed: "playerParticle.sks")!
         var phyNode = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
         var skins = Array(repeating: "", count: 20)
-        var isDead = false
         var pos = 3
         var shield = false
         var god = false
     }
     
-    
     // MARK: Variables  //
     
-    var player = Player()   // initalize player
+    var player = Player() // initalize player
     var spawnDur: CGFloat = 2.0 // Interval between each barrier/loot spawn
-    let bgRadial = SKSpriteNode(imageNamed: "bgRadial") // Radial background for in-game
+    var bgRadial = SKSpriteNode() // Radial background
 
     // Set up player selection view
-    let cellBackground = SKSpriteNode(imageNamed: "greenBlur")    // Skin cell background
-    var playerCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), collectionViewLayout: UICollectionViewFlowLayout.init())
+    let cellBackground = SKSpriteNode(imageNamed: "greenBlur") // Skin cell background
+    var playerCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), collectionViewLayout: UICollectionViewFlowLayout())
     var lastValidPlayerIndex: Int = 0
     let cellParticle = SKEmitterNode(fileNamed: "sparkleStar.sks")!
-    let cellLabel = UILabel()  // Label that shows which cell you're on
-    let btnBuy = cButton(btitle: "250")
+    let cellLabel = UILabel() // Label that shows which cell you're on
+    let btnBuy = cButton(btitle: "\(unlockPrice)")
+    var justLaunched = true // Indicates if the game just launched or not [Used to view playerCollectionView correctly]
     
     // Taps
-    let rightBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
-    let leftBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
-    
+    var rightBlock = TouchableNode()
+    var leftBlock = TouchableNode()
+
     // Particles
     let snowing = SKEmitterNode(fileNamed: "snowingParticle.sks")!
     let rain = SKEmitterNode(fileNamed: "rainParticle.sks")!
@@ -91,10 +63,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bestLabel = SpringLabel()
     
     // Dividing the screen to 5 parts
-    var screenSpots: [CGFloat] = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
+    var screenSection: [CGFloat] = []
     
     // Barriers colors
-    var colorsArray : [UIColor] = [clrSkyBlue, clrPurple, clrMint, clrWatermelon, clrYellow]
+    var colorsArray: [UIColor] = [clrSkyBlue, clrPurple, clrMint, clrWatermelon, clrYellow]
+    var randomColor = clrSkyBlue // Random color to change player to everytime
     
     // Indicates if collisions should be checked or not
     var canCheck: Bool = true
@@ -118,32 +91,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let btnPlayAgain = cButton(btitle: "Play Again")
     let lblGO = SpringLabel()
     let lblGOScore = SpringLabel()
-    
     let lblCurrentScore = SpringLabel() // Current score label in-game
     
     // Loot stuff
-    let loots = ["nil", "coin", "shield", "skull", "double"]    // 'double' unused
-    let lootWeight = [70, 20, 5, 5, 0]  // Weight for loot [i] to be chosen -: SHOULD ADD UP TO 100!
-    let lootMax = [5, 3, 2, 2, 0]       // Max # of loot [i] in a line (Max # = 5)
+    let loots = ["nil", "coin", "shield", "skull", "double"] // 'double' unused
+    let lootWeight = [73, 20, 2, 5, 0] // Weight for loot [i] to be chosen :: (sum should = 100)
+    let lootMax = [5, 3, 1, 2, 0] // Max # of loot [i] in a line (Can't be > 5)
 
     let confetti = AnimationView(name: "conf")
     //  ***  End of Variables  ***  //
     
-    
     // MARK: didMove to view
+
     override func didMove(to view: SKView) {
-        
-        // Set player skins names
-        for i in 0...(player.skins.count-1) {
-            player.skins[i] = ("playerSkin\(i+1)")
-        }
-        
-        self.physicsWorld.contactDelegate = self
+        // Get display size of the scene
+        displaySize = view.bounds
         screenDiv = (displaySize.width / 5) // Set screen divider
+        screenSection = [-(screenDiv * 2), -screenDiv, 0, screenDiv, screenDiv * 2] // Divides screen to 5 spaces
+
+        // Set Taps
+        rightBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
+        leftBlock = TouchableNode(rectOf: CGSize(width: displaySize.width / 2, height: displaySize.height))
         
-        // Divides screen to 5 spaces
-        screenSpots = [-(screenDiv * 2), -screenDiv, 0, screenDiv, (screenDiv * 2)]
-        
+        physicsWorld.contactDelegate = self
+                
+        // Set player skins names
+        for i in 0 ... (player.skins.count - 1) {
+            player.skins[i] = "playerSkin\(i + 1)"
+        }
         
         // Initialize skins
         if Defaults[\.lockedSkins] == nil {
@@ -151,14 +126,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             Defaults[\.lockedSkins]![0] = 1 // Unlock first skin
         }
         
-        backgroundColor = clrBlackDark
+        backgroundColor = clrBg
         lastValidPlayerIndex = player.skins.firstIndex(of: Defaults[\.selectedSkin] ?? "playerSkin1")! // Set which index should be selected for the selection view
         
         // Setup the radial background
-        bgRadial.position = CGPoint(x: 0, y: 0)
+        bgRadial.texture = SKTexture(imageNamed: "bgRadial\(Int(arc4random_uniform(2)) + 1)")
+        let bgAspectRatio = bgRadial.texture!.size().width / bgRadial.texture!.size().height
+        bgRadial.anchorPoint = CGPoint(x: 0.5, y: 0)
+        bgRadial.position = CGPoint(x: frame.midX, y: frame.minY )
         bgRadial.zPosition = -99
-        bgRadial.size = displaySize.size
-        bgRadial.alpha = 0.3
+        bgRadial.size = CGSize(width: (displaySize.size.height / 1.5) * bgAspectRatio, height: displaySize.size.height / 1.5)
+        bgRadial.alpha = 0
         addChild(bgRadial)
         
         // Setup player
@@ -215,21 +193,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         confetti.frame = view.bounds
         confetti.isUserInteractionEnabled = false
         
-        
-        if playAgain {
+        if startOnLoad {
             startGame()
         } else {
             setStartScreen()
         }
-        
-        
     }
-    
-    
-    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
-    
 }

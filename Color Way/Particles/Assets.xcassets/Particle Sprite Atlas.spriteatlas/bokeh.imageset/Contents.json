@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "bokeh.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "playerSkin3.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
